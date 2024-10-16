@@ -22,7 +22,7 @@ const Navbar = () => {
           <a href="#" className="text-gray-400 hover:text-white">Inicio</a>
           <a href="#" className="text-gray-400 hover:text-white">Servicios</a>
           <a href="#" className="text-gray-400 hover:text-white">Nosotros</a>
-          <a href="#" className="text-gray-400 hover:text-white">Contacto</a>
+          <a href="/contacto" className="text-gray-400 hover:text-white">Contacto</a>
         </div>
 
         {/* Botón del menú móvil */}
