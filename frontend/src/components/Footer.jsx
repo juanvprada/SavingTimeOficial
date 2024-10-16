@@ -1,4 +1,6 @@
-const footer = () => (
+import React from 'react';
+
+const Footer = () => (
     <footer className="bg-gray-800 text-white py-8">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
         
@@ -31,9 +33,9 @@ const footer = () => (
 
       {/* Copyright */}
       <div className="border-t border-gray-700 mt-6 pt-4 text-center">
-        <p className="text-gray-400">&copy; 2024 MiProyecto. Todos los derechos reservados.</p>
+        <p className="text-gray-400">&copy; 2024 Bio Blog. Todos los derechos reservados.</p>
       </div>
     </footer>       
   );
 
-export default footer;
+export default Footer;

@@ -14,7 +14,7 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
         <div className="text-white text-xl font-bold">
-          <a href="#">MiProyecto</a>
+          <a href="#">Bio Blog</a>
         </div>
 
         {/* Links de navegación para pantallas grandes */}
