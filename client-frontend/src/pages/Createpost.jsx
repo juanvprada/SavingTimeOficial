@@ -7,7 +7,7 @@ export const Create = ({ onCancel }) => {
     const [direccion, setDireccion] = useState("");
     const [descripcion, setDescripcion] = useState("");
 
-    const manejarCambioImagenes = (event) => {
+    const handleChangesImages = (event) => {
         const archivos = Array.from(event.target.files);
         if (archivos.length > 10) {
             alert("Puedes subir hasta 10 imágenes.");
@@ -16,10 +16,10 @@ export const Create = ({ onCancel }) => {
         setImagenes(archivos);
     };
 
-    const manejarSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault(); 
 
-        const nuevaExperiencia = {
+        const newPost = {
             name: titulo,
             direction: direccion,
             description: descripcion,
@@ -29,15 +29,15 @@ export const Create = ({ onCancel }) => {
         // Llama a la función createPost desde services.jsx
         // ======================================================
         try {
-            const respuesta = await createPost(nuevaExperiencia);
+            const respuesta = await createPost(newPost);
             if (respuesta.ok) {
-                alert('Experiencia guardada exitosamente');
+                alert('EPost guardado exitosamente');
                 onCancel();
             } else {
-                alert('Hubo un error al guardar la experiencia');
+                alert('Hubo un error al guardar el Post');
             }
         } catch (error) {
-            console.error("Error al guardar la experiencia", error);
+            console.error("Error al guardar el Post", error);
         }
     };
 
@@ -45,7 +45,7 @@ export const Create = ({ onCancel }) => {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md box-border m-5">
                 <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">Nuevo Post</h3>
-                <form onSubmit={manejarSubmit} className="flex flex-col items-center gap-4">
+                <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
                     <input 
                         type="text" 
                         id="title" 
@@ -75,7 +75,7 @@ export const Create = ({ onCancel }) => {
                         id="imagenes"
                         accept="image/*"
                         multiple
-                        onChange={manejarCambioImagenes}
+                        onChange={handleChangesImages}
                         className="w-full max-w-md p-2 text-sm border border-gray-300 rounded-md bg-gray-100"
                     />
 
