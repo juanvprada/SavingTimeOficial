@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logoSinFondo.webp'; // Asegúrate de que la ruta sea correcta
 
 const LoginForm = () => {
     
@@ -64,7 +65,11 @@ const LoginForm = () => {
 
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-            <h2 className="text-2xl font-semibold text-center text-green-600">Iniciar Sesión</h2>
+            <div className="text-center mb-6">
+                <img src={logo} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
+                <h2 className="text-2xl font-semibold text-green-600">Iniciar Sesión</h2>
+                <p className="text-gray-500">Accede a tu cuenta para continuar.</p>
+            </div>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
                     <label className="block text-gray-700" htmlFor="email">Correo Electrónico</label>
@@ -113,6 +118,8 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+
 
 
 
