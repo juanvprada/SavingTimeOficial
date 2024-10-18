@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { createPost } from '../services/services'; 
+import logo from '../assets/logoSinFondo.webp'; // Asegúrate de que la ruta sea correcta
 
 export const Create = ({ onCancel }) => { 
     const [images, setImages] = useState([]);
@@ -42,8 +43,16 @@ export const Create = ({ onCancel }) => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md box-border m-5">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-5 relative z-10">
+                {/* Encabezado con Logo */}
+                <div className="flex justify-center mb-4">
+                    <img 
+                        src={logo} 
+                        alt="Logo" 
+                        className="h-16 w-auto"
+                    />
+                </div>
                 <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">Nuevo Post</h3>
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
                     <input 
@@ -52,7 +61,7 @@ export const Create = ({ onCancel }) => {
                         placeholder="Nombre" 
                         value={title}
                         onChange={(e) => setTitle(e.target.value)} 
-                        className="w-full max-w-md p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
                     />
                     <input 
                         type="text" 
@@ -60,14 +69,14 @@ export const Create = ({ onCancel }) => {
                         placeholder="Tipo de Post: receta, entrevista, etc" 
                         value={kindOfPost}
                         onChange={(e) => setKindOfPost(e.target.value)} 
-                        className="w-full max-w-md p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
                     />
                     <textarea 
                         id="description" 
                         placeholder="Descripción"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full max-w-md p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none h-24 resize-none"
+                        className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none h-24 resize-none"
                     ></textarea>
 
                     <input
@@ -76,11 +85,11 @@ export const Create = ({ onCancel }) => {
                         accept="image/*"
                         multiple
                         onChange={handleChangesImages}
-                        className="w-full max-w-md p-2 text-sm border border-gray-300 rounded-md bg-gray-100"
+                        className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100"
                     />
 
                     {images.length > 0 && (
-                        <div className="w-full max-w-md">
+                        <div className="w-full">
                             <h4 className="text-lg text-gray-800 my-2">Imágenes seleccionadas:</h4>
                             <ul className="list-none p-0">
                                 {images.map((image, index) => (
@@ -94,12 +103,12 @@ export const Create = ({ onCancel }) => {
                         type="submit" 
                         id="save" 
                         value="Guardar" 
-                        className="w-full max-w-md p-3 text-lg font-bold bg-green-500 text-white rounded-md cursor-pointer hover:bg-green-600 transition-colors"
+                        className="w-full p-3 text-lg font-bold bg-green-500 text-white rounded-md cursor-pointer hover:bg-green-600 transition-colors"
                     />
                     <button 
                         type="button" 
                         onClick={onCancel} 
-                        className="w-full max-w-md p-3 text-lg font-bold bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600 transition-colors"
+                        className="w-full p-3 text-lg font-bold bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600 transition-colors"
                     >
                         Cancelar
                     </button>
@@ -108,4 +117,6 @@ export const Create = ({ onCancel }) => {
         </div>
     );
 };
+
+
 
