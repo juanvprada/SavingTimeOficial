@@ -8,7 +8,7 @@ export const Create = ({ onCancel }) => {
     const [kindOfPost, setKindOfPost] = useState("");
     const [description, setDescription] = useState("");
 
-    const handleChangesImages = (event) => {
+    const handleImageChange = (event) => {
         const selectedImage = event.target.files[0]; 
         if (!selectedImage) {
             alert("Debes seleccionar una imagen.");
@@ -19,6 +19,11 @@ export const Create = ({ onCancel }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault(); 
+
+        if (!title || !kindOfPost || !description) {
+            alert("Por favor, completa todos los campos.");
+            return;
+        }
 
         const newPost = {
             name: title,
@@ -81,7 +86,7 @@ export const Create = ({ onCancel }) => {
                         type="file"
                         id="image"
                         accept="image/*"
-                        onChange={handleChangesImages}
+                        onChange={handleImageChange}
                         className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100"
                     />
 
@@ -89,6 +94,7 @@ export const Create = ({ onCancel }) => {
                         <div className="w-full">
                             <h4 className="text-lg text-gray-800 my-2">Imagen seleccionada:</h4>
                             <p className="bg-gray-100 p-2 my-1 rounded-md text-sm text-gray-700">{image.name}</p>
+                            <img src={URL.createObjectURL(image)} alt="Previsualización" className="max-w-full h-auto mt-2" />
                         </div>
                     )}
 
@@ -110,6 +116,7 @@ export const Create = ({ onCancel }) => {
         </div>
     );
 };
+
 
 
 

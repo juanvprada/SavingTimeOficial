@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logoSinFondo.webp'; // Asegúrate de que la ruta sea correcta
+import logo from '../assets/logoSinFondo.webp';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
     

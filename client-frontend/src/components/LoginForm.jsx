@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/logoSinFondo.webp'; // Asegúrate de que la ruta sea correcta
+import logo from '../assets/logoSinFondo.webp';
 
 const LoginForm = () => {
     

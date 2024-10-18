@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
+import Search from './Search';
 
-const Navbar = () => {
-  // Estado para controlar el menú móvil
+const Navbar = ({ onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Función para alternar el estado del menú móvil
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -15,6 +14,11 @@ const Navbar = () => {
         {/* Logo */}
         <div className="text-white text-xl font-bold">
           <a href="#">Bio Blog</a>
+        </div>
+
+        {/* Search Component */}
+        <div className="hidden md:block w-full max-w-md">
+          <Search onSearch={onSearch} />
         </div>
 
         {/* Links de navegación para pantallas grandes */}
@@ -49,6 +53,7 @@ const Navbar = () => {
       {/* Menú desplegable para dispositivos móviles */}
       {isOpen && (
         <div className="md:hidden mt-4 space-y-2">
+          <Search onSearch={onSearch} /> 
           <a href="#" className="block text-gray-400 hover:text-white">Inicio</a>
           <a href="#" className="block text-gray-400 hover:text-white">Servicios</a>
           <a href="#" className="block text-gray-400 hover:text-white">Nosotros</a>
