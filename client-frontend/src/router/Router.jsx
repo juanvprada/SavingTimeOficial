@@ -4,6 +4,10 @@ import Home from "../pages/Home.jsx";
 import AboutUs from "../pages/AboutUs.jsx";
 import Blog from "../pages/Blog.jsx";
 import GetInTouch from "../pages/GetInTouch.jsx";
+import Register from "../pages/Register.jsx";
+import Login from "../pages/Login.jsx";
+import RecoverPassword from "../pages/RecoverPassword.jsx";
+import { Navigate } from 'react-router-dom';
 
 export const router = createBrowserRouter([
     {
@@ -12,20 +16,36 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
+                element: <Navigate to="/registro" />, 
+            },
+            {
+                path: "home",
                 element: <Home />,
             },
             {
-				path: "sobre-nosotros",
-				element: <AboutUs />,
-			},
+                path: "sobre-nosotros",
+                element: <AboutUs />,
+            },
             {
-				path: "blog",
-				element: <Blog />,
-			},
+                path: "blog",
+                element: <Blog />,
+            },
             {
-				path: "contacto",
-				element: <GetInTouch />,
-			},
+                path: "contacto",
+                element: <GetInTouch />,
+            },
+            {
+                path: "registro",
+                element: <Register />,
+            },
+            {
+                path: "acceso",
+                element: <Login />,
+            },
+            {
+                path: "recuperar-contraseña",
+                element: <RecoverPassword />,
+              }
         ]
     }
 ]);
