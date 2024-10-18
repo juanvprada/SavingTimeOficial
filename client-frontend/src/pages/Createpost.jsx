@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 import { createPost } from '../services/services'; 
-import logo from '../assets/logoSinFondo.webp'; // Asegúrate de que la ruta sea correcta
+import logo from '../assets/logoSinFondo.webp'; 
 
 export const Create = ({ onCancel }) => { 
-    const [images, setImages] = useState([]);
+    const [image, setImage] = useState(null);
     const [title, setTitle] = useState("");
     const [kindOfPost, setKindOfPost] = useState("");
     const [description, setDescription] = useState("");
 
     const handleChangesImages = (event) => {
-        const archives = Array.from(event.target.files);
-        if (archives.length > 10) {
-            alert("Puedes subir hasta 10 imágenes.");
+        const selectedImage = event.target.files[0]; 
+        if (!selectedImage) {
+            alert("Debes seleccionar una imagen.");
             return;
         }
-        setImages(archives);
+        setImage(selectedImage);
     };
 
     const handleSubmit = async (event) => {
@@ -24,11 +24,9 @@ export const Create = ({ onCancel }) => {
             name: title,
             kindOfPost: kindOfPost,
             description: description,
-            images: images.map(image => image.name)
+            image: image ? image.name : null 
         };
-        // ======================================================
-        // Llama a la función createPost desde services.jsx
-        // ======================================================
+
         try {
             const respuesta = await createPost(newPost);
             if (respuesta.ok) {
@@ -81,21 +79,16 @@ export const Create = ({ onCancel }) => {
 
                     <input
                         type="file"
-                        id="images"
+                        id="image"
                         accept="image/*"
-                        multiple
                         onChange={handleChangesImages}
                         className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100"
                     />
 
-                    {images.length > 0 && (
+                    {image && (
                         <div className="w-full">
-                            <h4 className="text-lg text-gray-800 my-2">Imágenes seleccionadas:</h4>
-                            <ul className="list-none p-0">
-                                {images.map((image, index) => (
-                                    <li key={index} className="bg-gray-100 p-2 my-1 rounded-md text-sm text-gray-700">{image.name}</li>
-                                ))}
-                            </ul>
+                            <h4 className="text-lg text-gray-800 my-2">Imagen seleccionada:</h4>
+                            <p className="bg-gray-100 p-2 my-1 rounded-md text-sm text-gray-700">{image.name}</p>
                         </div>
                     )}
 
