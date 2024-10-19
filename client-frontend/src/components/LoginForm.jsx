@@ -107,7 +107,7 @@ const LoginForm = () => {
             <p className="mt-4 text-center">
                 <span className="text-gray-600">¿Has olvidado tu contraseña?</span>{' '}
                 <button
-                    onClick={() => navigate('/recuperar-contraseña')}
+                    onClick={() => navigate('/recuperar-password')}
                     className="text-green-600 hover:underline focus:outline-none"
                 >
                     Recuperar contraseña

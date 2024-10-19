@@ -43,7 +43,7 @@ export const router = createBrowserRouter([
                 element: <Login />,
             },
             {
-                path: "recuperar-contraseña",
+                path: "recuperar-password",
                 element: <RecoverPassword />,
               }
         ]

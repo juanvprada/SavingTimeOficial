@@ -13,7 +13,8 @@ const IconCreate = () => {
   // =====================================================
   // Ponemos las rutas donde no queremos mostrar el icono
   // =====================================================
-  const hideIconRoutes = ['/registro', '/acceso', '/recuperar-contraseña'];
+  const hideIconRoutes = ['/registro', '/acceso', '/recuperar-password'];
+  
 
   // ==================================================================
   // Verificamos si la ruta actual está en la lista de rutas a ocultar
