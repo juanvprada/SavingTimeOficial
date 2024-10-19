@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Importar Link
 import logo from '../assets/logoSinFondo.webp';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
@@ -121,15 +121,16 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
             </form>
             {message && <p className="text-red-500 text-center mt-4">{message}</p>}
             <div className="text-center mt-4">
-                <a className="text-blue-500 hover:text-blue-700 text-sm" href="/login">¿Ya tienes cuenta? Inicia sesión</a>
+                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/acceso">¿Ya tienes cuenta? Inicia sesión</Link>
                 <br />
-                <a className="text-blue-500 hover:text-blue-700 text-sm" href="/reset-password">¿Olvidaste tu contraseña?</a>
+                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/recuperar-contraseña">¿Olvidaste tu contraseña?</Link>
             </div>
         </section>
     );
 };
 
 export default RegisterForm;
+
 
 
 

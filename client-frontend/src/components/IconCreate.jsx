@@ -10,14 +10,14 @@ const IconCreate = () => {
     setShowForm(!showForm);
   };
 
-  // ====================================================
+  // =====================================================
   // Ponemos las rutas donde no queremos mostrar el icono
-  // ====================================================
-  const hideIconRoutes = ['/registro', '/acceso'];
+  // =====================================================
+  const hideIconRoutes = ['/registro', '/acceso', '/recuperar-contraseña'];
 
-  // =================================================================
+  // ==================================================================
   // Verificamos si la ruta actual está en la lista de rutas a ocultar
-  // =================================================================
+  // ==================================================================
   const shouldHideIcon = hideIconRoutes.includes(location.pathname);
 
   if (shouldHideIcon) return null;
