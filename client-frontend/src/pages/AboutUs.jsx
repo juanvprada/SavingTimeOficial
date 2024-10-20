@@ -9,7 +9,7 @@ const AboutUs = () => {
       {/* Header */}
       <header className="bg-green-600 py-6">
         <div className="container mx-auto px-4 text-center ">
-        <h2 className="text-3xl font-semibold text-graan-600 font-serif mb-2">Alimentación Consciente para un Futuro Sostenible</h2>
+        <h2 className="text-3xl font-semibold text-green-900 font-serif mb-2">Alimentación Consciente para un Futuro Sostenible</h2>
           <p className="text-green-100 mt-4 text-lg">En Sustainify, creemos que cada decisión que tomamos sobre lo que comemos tiene un impacto
             directo en nuestro planeta. Nuestro objetivo es ayudarte a hacer elecciones alimentarias más sostenibles, sin sacrificar el sabor ni la calidad.
             A través de nuestras guías, recetas y consejos, te mostramos cómo adoptar un enfoque más consciente al alimentarte, apoyando a los agricultores
