@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom'; // Importar Link
-import logo from '../assets/logoSinFondo.webp';
+import { logoImg } from '../utils';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
     
@@ -80,7 +80,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
             <div className="text-center mb-6">
-                <img src={logo} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
+                <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">Registro de Usuario</h2>
                 <p className="text-gray-500">Crea una cuenta para acceder a contenido exclusivo.</p>
             </div>
