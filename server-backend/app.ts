@@ -15,12 +15,15 @@ app.use(express.json());
 app.use('/api/memes', router);
 
   try {
-    conectionDB.authenticate();  // Autheticas the database
+    await conectionDB.authenticate();  // Autheticas the database
     console.log('Conexión a la base de datos exitosa');
 
     // Fetch all memes
-   catMeme.sync({ force: false });
+   await catMeme.sync({ force: false });
    console.log('Tabla de memes creada');
+
+   await userModel.sync({ force: false });
+   console.log('Tabla de usuarios creada');
 
   } catch (error) {
     console.error('Error al conectar o consultar la base de datos 😒:', error);
