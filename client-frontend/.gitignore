@@ -1,4 +1,4 @@
-# Logs
+#Logs
 logs
 *.log
 npm-debug.log*
@@ -23,4 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 *.mp4
+<<<<<<< HEAD
 client-frontend/src/assets/home-video/
+=======
+>>>>>>> a3c9121e9c57d538649941f8ed8ecbf624aa2f06

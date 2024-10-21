@@ -1,11 +1,95 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { bosqueImg, reciclaImg, solarImg } from '../utils/index.js';
 
 const Blog = () => {
-  return (
-    <div>
-        <h1>Nuestro blog</h1>      
-    </div>
-  )
-}
+  const [search, setSearch] = useState('');
 
-export default Blog
+  // Publicaciones destacadas
+  const featuredArticles = [
+    {
+      img: bosqueImg,
+      title: "La Importancia de Proteger los Bosques",
+      description: "Los bosques son esenciales para mantener el equilibrio ecológico. Aprende cómo puedes ayudar a protegerlos."
+    },
+    {
+      img: reciclaImg,
+      title: "Guía de Reciclaje para Principiantes",
+      description: "¿No sabes por dónde empezar a reciclar? Aquí te ofrecemos una guía simple para que empieces hoy mismo."
+    },
+    {
+      img: solarImg,
+      title: "Beneficios de la Energía Solar",
+      description: "La energía solar es una de las fuentes renovables más eficientes. Descubre cómo aprovecharla en tu hogar."
+    }
+  ];
+
+  const allArticles = [...featuredArticles]; // Aquí añadirías más publicaciones si tienes
+
+  const filteredArticles = allArticles.filter(article =>
+    article.title.toLowerCase().includes(search.toLowerCase()) ||
+    article.description.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="bg-gray-100 min-h-screen">
+      {/* Encabezado */}
+      <header className="bg-green-600 text-white py-8">
+        <div className="container mx-auto text-center">
+          <h1 className="text-4xl font-bold">Bienvenidos a EcoBlog</h1>
+          <p className="mt-4 text-xl">Tu fuente de información para un estilo de vida sostenible y ecológico.</p>
+        </div>
+      </header>
+      {/* Sección de tarjetas destacadas */}
+      <section className="container mx-auto py-12 px-4">
+        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Artículos Destacados</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {featuredArticles.map((article, index) => (
+            <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden">
+              <img
+                src={article.img}
+                alt={article.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-green-600 mb-2">{article.title}</h3>
+                <p className="text-gray-700 mb-4">{article.description}</p>
+                <a href="#" className="text-green-600 font-semibold hover:underline">Leer más...</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      {/* Sección de buscador y publicaciones filtradas */}
+      <h2 className="text-3xl font-semibold text-center text-gray-800">Todas las publicaciones</h2>
+      <section className="container mx-auto py-12 px-4">
+        <div className="mb-8 text-center">
+          <input
+            type="text"
+            className="px-4 py-2 w-full md:w-1/2 border border-gray-300 rounded-md"
+            placeholder="Buscar..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {filteredArticles.map((article, index) => (
+            <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden">
+              <img
+                src={article.img}
+                alt={article.title}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-green-600 mb-2">{article.title}</h3>
+                <p className="text-gray-700 mb-4">{article.description}</p>
+                <a href="#" className="text-green-600 font-semibold hover:underline">Leer más...</a>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Blog;
