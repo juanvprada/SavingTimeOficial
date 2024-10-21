@@ -10,7 +10,7 @@ export const createPost = async (newPost) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newPost), // Corregido 'nePost' a 'newPost'
+            body: JSON.stringify(newPost),
         });
         return response; 
     } catch (error) {
@@ -41,7 +41,7 @@ export const getPosts = async () => {
 // ====================
 export const getOnePost = async (id) => {
     try {
-        const response = await fetch(`${API_URL}/${id}`); // Usamos el id para obtener el post específico
+        const response = await fetch(`${API_URL}/${id}`);
         if (!response.ok) {
             throw new Error('Error al obtener el Post');
         }
