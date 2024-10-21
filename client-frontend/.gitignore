@@ -22,3 +22,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.mp4
+client-frontend/src/assets/home-video/

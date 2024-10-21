@@ -15,11 +15,10 @@ export const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                index: true,
                 element: <Navigate to="/registro" />, 
             },
             {
-                path: "home",
+                index: true,
                 element: <Home />,
             },
             {
