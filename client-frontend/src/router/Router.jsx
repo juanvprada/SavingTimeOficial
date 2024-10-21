@@ -15,17 +15,16 @@ export const router = createBrowserRouter([
         element: <Layout />,
         children: [
             {
-                index: true,
                 element: <Navigate to="/registro" />, 
             },
             {
-                path: "home",
+                index: true,
                 element: <Home />,
             },
             {
-                path: "sobre-nosotros",
-                element: <AboutUs />,
-            },
+				path: "nosotros",
+				element: <AboutUs />,
+			},
             {
                 path: "blog",
                 element: <Blog />,

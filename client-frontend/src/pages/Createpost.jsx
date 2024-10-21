@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createPost } from '../services/services'; 
-import logo from '../assets/logoSinFondo.webp'; 
+import { logoImg } from '../utils';
 
 export const Create = ({ onCancel }) => { 
     const [image, setImage] = useState(null);
@@ -51,7 +51,7 @@ export const Create = ({ onCancel }) => {
                 {/* Encabezado con Logo */}
                 <div className="flex justify-center mb-4">
                     <img 
-                        src={logo} 
+                        src={logoImg} 
                         alt="Logo" 
                         className="h-16 w-auto"
                     />

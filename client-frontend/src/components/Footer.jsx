@@ -1,36 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => (
     <footer className="bg-gray-800 text-white py-8">
-      <div className="container mx-auto flex flex-col md:flex-row justify-between items-center px-4">
-        
-        {/* Acerca de nosotros */}
-        <div className="mb-6 md:mb-0">
-          <h4 className="text-xl font-semibold mb-2">Acerca de nosotros</h4>
-          <p className="text-gray-400">Somos una compañía dedicada a ofrecer los mejores productos.</p>
-        </div>
-
-        {/* Enlaces útiles */}
-        <div className="mb-6 md:mb-0">
-          <h4 className="text-xl font-semibold mb-2">Enlaces útiles</h4>
-          <ul>
-            <li><a href="#" className="text-gray-400 hover:text-white">Inicio</a></li>
-            <li><a href="#" className="text-gray-400 hover:text-white">Servicios</a></li>
-            <li><a href="#" className="text-gray-400 hover:text-white">Contacto</a></li>
-          </ul>
-        </div>
-
-        {/* Síguenos */}
-        <div>
-          <h4 className="text-xl font-semibold mb-2">Síguenos</h4>
-          <div className="flex space-x-4">
-            <a href="#" className="text-gray-400 hover:text-white">Facebook</a>
-            <a href="#" className="text-gray-400 hover:text-white">Twitter</a>
-            <a href="#" className="text-gray-400 hover:text-white">Instagram</a>
+      <div className="container mx-auto flex flex-col md:flex justify-between items-center px-4">
+        <div className="flex">
+          {/* Enlaces útiles */}
+          <div className="mb-6 md:mb-0 flexitems-center">
+            <h4 className="text-xl font-semibold mb-2 mr-16">Enlaces útiles</h4>
+            <ul>
+              <li><Link className="text-gray-400 hover:text-white" to="/" rel="noopener noreferrer">Inicio</Link></li>
+              <li><Link className="text-gray-400 hover:text-white" to="/blog" rel="noopener noreferrer">Blog</Link></li>
+              <li><Link className="text-gray-400 hover:text-white" to="/contacto" rel="noopener noreferrer">Contacto</Link></li>
+            </ul>
           </div>
+          {/* Síguenos */}
+          <div className="flex flex-col">
+            <h4 className="text-xl font-semibold mb-2">Síguenos</h4>
+            <ul>
+              <li><Link className="text-gray-400 hover:text-white" to="https://github.com/Omarlsant/bio-blog/tree/dev" target="_blank" rel="noopener noreferrer">GitHub</Link></li>
+              <li><Link className="text-gray-400 hover:text-white" to="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">LinkedIn</Link></li>
+              <li><Link className="text-gray-400 hover:text-white" to="" target="_blank" rel="noopener noreferrer">Discord</Link></li>
+            </ul>
         </div>
       </div>
-
+      </div>
+        
       {/* Copyright */}
       <div className="border-t border-gray-700 mt-6 pt-4 text-center">
         <p className="text-gray-400">&copy; 2024 Bio Blog. Todos los derechos reservados.</p>
