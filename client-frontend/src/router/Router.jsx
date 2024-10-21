@@ -7,7 +7,7 @@ import GetInTouch from "../pages/GetInTouch.jsx";
 import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
 import RecoverPassword from "../pages/RecoverPassword.jsx";
-import { Navigate } from 'react-router-dom';
+
 
 export const router = createBrowserRouter([
     {
@@ -16,12 +16,9 @@ export const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Navigate to="/registro" />, 
+                element: <Home />, 
             },
-            {
-                path: "home",
-                element: <Home />,
-            },
+            
             {
                 path: "sobre-nosotros",
                 element: <AboutUs />,
