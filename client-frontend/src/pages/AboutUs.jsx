@@ -98,7 +98,7 @@ const AboutUs = () => {
 
       {/* Valores y Sostenibilidad */}
       <section className="bg-green-100 py-16">
-  <div className="container mx-auto px-4 text-center pointer-events-none">
+  <div className="container mx-auto px-4 text-center">
     <h2 className="text-3xl font-semibold text-green-800 font-serif mb-12">Nuestros Valores</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {[
@@ -127,11 +127,6 @@ const AboutUs = () => {
     </div>
   </div>
 </section>
-
-<Carousel />
-
-
-
 
       {/* CTA */}
       <section className="bg-green-700 py-12">

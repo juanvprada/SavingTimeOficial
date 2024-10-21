@@ -75,7 +75,7 @@ const Carousel = () => {
   return (
     <section className="bg-white py-16">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-semibold text-green-800 font-serif mb-12">Beneficios para el Usuario</h2>
+        <h2 className="text-3xl font-semibold text-green-800 mb-12">Beneficios para el Usuario</h2>
 
         {/* Carousel container */}
         <div className="overflow-hidden relative">
@@ -99,13 +99,13 @@ const Carousel = () => {
           {/* Carousel navigation */}
           <button
             onClick={() => handleScroll('left')}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-green-600 ml-2"
           >
             ‹
           </button>
           <button
             onClick={() => handleScroll('right')}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-green-500 text-white rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-green-600 mr-2"
           >
             ›
           </button>
