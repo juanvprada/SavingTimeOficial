@@ -1,5 +1,3 @@
-
-
 const API_URL = ''; 
 
 // ===========================
@@ -12,7 +10,7 @@ export const createPost = async (newPost) => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(nePost),
+            body: JSON.stringify(newPost), // Corregido 'nePost' a 'newPost'
         });
         return response; 
     } catch (error) {
@@ -20,6 +18,7 @@ export const createPost = async (newPost) => {
         throw error; 
     }
 };
+
 // =====================
 // Traer todos los Posts
 // =====================
@@ -36,6 +35,24 @@ export const getPosts = async () => {
         throw error; 
     }
 };
+
+// ====================
+// Traer un solo Post
+// ====================
+export const getOnePost = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/${id}`); // Usamos el id para obtener el post específico
+        if (!response.ok) {
+            throw new Error('Error al obtener el Post');
+        }
+        const post = await response.json();
+        return post;
+    } catch (error) {
+        console.error("Error al obtener el Post:", error);
+        throw error;
+    }
+};
+
 // ==================
 // Actualizar un Post
 // ==================
@@ -54,6 +71,7 @@ export const updatePost = async (id, updatedPost) => {
         throw error;
     }
 };
+
 // ================
 // Eliminar un Post
 // ================
@@ -68,3 +86,4 @@ export const deletePost = async (id) => {
         throw error;
     }
 };
+
