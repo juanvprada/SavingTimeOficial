@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { createPost } from '../services/services'; 
 import { logoImg } from '../utils';
-import { useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
+import { useNavigate } from 'react-router-dom';
 
 export const Create = ({ onCancel }) => { 
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState("");
     const [kindOfPost, setKindOfPost] = useState("");
     const [description, setDescription] = useState("");
-    const [error, setError] = useState(""); // Estado para manejar errores
-    const navigate = useNavigate(); // Inicializa useNavigate
+    const [error, setError] = useState(""); 
+    const navigate = useNavigate(); 
 
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0]; 
@@ -33,15 +33,15 @@ export const Create = ({ onCancel }) => {
         newPost.append('kindOfPost', kindOfPost);
         newPost.append('description', description);
         if (image) {
-            newPost.append('image', image); // Agregar la imagen si existe
+            newPost.append('image', image); 
         }
 
         try {
-            const respuesta = await createPost(newPost); // Asumiendo que createPost acepta FormData
+            const respuesta = await createPost(newPost); 
             if (respuesta && (respuesta.status === 200 || respuesta.status === 201)) {
                 alert('Post guardado exitosamente');
-                onCancel(); // Cierra el modal
-                navigate('/blog'); // Redirige a la página de Blog
+                onCancel(); 
+                navigate('/blog'); 
             } else {
                 setError('Hubo un error al guardar el Post');
             }

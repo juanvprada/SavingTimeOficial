@@ -6,7 +6,7 @@ const Blog = () => {
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
-    fetchPosts(); // Llama a la función para cargar los posts al inicio
+    fetchPosts(); 
   }, []);
 
   const fetchPosts = async () => {
@@ -20,7 +20,7 @@ const Blog = () => {
 
   // Llamar a fetchPosts para actualizar después de crear un post
   const handlePostCreated = () => {
-    fetchPosts(); // Actualiza la lista de artículos
+    fetchPosts(); 
   };
 
   const filteredArticles = articles.filter(article =>
