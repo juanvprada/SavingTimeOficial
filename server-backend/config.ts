@@ -11,6 +11,6 @@ export const PORT = process.env.PORT;
 
 // export const CLOUD_NAME = process.env.VITE_CLOUDINARY_CLOUD_NAME;
 // export const API_KEY = process.env.VITE_CLOUDINARY_API_KEY;
-// export const PRESET = process.env.VITE_CLOUDINARY_PRESET;
-// export const DB_TEST_NAME =<string> process.env.DB_TEST_NAME;
-// export const NODE_ENV = process.env.NODE_ENV;
+export const PRESET = process.env.VITE_CLOUDINARY_PRESET;
+export const DB_TEST_NAME =<string> process.env.DB_TEST_NAME;
+export const NODE_ENV = process.env.NODE_ENV;
