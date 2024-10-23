@@ -7,7 +7,7 @@ const Home = () => {
     <div className="bg-gray-100 min-h-screen">
       {/* Video de inicio */}
       <div className="relative">
-        <video autoPlay loop muted playsInline="true" className="w-full h-50 object-cover">
+        <video autoPlay loop muted playsInline={true} className="w-full h-50 object-cover">
           <source src= {homeVid} type="video/mp4" />
           Tu navegador no soporta el elemento de video.
         </video>

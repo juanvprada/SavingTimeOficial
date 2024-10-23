@@ -1,5 +1,7 @@
 import React from 'react';
 import Carousel from '../components/Carousel';
+import { logoImg } from '../utils';
+
 
 const AboutUs = () => {
   return (
@@ -9,7 +11,7 @@ const AboutUs = () => {
       {/* Header */}
       <header className="bg-green-600 py-6">
         <div className="container mx-auto px-4 text-center ">
-        <h2 className="text-3xl font-semibold text-green-900 font-serif mb-2">Alimentación Consciente para un Futuro Sostenible</h2>
+        <h2 className="text-3xl font-semibold text-green-900 mb-2">Alimentación Consciente para un Futuro Sostenible</h2>
           <p className="text-green-100 mt-4 text-lg">En Sustainify, creemos que cada decisión que tomamos sobre lo que comemos tiene un impacto
             directo en nuestro planeta. Nuestro objetivo es ayudarte a hacer elecciones alimentarias más sostenibles, sin sacrificar el sabor ni la calidad.
             A través de nuestras guías, recetas y consejos, te mostramos cómo adoptar un enfoque más consciente al alimentarte, apoyando a los agricultores
@@ -22,8 +24,8 @@ const AboutUs = () => {
         <div className="text-center mb-12 relative">
 
           <div className="relative z-10 flex flex-col items-center justify-center">
-          <img src="/src/assets/logoBioBlog.png" className="w-60 mb-8 transform transition duration-500 ease-in-out hover:scale-110" alt="Logo Bio Blog" />
-            <h2 className="text-3xl font-semibold text-green-800 font-serif">Nuestra Historia y Misión</h2>
+          <img src={logoImg} className="w-60 mb-8 transform transition duration-500 ease-in-out hover:scale-110" alt="Logo Bio Blog" />
+            <h2 className="text-3xl font-semibold text-green-800">Nuestra Historia y Misión</h2>
             <p className="mt-6 text-lg text-gray-600">
               Desde nuestro inicio, hemos estado comprometidos con un solo objetivo: ayudar a las personas a alimentarse
               de manera sostenible. Sabemos que las pequeñas acciones pueden generar grandes cambios, por lo que nos esforzamos
@@ -40,7 +42,7 @@ const AboutUs = () => {
       {/* Nuestro Equipo */}
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-semibold text-green-800 text-center font-serif mb-12">Conoce a Nuestro Equipo</h2>
+          <h2 className="text-3xl font-semibold text-green-800 text-center mb-12">Conoce a Nuestro Equipo</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
 
             {/* Omar - Scrum Master */}
@@ -99,7 +101,7 @@ const AboutUs = () => {
       {/* Valores y Sostenibilidad */}
       <section className="bg-green-100 py-16">
   <div className="container mx-auto px-4 text-center">
-    <h2 className="text-3xl font-semibold text-green-800 font-serif mb-12">Nuestros Valores</h2>
+    <h2 className="text-3xl font-semibold text-green-800 mb-12">Nuestros Valores</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {[
         {
@@ -131,7 +133,7 @@ const AboutUs = () => {
       {/* CTA */}
       <section className="bg-green-700 py-12">
         <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold text-white font-serif animate-pulse">Únete a Nosotros</h2>
+          <h2 className="text-3xl font-bold text-white animate-pulse">Únete a Nosotros</h2>
           <p className="text-green-200 mt-4 text-lg">Queremos que seas parte de esta revolución alimentaria sostenible. Descubre más y empieza hoy.</p>
           <a href="/contacto" className="mt-6 inline-block bg-white text-green-700 font-semibold py-2 px-6 rounded-lg shadow-lg transition duration-300 hover:bg-gray-200">
             Contáctanos

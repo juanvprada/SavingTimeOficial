@@ -8,6 +8,7 @@ import Register from "../pages/Register.jsx";
 import Login from "../pages/Login.jsx";
 import RecoverPassword from "../pages/RecoverPassword.jsx";
 import { Navigate } from 'react-router-dom';
+import UnderConstruction from "../pages/UnderConstruction.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -41,6 +42,10 @@ export const router = createBrowserRouter([
                 path: "acceso",
                 element: <Login />,
             },
+            {
+                path: "construccion",
+                element: <UnderConstruction />,
+              },
             {
                 path: "recuperar-password",
                 element: <RecoverPassword />,
