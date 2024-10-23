@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { createPost } from '../services/services'; 
 import { logoImg } from '../utils';
+import { useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
 
 export const Create = ({ onCancel }) => { 
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState("");
     const [kindOfPost, setKindOfPost] = useState("");
     const [description, setDescription] = useState("");
+    const [error, setError] = useState(""); // Estado para manejar errores
+    const navigate = useNavigate(); // Inicializa useNavigate
 
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0]; 
@@ -25,30 +28,32 @@ export const Create = ({ onCancel }) => {
             return;
         }
 
-        const newPost = {
-            name: title,
-            kindOfPost: kindOfPost,
-            description: description,
-            image: image ? image.name : null 
-        };
+        const newPost = new FormData(); 
+        newPost.append('name', title);
+        newPost.append('kindOfPost', kindOfPost);
+        newPost.append('description', description);
+        if (image) {
+            newPost.append('image', image); // Agregar la imagen si existe
+        }
 
         try {
-            const respuesta = await createPost(newPost);
-            if (respuesta.ok) {
+            const respuesta = await createPost(newPost); // Asumiendo que createPost acepta FormData
+            if (respuesta && (respuesta.status === 200 || respuesta.status === 201)) {
                 alert('Post guardado exitosamente');
-                onCancel();
+                onCancel(); // Cierra el modal
+                navigate('/blog'); // Redirige a la página de Blog
             } else {
-                alert('Hubo un error al guardar el Post');
+                setError('Hubo un error al guardar el Post');
             }
         } catch (error) {
             console.error("Error al guardar el Post", error);
+            setError('Hubo un error al guardar el Post: ' + error.message); 
         }
     };
 
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-5 relative z-10">
-                {/* Encabezado con Logo */}
                 <div className="flex justify-center mb-4">
                     <img 
                         src={logoImg} 
@@ -57,6 +62,7 @@ export const Create = ({ onCancel }) => {
                     />
                 </div>
                 <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">Nuevo Post</h3>
+                {error && <div className="text-red-500 text-center mb-4">{error}</div>} {/* Mensaje de error */}
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
                     <input 
                         type="text" 
@@ -116,6 +122,7 @@ export const Create = ({ onCancel }) => {
         </div>
     );
 };
+
 
 
 

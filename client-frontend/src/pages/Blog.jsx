@@ -1,32 +1,30 @@
-import React, { useState } from 'react';
-import { bosqueImg, reciclaImg, solarImg } from '../utils/index.js';
+import React, { useState, useEffect } from 'react';
+import { getPosts } from '../services/services'; 
 
 const Blog = () => {
   const [search, setSearch] = useState('');
+  const [articles, setArticles] = useState([]);
 
-  // Publicaciones destacadas
-  const featuredArticles = [
-    {
-      img: bosqueImg,
-      title: "La Importancia de Proteger los Bosques",
-      description: "Los bosques son esenciales para mantener el equilibrio ecológico. Aprende cómo puedes ayudar a protegerlos."
-    },
-    {
-      img: reciclaImg,
-      title: "Guía de Reciclaje para Principiantes",
-      description: "¿No sabes por dónde empezar a reciclar? Aquí te ofrecemos una guía simple para que empieces hoy mismo."
-    },
-    {
-      img: solarImg,
-      title: "Beneficios de la Energía Solar",
-      description: "La energía solar es una de las fuentes renovables más eficientes. Descubre cómo aprovecharla en tu hogar."
+  useEffect(() => {
+    fetchPosts(); // Llama a la función para cargar los posts al inicio
+  }, []);
+
+  const fetchPosts = async () => {
+    try {
+      const posts = await getPosts(); 
+      setArticles(posts);
+    } catch (error) {
+      console.error('Error al obtener los artículos:', error);
     }
-  ];
+  };
 
-  const allArticles = [...featuredArticles]; // Aquí añadirías más publicaciones si tienes
+  // Llamar a fetchPosts para actualizar después de crear un post
+  const handlePostCreated = () => {
+    fetchPosts(); // Actualiza la lista de artículos
+  };
 
-  const filteredArticles = allArticles.filter(article =>
-    article.title.toLowerCase().includes(search.toLowerCase()) ||
+  const filteredArticles = articles.filter(article =>
+    article.name.toLowerCase().includes(search.toLowerCase()) ||
     article.description.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -39,26 +37,6 @@ const Blog = () => {
           <p className="mt-4 text-xl">Tu fuente de información para un estilo de vida sostenible y ecológico.</p>
         </div>
       </header>
-      {/* Sección de tarjetas destacadas */}
-      <section className="container mx-auto py-12 px-4">
-        <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">Artículos Destacados</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {featuredArticles.map((article, index) => (
-            <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden">
-              <img
-                src={article.img}
-                alt={article.title}
-                className="w-full h-48 object-cover"
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-green-600 mb-2">{article.title}</h3>
-                <p className="text-gray-700 mb-4">{article.description}</p>
-                <a href="#" className="text-green-600 font-semibold hover:underline">Leer más...</a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
       {/* Sección de buscador y publicaciones filtradas */}
       <h2 className="text-3xl font-semibold text-center text-gray-800">Todas las publicaciones</h2>
       <section className="container mx-auto py-12 px-4">
@@ -75,12 +53,12 @@ const Blog = () => {
           {filteredArticles.map((article, index) => (
             <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden">
               <img
-                src={article.img}
-                alt={article.title}
+                src={article.image}
+                alt={article.name}
                 className="w-full h-48 object-cover"
               />
               <div className="p-6">
-                <h3 className="text-xl font-bold text-green-600 mb-2">{article.title}</h3>
+                <h3 className="text-xl font-bold text-green-600 mb-2">{article.name}</h3>
                 <p className="text-gray-700 mb-4">{article.description}</p>
                 <a href="#" className="text-green-600 font-semibold hover:underline">Leer más...</a>
               </div>
@@ -93,3 +71,5 @@ const Blog = () => {
 };
 
 export default Blog;
+
+

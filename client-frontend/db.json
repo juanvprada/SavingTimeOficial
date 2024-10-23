@@ -1,0 +1,53 @@
+{
+  "posts": [
+    {
+      "id": "1302",
+      "name": "Prueba",
+      "kindOfPost": "Receta",
+      "description": "Muchas cosas",
+      "image": "salmorejo.jpeg"
+    },
+    {
+      "id": "240e",
+      "name": "Prueba",
+      "kindOfPost": "Receta",
+      "description": "Muchas cosas",
+      "image": "salmorejo.jpeg"
+    },
+    {
+      "id": "7819",
+      "name": "Prueba",
+      "kindOfPost": "Receta",
+      "description": "Muchas cosas",
+      "image": "salmorejo.jpeg"
+    },
+    {
+      "id": "6029",
+      "name": "Prueba",
+      "kindOfPost": "Receta",
+      "description": "Muchas cosas",
+      "image": "salmorejo.jpeg"
+    },
+    {
+      "id": "fffe",
+      "name": "PRUEBA 1",
+      "kindOfPost": "Receta",
+      "description": "MUCHO DE TODO",
+      "image": "chocolate-pudding.webp"
+    },
+    {
+      "id": "bfe6",
+      "name": "PRUEBA 1",
+      "kindOfPost": "Receta",
+      "description": "MUCHO DE TODO",
+      "image": "chocolate-pudding.webp"
+    },
+    {
+      "id": "3d7f",
+      "name": "PRUEBA 10",
+      "kindOfPost": "Receta",
+      "description": "MUCHO",
+      "image": {}
+    }
+  ]
+}
