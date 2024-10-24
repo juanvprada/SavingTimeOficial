@@ -1,4 +1,3 @@
-// Createpost.jsx
 import React, { useState, useEffect } from 'react'; 
 import { createPost, updatePost } from '../services/services'; 
 import { logoImg } from '../utils';
@@ -34,25 +33,31 @@ export const Create = ({ post, onSubmit, onCancel }) => {
 
     // Manejar el submit del formulario (crear/editar)
     const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        if (!title || !kindOfPost || !description) {
-            alert("Por favor, completa todos los campos.");
-            return;
-        }
-    
-        // Enviar los datos como JSON
-        const updatedPost = {
+        event.preventDefault(); 
+        
+        // Enviar datos en JSON en lugar de FormData
+        const newPostData = {
             name: title,
             kindOfPost: kindOfPost,
             description: description,
-            image: image ? image : post?.image || null  // Usa la imagen existente si no se selecciona una nueva
+            image: image ? image.name : ''  
         };
     
         try {
-            await onSubmit(updatedPost);  // Llama a onSubmit con el objeto JSON
+            let newPost;
+            if (post) {
+                // Editar un post existente
+                await updatePost(post.id, newPostData);  
+                alert('Post actualizado exitosamente');
+                newPost = { ...post, ...newPostData };
+            } 
+    
+            onSubmit(newPost); 
+            onCancel(); 
+            navigate('/blog'); 
         } catch (error) {
             console.error("Error al procesar el Post:", error);
+            setError('Hubo un error al procesar el Post: ' + error.message); 
         }
     };
     

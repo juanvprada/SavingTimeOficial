@@ -8,7 +8,7 @@ export const createPost = async (newPost) => {
   try {
     const response = await axios.post(API_URL, newPost, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json',  
       },
     });
     return response.data;
@@ -45,7 +45,7 @@ export const updatePost = async (id, updatedPost) => {
   try {
     const response = await axios.put(`${API_URL}/${id}`, updatedPost, {
       headers: {
-        'Content-Type': 'application/json',  // Enviar los datos como JSON
+        'Content-Type': 'application/json',  
       },
     });
     return response.data;

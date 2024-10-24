@@ -8,7 +8,7 @@
       "id": "bfe6"
     },
     {
-      "name": "PRUEBA 20000000000",
+      "name": "INTERVIEWWWW",
       "kindOfPost": "Receta",
       "description": "MUCHO",
       "image": {},
@@ -22,16 +22,20 @@
       "image": {}
     },
     {
-      "name": "Darth Vada11",
+      "name": "JUEGOS ECOLÓGICOS",
       "email": "Vada@mailfalso.com",
       "password": "1234abcd",
-      "id": "c440"
+      "id": "c440",
+      "kindOfPost": "JUEGOS",
+      "description": "NADA",
+      "image": "salmorejo.jpeg"
     },
     {
-      "id": "acb2",
-      "name": "NUEVO1111",
+      "id": "1d72",
+      "name": "SIII",
       "kindOfPost": "Receta",
-      "description": "NADA"
+      "description": "PRUEBA",
+      "image": ""
     }
   ]
 }
