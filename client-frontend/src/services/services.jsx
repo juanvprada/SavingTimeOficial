@@ -11,7 +11,7 @@ export const createPost = async (newPost) => {
         'Content-Type': 'application/json',
       },
     });
-    return response;
+    return response.data;
   } catch (error) {
     console.error("Error al crear Post:", error);
     throw error;
@@ -45,13 +45,33 @@ export const updatePost = async (id, updatedPost) => {
   try {
     const response = await axios.put(`${API_URL}/${id}`, updatedPost, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json',  // Enviar los datos como JSON
       },
     });
-    return response;
+    return response.data;
   } catch (error) {
     console.error("Error al actualizar Post:", error);
     throw error;
+  }
+};
+
+// EditPost.jsx
+const handleUpdate = async (updatedPost) => {
+  const updatedPostObject = {
+    name: updatedPost.get('name'),
+    kindOfPost: updatedPost.get('kindOfPost'),
+    description: updatedPost.get('description'),
+  };
+
+  if (updatedPost.has('image')) {
+    updatedPostObject.image = updatedPost.get('image');
+  }
+
+  try {
+    await updatePost(id, updatedPostObject);
+    navigate('/blog'); 
+  } catch (error) {
+    console.error("Error al actualizar el Post:", error);
   }
 };
 

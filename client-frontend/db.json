@@ -1,53 +1,37 @@
 {
   "posts": [
     {
-      "id": "1302",
-      "name": "Prueba",
+      "name": "RECETA",
       "kindOfPost": "Receta",
-      "description": "Muchas cosas",
-      "image": "salmorejo.jpeg"
+      "description": "NADA",
+      "image": {},
+      "id": "bfe6"
     },
     {
-      "id": "240e",
-      "name": "Prueba",
-      "kindOfPost": "Receta",
-      "description": "Muchas cosas",
-      "image": "salmorejo.jpeg"
-    },
-    {
-      "id": "7819",
-      "name": "Prueba",
-      "kindOfPost": "Receta",
-      "description": "Muchas cosas",
-      "image": "salmorejo.jpeg"
-    },
-    {
-      "id": "6029",
-      "name": "Prueba",
-      "kindOfPost": "Receta",
-      "description": "Muchas cosas",
-      "image": "salmorejo.jpeg"
-    },
-    {
-      "id": "fffe",
-      "name": "PRUEBA 1",
-      "kindOfPost": "Receta",
-      "description": "MUCHO DE TODO",
-      "image": "chocolate-pudding.webp"
-    },
-    {
-      "id": "bfe6",
-      "name": "PRUEBA 1",
-      "kindOfPost": "Receta",
-      "description": "MUCHO DE TODO",
-      "image": "chocolate-pudding.webp"
-    },
-    {
-      "id": "3d7f",
-      "name": "PRUEBA 10",
+      "name": "PRUEBA 20000000000",
       "kindOfPost": "Receta",
       "description": "MUCHO",
+      "image": {},
+      "id": "3d7f"
+    },
+    {
+      "id": "0250",
+      "name": "6666",
+      "kindOfPost": "Receta",
+      "description": "nada",
       "image": {}
+    },
+    {
+      "name": "Darth Vada11",
+      "email": "Vada@mailfalso.com",
+      "password": "1234abcd",
+      "id": "c440"
+    },
+    {
+      "id": "acb2",
+      "name": "NUEVO1111",
+      "kindOfPost": "Receta",
+      "description": "NADA"
     }
   ]
 }

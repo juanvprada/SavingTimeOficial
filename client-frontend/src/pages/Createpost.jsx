@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { createPost } from '../services/services'; 
+// Createpost.jsx
+import React, { useState, useEffect } from 'react'; 
+import { createPost, updatePost } from '../services/services'; 
 import { logoImg } from '../utils';
 import { useNavigate } from 'react-router-dom';
 
-export const Create = ({ onCancel }) => { 
+export const Create = ({ post, onSubmit, onCancel }) => { 
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState("");
     const [kindOfPost, setKindOfPost] = useState("");
@@ -11,6 +12,17 @@ export const Create = ({ onCancel }) => {
     const [error, setError] = useState(""); 
     const navigate = useNavigate(); 
 
+    // Cargar los datos del post en caso de editar
+    useEffect(() => {
+        if (post) {
+            setTitle(post.name || ""); 
+            setKindOfPost(post.kindOfPost || "");
+            setDescription(post.description || "");
+            setImage(null); 
+        }
+    }, [post]);
+
+    // Manejar cambio de imagen
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0]; 
         if (!selectedImage) {
@@ -20,37 +32,30 @@ export const Create = ({ onCancel }) => {
         setImage(selectedImage);
     };
 
+    // Manejar el submit del formulario (crear/editar)
     const handleSubmit = async (event) => {
-        event.preventDefault(); 
-
+        event.preventDefault();
+    
         if (!title || !kindOfPost || !description) {
             alert("Por favor, completa todos los campos.");
             return;
         }
-
-        const newPost = new FormData(); 
-        newPost.append('name', title);
-        newPost.append('kindOfPost', kindOfPost);
-        newPost.append('description', description);
-        if (image) {
-            newPost.append('image', image); 
-        }
-
+    
+        // Enviar los datos como JSON
+        const updatedPost = {
+            name: title,
+            kindOfPost: kindOfPost,
+            description: description,
+            image: image ? image : post?.image || null  // Usa la imagen existente si no se selecciona una nueva
+        };
+    
         try {
-            const respuesta = await createPost(newPost); 
-            if (respuesta && (respuesta.status === 200 || respuesta.status === 201)) {
-                alert('Post guardado exitosamente');
-                onCancel(); 
-                navigate('/blog'); 
-            } else {
-                setError('Hubo un error al guardar el Post');
-            }
+            await onSubmit(updatedPost);  // Llama a onSubmit con el objeto JSON
         } catch (error) {
-            console.error("Error al guardar el Post", error);
-            setError('Hubo un error al guardar el Post: ' + error.message); 
+            console.error("Error al procesar el Post:", error);
         }
     };
-
+    
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-5 relative z-10">
@@ -61,8 +66,10 @@ export const Create = ({ onCancel }) => {
                         className="h-16 w-auto"
                     />
                 </div>
-                <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">Nuevo Post</h3>
-                {error && <div className="text-red-500 text-center mb-4">{error}</div>} {/* Mensaje de error */}
+                <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">
+                    {post ? 'Editar Post' : 'Nuevo Post'}
+                </h3>
+                {error && <div className="text-red-500 text-center mb-4">{error}</div>}
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
                     <input 
                         type="text" 
@@ -107,7 +114,7 @@ export const Create = ({ onCancel }) => {
                     <input 
                         type="submit" 
                         id="save" 
-                        value="Guardar" 
+                        value={post ? "Actualizar" : "Crear"} 
                         className="w-full p-3 text-lg font-bold bg-green-500 text-white rounded-md cursor-pointer hover:bg-green-600 transition-colors"
                     />
                     <button 
@@ -122,6 +129,9 @@ export const Create = ({ onCancel }) => {
         </div>
     );
 };
+
+
+
 
 
 
