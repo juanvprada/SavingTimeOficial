@@ -30,7 +30,7 @@ const EditPost = () => {
   const handleUpdate = async (updatedPost) => {
     try {
       await updatePost(id, updatedPost); 
-      alert("Post actualizado exitosamente");
+      // alert("Post actualizado exitosamente");
       navigate('/blog');
     } catch (error) {
       console.error("Error al actualizar el Post:", error);

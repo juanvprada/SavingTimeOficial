@@ -50,7 +50,11 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                 await updatePost(post.id, newPostData);  
                 alert('Post actualizado exitosamente');
                 newPost = { ...post, ...newPostData };
-            } 
+            } else {
+                // Crear un nuevo post
+                newPost = await createPost(newPostData);  
+                alert('Post creado exitosamente');
+            }
     
             onSubmit(newPost); 
             onCancel(); 
