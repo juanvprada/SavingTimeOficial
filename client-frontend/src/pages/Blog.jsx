@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { getPosts, deletePost } from '../services/services'; 
 import ButtonIcon from '../components/ButtonIcon'; 
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate, Link } from 'react-router-dom'; 
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate'; 
 
@@ -90,7 +90,12 @@ const Blog = () => {
                     title="Eliminar"
                   />
                 </div>
-                <a href="#" className="text-green-600 font-semibold hover:underline">Leer más...</a>
+                <Link
+                  to={`/post/${article.id}`}
+                  className="text-green-600 font-semibold hover:underline"
+                >
+                  Leer más...
+                </Link>
               </div>
             </div>
           ))}
@@ -112,6 +117,7 @@ const Blog = () => {
 };
 
 export default Blog;
+
 
 
 

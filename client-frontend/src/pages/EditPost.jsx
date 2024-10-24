@@ -30,11 +30,16 @@ const EditPost = () => {
   const handleUpdate = async (updatedPost) => {
     try {
       await updatePost(id, updatedPost); 
-      // alert("Post actualizado exitosamente");
       navigate('/blog');
     } catch (error) {
       console.error("Error al actualizar el Post:", error);
     }
+  };
+
+  // Función para manejar la cancelación
+  const handleCancel = () => {
+    console.log("Cancelando..."); // Para verificar si la función se llama
+    navigate('/blog'); // o prueba con window.location.href = '/blog';
   };
 
   if (loading) {
@@ -42,15 +47,25 @@ const EditPost = () => {
   }
 
   return (
-    <div>
-      <h2>Editar Post</h2>
+    <div className="container mx-auto px-4 py-6">
+      <h2 className="text-2xl font-bold mb-4">Editar Post</h2>
       {/* Pasamos el post existente al componente Create para editar */}
       <Create post={post} onSubmit={handleUpdate} />
+      
+      {/* Botón de cancelar */}
+      <button 
+        className="text-red-500 mt-4" 
+        onClick={handleCancel}
+      >
+        Cancelar
+      </button>
     </div>
   );
 };
 
 export default EditPost;
+
+
 
 
 
