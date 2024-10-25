@@ -1,7 +1,7 @@
-import conectionDb from "../database/conectionDB";
+import conectionDB from "../database/conectionDb";
 import { DataTypes } from "sequelize";
 
-const userModel = conectionDb.define(
+const UserModel = conectionDB.define(
     "User",
     {
       id: {
@@ -28,4 +28,4 @@ const userModel = conectionDb.define(
     }
   );
 
-  export default userModel;
+  export default UserModel;

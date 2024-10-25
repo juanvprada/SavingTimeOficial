@@ -1,12 +1,10 @@
-// models/Book.ts
 import { DataTypes, Model} from 'sequelize';
-import conectionDB from '../database/conectionDB'; // Importa tu conexión a la base de datos
-import { CatMeme } from '../Interfaces/catInterfaces';
-// Definición de los atributos de Book
+import conectionDB from '../database/conectionDb'; 
+import { Publication } from '../interface/modelInterface';
 
-interface catMeme extends Model<CatMeme>, CatMeme {}
- const catMeme = conectionDB.define('catMeme', { // aqui cambia el mongodb
 
+interface PostBlog extends Model<Publication>, Publication {}
+ const PostBlog = conectionDB.define('back_bioblog', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -42,4 +40,4 @@ interface catMeme extends Model<CatMeme>, CatMeme {}
   timestamps: false,
 });
 
-export default catMeme;
+export default PostBlog;

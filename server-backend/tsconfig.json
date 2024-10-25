@@ -1,11 +1,14 @@
 {
-    "compilerOptions": {
-      "target": "ES6", 
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "strict": true,
-      "skipLibCheck": true,
-      "allowImportingTsExtensions": true
-    }
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "target": "ES6", 
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   }
+}

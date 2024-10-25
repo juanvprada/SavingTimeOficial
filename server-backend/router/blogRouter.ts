@@ -1,12 +1,10 @@
 import { Router } from 'express';
-import { deleteMeme, getAllMemes, createMeme, putMeme } from '../controllers/catController';
-import { validateCreateMeme, validateUpdateMeme, validateDeleteMeme } from '../validations/catValidation';
-import { validationHandler } from '../handle/handleValidator';
+import { deletePost, getAllPosts, createPost, putPost } from '../controllers/controller';
 
 export const router = Router();
 
-router.get('/', getAllMemes);
-router.post('/', validateCreateMeme, validationHandler, createMeme);
-router.delete('/:id', validateDeleteMeme, validationHandler, deleteMeme);
-router.put('/:id', validateUpdateMeme, validationHandler, putMeme);
+router.get('/', getAllPosts);
+router.post('/', createPost);
+router.delete('/:id', deletePost);
+router.put('/:id', putPost);
 

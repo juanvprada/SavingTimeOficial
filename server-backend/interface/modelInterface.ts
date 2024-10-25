@@ -1,4 +1,4 @@
-export interface CatMeme {
+export interface Publication {
     id?: number
     name: string;
     description: string;
