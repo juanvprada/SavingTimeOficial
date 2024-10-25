@@ -1,19 +1,17 @@
 import axios from 'axios';
 
 
-const API_URL = 'http://localhost:5000/posts';
+const API_URL = 'http://localhost:5000/api/posts';
 
 // Crear un nuevo Post
-export const createPost = async (newPost) => {
+export const createPost = async (formData) => {
   try {
-    const response = await axios.post(API_URL, newPost, {
-      headers: {
-        'Content-Type': 'application/json',  
-      },
-    });
-    return response.data;
+    const response = await axios.post(API_URL, formData);
+    
+    response.data.image = `http://localhost:5000/uploads/${response.data.image}`;
+    return response.data; 
   } catch (error) {
-    console.error("Error al crear Post:", error);
+    console.error("Error al crear Post:", error.response ? error.response.data : error.message);
     throw error;
   }
 };
@@ -41,20 +39,15 @@ export const getOnePost = async (id) => {
 };
 
 // Actualizar un Post
-export const updatePost = async (id, updatedPost) => {
+export const updatePost = async (id, postData) => {
   try {
-    const response = await axios.put(`${API_URL}/${id}`, updatedPost, {
-      headers: {
-        'Content-Type': 'application/json',  
-      },
-    });
-    return response.data;
+      const response = await axios.put(`http://localhost:5000/api/posts/${id}`, postData);
+      return response.data;
   } catch (error) {
-    console.error("Error al actualizar Post:", error);
-    throw error;
+      console.error('Error al actualizar Post: ', error.response.data);
+      throw error;
   }
 };
-
 // EditPost.jsx
 const handleUpdate = async (updatedPost) => {
   const updatedPostObject = {

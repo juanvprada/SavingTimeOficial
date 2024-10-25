@@ -1,21 +1,21 @@
-// Blog.jsx
 import React, { useState, useEffect } from 'react';
-import { getPosts, deletePost } from '../services/services'; 
-import ButtonIcon from '../components/ButtonIcon'; 
-import { useNavigate, Link } from 'react-router-dom'; 
+import { getPosts, deletePost } from '../services/services';
+import ButtonIcon from '../components/ButtonIcon';
+import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
-import IconCreate from '../components/IconCreate'; 
+import IconCreate from '../components/IconCreate';
 
 const Blog = () => {
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const posts = await getPosts(); 
+        const posts = await getPosts();
+        console.log(posts);  // Para verificar los datos
         setArticles(posts);
       } catch (error) {
         console.error('Error al obtener los artículos:', error);
@@ -39,13 +39,13 @@ const Blog = () => {
   };
 
   const handleNewPost = (newPost) => {
-    // Agregar el nuevo post a la lista de artículos
+    // Asignar la URL de la imagen correctamente
     setArticles(prevArticles => [...prevArticles, newPost]);
   };
 
   const filteredArticles = articles.filter(article =>
-    article.name.toLowerCase().includes(search.toLowerCase()) ||
-    article.description.toLowerCase().includes(search.toLowerCase())
+    (article.name && article.name.toLowerCase().includes(search.toLowerCase())) ||
+    (article.description && article.description.toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
@@ -74,18 +74,22 @@ const Blog = () => {
                 src={article.image}
                 alt={article.name}
                 className="w-full h-48 object-cover"
+                onError={(e) => {
+                  e.target.onerror = null; // Previene bucles en caso de error
+                  e.target.src = 'ruta_a_imagen_por_defecto'; // Cambia esto a una imagen predeterminada
+                }}
               />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-green-600 mb-2">{article.name}</h3>
                 <p className="text-gray-700 mb-4">{article.description}</p>
                 <div className="flex justify-between">
                   <ButtonIcon
-                    icon="fas fa-edit" 
-                    onClick={() => navigate(`/editar/${article.id}`)} 
+                    icon="fas fa-edit"
+                    onClick={() => navigate(`/editar/${article.id}`)}
                     title="Editar"
                   />
                   <ButtonIcon
-                    icon="fas fa-trash" 
+                    icon="fas fa-trash"
                     onClick={() => handleDelete(article.id)}
                     title="Eliminar"
                   />
@@ -105,7 +109,7 @@ const Blog = () => {
         {showCreate && (
           <Create
             onCancel={() => setShowCreate(false)}
-            onSubmit={handleNewPost} 
+            onSubmit={handleNewPost}
           />
         )}
 
@@ -117,6 +121,9 @@ const Blog = () => {
 };
 
 export default Blog;
+
+
+
 
 
 

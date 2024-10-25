@@ -28,9 +28,18 @@ const EditPost = () => {
 
   // Función que se pasa a `Create` para manejar la actualización
   const handleUpdate = async (updatedPost) => {
+    const formData = new FormData();
+    formData.append('name', updatedPost.get('name'));
+    formData.append('kindOfPost', updatedPost.get('kindOfPost'));
+    formData.append('description', updatedPost.get('description'));
+  
+    if (updatedPost.has('image')) {
+      formData.append('image', updatedPost.get('image'));
+    }
+  
     try {
-      await updatePost(id, updatedPost); 
-      navigate('/blog');
+      await updatePost(id, formData);
+      navigate('/blog'); 
     } catch (error) {
       console.error("Error al actualizar el Post:", error);
     }

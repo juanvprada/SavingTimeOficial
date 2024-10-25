@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react'; 
-import { createPost, updatePost } from '../services/services'; 
+import React, { useState, useEffect } from 'react';
+import { createPost, updatePost } from '../services/services';
 import { logoImg } from '../utils';
 import { useNavigate } from 'react-router-dom';
 
-export const Create = ({ post, onSubmit, onCancel }) => { 
+export const Create = ({ post, onSubmit, onCancel }) => {
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState("");
     const [kindOfPost, setKindOfPost] = useState("");
     const [description, setDescription] = useState("");
-    const [error, setError] = useState(""); 
-    const navigate = useNavigate(); 
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     // Cargar los datos del post en caso de editar
     useEffect(() => {
         if (post) {
-            setTitle(post.name || ""); 
+            setTitle(post.name || "");
             setKindOfPost(post.kindOfPost || "");
             setDescription(post.description || "");
             setImage(null); 
@@ -23,7 +23,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
 
     // Manejar cambio de imagen
     const handleImageChange = (event) => {
-        const selectedImage = event.target.files[0]; 
+        const selectedImage = event.target.files[0];
         if (!selectedImage) {
             alert("Debes seleccionar una imagen.");
             return;
@@ -31,47 +31,61 @@ export const Create = ({ post, onSubmit, onCancel }) => {
         setImage(selectedImage);
     };
 
-    // Manejar el submit del formulario (crear/editar)
     const handleSubmit = async (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         
-        // Enviar datos en JSON en lugar de FormData
-        const newPostData = {
+        // Usar FormData para enviar el archivo de imagen
+        const formData = new FormData();
+        formData.append('name', title);
+        formData.append('kindOfPost', kindOfPost);
+        formData.append('description', description);
+        
+        // Si hay una nueva imagen, se agrega a FormData
+        if (image) {
+            formData.append('image', image);
+        } else if (post) {
+            // Si no hay nueva imagen, se agrega la imagen existente del post
+            formData.append('image', post.image); // Asegúrate de que post.image tenga la ruta correcta
+        }
+    
+        // Para verificar qué datos se están enviando
+        console.log('Datos que se están enviando:', {
             name: title,
-            kindOfPost: kindOfPost,
-            description: description,
-            image: image ? image.name : ''  
-        };
+            kindOfPost,
+            description,
+            image: image ? image.name : (post ? post.image : 'No hay imagen'),
+        });
     
         try {
             let newPost;
             if (post) {
                 // Editar un post existente
-                await updatePost(post.id, newPostData);  
+                await updatePost(post.id, formData);
                 alert('Post actualizado exitosamente');
-                newPost = { ...post, ...newPostData };
+                newPost = { ...post, ...{ name: title, kindOfPost, description, image: image ? image.name : post.image } };
             } else {
                 // Crear un nuevo post
-                newPost = await createPost(newPostData);  
+                newPost = await createPost(formData);
+                newPost.image = `http://localhost:5000/uploads/${newPost.image}`;
                 alert('Post creado exitosamente');
             }
     
-            onSubmit(newPost); 
-            onCancel(); 
-            navigate('/blog'); 
+            onSubmit(newPost);
+            onCancel();
+            navigate('/blog');
         } catch (error) {
             console.error("Error al procesar el Post:", error);
-            setError('Hubo un error al procesar el Post: ' + error.message); 
+            setError('Hubo un error al procesar el Post: ' + error.message);
         }
     };
-    
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-5 relative z-10">
                 <div className="flex justify-center mb-4">
-                    <img 
-                        src={logoImg} 
-                        alt="Logo" 
+                    <img
+                        src={logoImg}
+                        alt="Logo"
                         className="h-16 w-auto"
                     />
                 </div>
@@ -80,28 +94,31 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                 </h3>
                 {error && <div className="text-red-500 text-center mb-4">{error}</div>}
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
-                    <input 
-                        type="text" 
-                        id="title"  
-                        placeholder="Nombre" 
+                    <input
+                        type="text"
+                        id="title"
+                        placeholder="Nombre"
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)} 
+                        onChange={(e) => setTitle(e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
+                        required
                     />
-                    <input 
-                        type="text" 
-                        id="kindOfPost" 
-                        placeholder="Tipo de Post: receta, entrevista, etc" 
+                    <input
+                        type="text"
+                        id="kindOfPost"
+                        placeholder="Tipo de Post: receta, entrevista, etc"
                         value={kindOfPost}
-                        onChange={(e) => setKindOfPost(e.target.value)} 
+                        onChange={(e) => setKindOfPost(e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
+                        required
                     />
-                    <textarea 
-                        id="description" 
+                    <textarea
+                        id="description"
                         placeholder="Descripción"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none h-24 resize-none"
+                        required
                     ></textarea>
 
                     <input
@@ -120,15 +137,15 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                         </div>
                     )}
 
-                    <input 
-                        type="submit" 
-                        id="save" 
-                        value={post ? "Actualizar" : "Crear"} 
+                    <input
+                        type="submit"
+                        id="save"
+                        value={post ? "Actualizar" : "Crear"}
                         className="w-full p-3 text-lg font-bold bg-green-500 text-white rounded-md cursor-pointer hover:bg-green-600 transition-colors"
                     />
-                    <button 
-                        type="button" 
-                        onClick={onCancel} 
+                    <button
+                        type="button"
+                        onClick={onCancel}
                         className="w-full p-3 text-lg font-bold bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600 transition-colors"
                     >
                         Cancelar
