@@ -5,6 +5,20 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate';
 
+// Construye la URL completa para cada imagen
+const BASE_URL = "http://localhost:5000";
+
+function BlogPost({ post }) {
+    return (
+        <div>
+            <h2>{post.name}</h2>
+            <p>{post.kindOfPost}</p>
+            <p>{post.description}</p>
+            <img src={`${BASE_URL}${post.image}`} alt={post.name} />
+        </div>
+    );
+}
+
 const Blog = () => {
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
@@ -15,7 +29,7 @@ const Blog = () => {
     const fetchPosts = async () => {
       try {
         const posts = await getPosts();
-        console.log(posts);  // Para verificar los datos
+        console.log(posts);  
         setArticles(posts);
       } catch (error) {
         console.error('Error al obtener los artículos:', error);
@@ -75,8 +89,8 @@ const Blog = () => {
                 alt={article.name}
                 className="w-full h-48 object-cover"
                 onError={(e) => {
-                  e.target.onerror = null; // Previene bucles en caso de error
-                  e.target.src = 'ruta_a_imagen_por_defecto'; // Cambia esto a una imagen predeterminada
+                  e.target.onerror = null; 
+                  e.target.src = 'ruta_a_imagen_por_defecto'; 
                 }}
               />
               <div className="p-6">
