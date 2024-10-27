@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoImg } from '../utils';
 import Search from './Search';
@@ -6,44 +6,60 @@ import ButtonIcon from '../components/ButtonIcon';
 
 const Navbar = ({ onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate(); 
-  const location = useLocation(); 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const userEmail = decodedToken.email;
+      const userRole = decodedToken.role;
+
+      // Verifica si el usuario es el administrador
+      if (userEmail === 'proyectoBioBlog@gmail.com' && userRole === 'admin') {
+        setIsAdmin(true);
+      }
+      setIsLoggedIn(true); // Marcar al usuario como logueado
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
-  
   const navigateToRegister = () => {
     if (location.pathname === '/registro') {
-      navigate('/'); 
+      navigate('/');
     } else {
-      navigate('/registro'); 
+      navigate('/registro');
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Eliminar el token de localStorage
+    setIsLoggedIn(false); // Actualizar el estado
+    setIsAdmin(false); // Resetear el estado de administrador al cerrar sesión
+    navigate('/'); // Redirigir a la página de inicio
   };
 
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
         <div className="text-white text-xl font-bold flex items-center">
           <img src={logoImg} className="w-10" alt="logo" />
           <Link to="/" className="ml-2">Bio Blog</Link>
         </div>
 
-        {/* Search Component */}
-        {/* <div className="hidden md:block w-full max-w-md">
-          <Search onSearch={onSearch} />
-        </div> */}
         <div>
-
           <ButtonIcon
             icon="fas fa-user-plus fa-2x"
             onClick={navigateToRegister}
             title="Regístrate aquí"
           />
         </div>
-
 
         {/* Links de navegación para pantallas grandes */}
         <div className="hidden md:flex space-x-6">
@@ -52,8 +68,22 @@ const Navbar = ({ onSearch }) => {
             <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
             <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
             <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
+            {isAdmin && (
+              <li><Link className="text-gray-400 hover:text-white" to="/adminPage">AdminPage</Link></li>
+            )}
+            {/* Mostrar el botón de Cerrar Sesión si el usuario está logueado */}
+            {isLoggedIn && (
+              <li>
+                <ButtonIcon
+                  icon="fas fa-sign-out-alt"
+                  onClick={handleLogout}
+                  title="Cerrar Sesión"
+                />
+              </li>
+            )}
           </ul>
         </div>
+
         {/* Botón del menú móvil */}
         <div className="md:hidden">
           <button onClick={toggleMenu} className="text-gray-400 hover:text-white focus:outline-none">
@@ -74,7 +104,7 @@ const Navbar = ({ onSearch }) => {
           </button>
         </div>
       </div>
-      {/* Menú desplegable para dispositivos móviles */}
+
       {isOpen && (
         <div className="md:hidden">
           <Search onSearch={onSearch} />
@@ -83,6 +113,19 @@ const Navbar = ({ onSearch }) => {
             <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
             <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
             <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
+            {isAdmin && (
+              <li><Link className="text-gray-400 hover:text-white" to="/adminPage">AdminPage</Link></li>
+            )}
+            {/* Mostrar el botón de Cerrar Sesión si el usuario está logueado */}
+            {isLoggedIn && (
+              <li>
+                <ButtonIcon
+                  icon="fas fa-sign-out-alt"
+                  onClick={handleLogout}
+                  title="Cerrar Sesión"
+                />
+              </li>
+            )}
           </ul>
         </div>
       )}
@@ -91,4 +134,7 @@ const Navbar = ({ onSearch }) => {
 };
 
 export default Navbar;
+
+
+
 
