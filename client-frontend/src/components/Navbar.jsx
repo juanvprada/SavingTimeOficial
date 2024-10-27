@@ -1,13 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoImg } from '../utils';
 import Search from './Search';
+import ButtonIcon from '../components/ButtonIcon';
 
 const Navbar = ({ onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate(); 
+  const location = useLocation(); 
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  
+  const navigateToRegister = () => {
+    if (location.pathname === '/registro') {
+      navigate('/'); 
+    } else {
+      navigate('/registro'); 
+    }
   };
 
   return (
@@ -20,9 +32,18 @@ const Navbar = ({ onSearch }) => {
         </div>
 
         {/* Search Component */}
-        <div className="hidden md:block w-full max-w-md">
+        {/* <div className="hidden md:block w-full max-w-md">
           <Search onSearch={onSearch} />
+        </div> */}
+        <div>
+
+          <ButtonIcon
+            icon="fas fa-user-plus fa-2x"
+            onClick={navigateToRegister}
+            title="Regístrate aquí"
+          />
         </div>
+
 
         {/* Links de navegación para pantallas grandes */}
         <div className="hidden md:flex space-x-6">
@@ -56,7 +77,7 @@ const Navbar = ({ onSearch }) => {
       {/* Menú desplegable para dispositivos móviles */}
       {isOpen && (
         <div className="md:hidden">
-          <Search onSearch={onSearch} /> 
+          <Search onSearch={onSearch} />
           <ul className="space-y-2 mt-4 flex flex-col items-center">
             <li><Link className="text-gray-400 hover:text-white" to="/">Inicio</Link></li>
             <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>

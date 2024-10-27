@@ -1,3 +1,4 @@
+// Mantén el resto de tus importaciones
 import React, { useState, useEffect } from 'react';
 import { getPosts, deletePost } from '../services/services';
 import ButtonIcon from '../components/ButtonIcon';
@@ -53,7 +54,7 @@ const Blog = () => {
   };
 
   const handleNewPost = (newPost) => {
-    // Asignar la URL de la imagen correctamente
+    // Asegúrate de que el nuevo post se agregue al final
     setArticles(prevArticles => [...prevArticles, newPost]);
   };
 
@@ -135,6 +136,9 @@ const Blog = () => {
 };
 
 export default Blog;
+
+
+
 
 
 

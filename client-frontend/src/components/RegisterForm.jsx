@@ -4,19 +4,37 @@ import { useNavigate, Link } from 'react-router-dom';
 import { logoImg } from '../utils';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
-    
-    const [name, setName] = useState(initialData.name || '');
-    const [email, setEmail] = useState(initialData.email || '');
-    const [password, setPassword] = useState(initialData.password || '');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-
     const navigate = useNavigate();
 
     useEffect(() => {
-        setName(initialData.name || '');
-        setEmail(initialData.email || '');
-        setPassword('');
-    }, [initialData]);
+        if (editMode && initialData) {
+            setName(initialData.name || '');
+            setEmail(initialData.email || '');
+        }
+    }, [initialData, editMode]);
+
+    // ===============================
+    // Validación de la contraseña
+    // ===============================
+    const validatePasswordStrength = (password) => {
+        const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return strongPasswordRegex.test(password);
+    };
+
+    const handlePasswordChange = (e) => {
+        const inputPassword = e.target.value;
+        setPassword(inputPassword);
+
+        if (!validatePasswordStrength(inputPassword)) {
+            setMessage('La contraseña debe tener al menos 8 caracteres, incluyendo letras y números.');
+        } else {
+            setMessage('');
+        }
+    };
 
     // ===============================
     // Manejo del envío del formulario
@@ -26,32 +44,28 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 
         try {
             if (editMode) {
-                // ==================================
                 // Actualización de usuario existente
-                // ==================================
-                const response = await axios.put('http://localhost:5000/api/users/' + initialData._id, {
+                await axios.put('http://localhost:5000/api/users/' + initialData._id, {
                     name,
                     email,
                     password,
                 });
                 setMessage('Usuario actualizado correctamente.');
             } else {
-                // ============================
                 // Registro de un nuevo usuario
-                // ============================
                 const response = await axios.post('http://localhost:5000/api/users/register', {
                     name,
                     email,
                     password,
                 });
-                setMessage(response.data.message);
+                setMessage('Usuario registrado con éxito.');
                 resetRegisterForm();
-                navigate('/acceso');
+                setTimeout(() => {
+                    navigate('/acceso'); 
+                }, 2000);
             }
         } catch (error) {
-            // =================
             // Manejo de errores
-            // =================
             if (error.response) {
                 setMessage(error.response.data.message || 'Error al registrar usuario');
             } else if (error.request) {
@@ -110,7 +124,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                     <input
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         required
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
@@ -130,6 +144,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 };
 
 export default RegisterForm;
+
 
 
 

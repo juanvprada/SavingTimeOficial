@@ -11,6 +11,7 @@ import { Navigate } from 'react-router-dom';
 import UnderConstruction from "../pages/UnderConstruction.jsx";
 import EditPost from "../pages/EditPost.jsx"; 
 import PostDetail from "../pages/PostDetail.jsx"; 
+import Profile from "../pages/Profile.jsx";
 
 export const router = createBrowserRouter([
     {
@@ -60,7 +61,12 @@ export const router = createBrowserRouter([
                 path: "post/:id", 
                 element: <PostDetail />, 
             },
+            {
+                path: "perfil", 
+                element: <Profile />, 
+            },
         ]
     }
 ]);
+
 
