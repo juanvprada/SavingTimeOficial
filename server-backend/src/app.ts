@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes'; 
 import postRoutes from './routes/postRoutes'; 
 import path from 'path';
@@ -20,6 +21,7 @@ console.log('Upload path:', uploadPath);
 app.use('/uploads', express.static(uploadPath)); 
 
 // Rutas
+app.use('/api/auth', authRoutes); 
 app.use('/api/users', userRoutes); 
 app.use('/api/posts', postRoutes); 
 

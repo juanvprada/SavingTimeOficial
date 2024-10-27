@@ -1,41 +1,32 @@
 import { Request, Response } from 'express';
 import { db } from '../database/db';
 import bcrypt from 'bcryptjs';  
+import jwt from 'jsonwebtoken';  
 import { OkPacket, RowDataPacket } from 'mysql2';   
 
 // Registro de usuario
 export const registerUser = async (req: Request, res: Response) => {
-    const { email, password, name } = req.body; // Añadir name
+    const { email, password, name, role = 'user' } = req.body;
 
     try {
-        // Verificar si el usuario ya existe
-        const [rows] = await db.query<RowDataPacket[]>(
-            'SELECT * FROM users WHERE email = ?',
-            [email]
-        );
-
+        const [rows] = await db.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [email]);
         if (rows.length > 0) {
             return res.status(400).json({ message: 'El usuario ya existe' });
         }
 
-        // Encriptar la contraseña
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Crear un nuevo usuario
         const [result] = await db.query<OkPacket>(
-            'INSERT INTO users (email, password, name) VALUES (?, ?, ?)', // Añadir name aquí
-            [email, hashedPassword, name]
+            'INSERT INTO users (email, password, name, role) VALUES (?, ?, ?, ?)', 
+            [email, hashedPassword, name, role]
         );
 
-        res.status(201).json({
-            message: 'Usuario registrado con éxito',
-            userId: result.insertId,
-        });
+        res.status(201).json({ message: 'Usuario registrado con éxito', userId: result.insertId });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Error al registrar el usuario' });
     }
 };
+
 
 // Iniciar sesión
 export const loginUser = async (req: Request, res: Response) => {
@@ -43,25 +34,39 @@ export const loginUser = async (req: Request, res: Response) => {
 
     try {
         const [rows] = await db.query<RowDataPacket[]>(
-            'SELECT * FROM users WHERE email = ?',
+            'SELECT id, email, password, role FROM users WHERE email = ?',
             [email]
         );
 
         if (rows.length === 0) {
+            console.log('No se encontró el usuario con el correo:', email);
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
         const user = rows[0]; 
+        console.log('Usuario encontrado:', user); 
+
         const isMatch = await bcrypt.compare(password, user.password);
+        console.log('¿La contraseña coincide?', isMatch); 
 
         if (!isMatch) {
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
-        res.json({ message: 'Inicio de sesión exitoso' });
+        // Generar un token
+        const token = jwt.sign(
+            { userId: user.id, role: user.role }, 
+            '1234', 
+            { expiresIn: '1h' } 
+        );
+
+        res.json({ 
+            message: 'Inicio de sesión exitoso',
+            role: user.role,
+            token: token, 
+        });
     } catch (error) {
-        console.error(error);
+        console.error('Error en el proceso de login:', error);
         res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 };
-
