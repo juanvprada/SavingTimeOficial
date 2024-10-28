@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes'; 
 import postRoutes from './routes/postRoutes'; 
+import roleRoutes from './routes/roleRoutes';
 import path from 'path';
 
 dotenv.config();
@@ -24,6 +25,7 @@ app.use('/uploads', express.static(uploadPath));
 app.use('/api/auth', authRoutes); 
 app.use('/api/users', userRoutes); 
 app.use('/api/posts', postRoutes); 
+app.use('/api/roles', roleRoutes); 
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

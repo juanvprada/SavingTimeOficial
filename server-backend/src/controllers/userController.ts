@@ -34,7 +34,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
     try {
         const [rows] = await db.query<RowDataPacket[]>(
-            'SELECT id, email, password, role FROM users WHERE email = ?',
+            'SELECT id, email, password, name, role FROM users WHERE email = ?', 
             [email]
         );
 
@@ -43,11 +43,11 @@ export const loginUser = async (req: Request, res: Response) => {
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
-        const user = rows[0]; 
-        console.log('Usuario encontrado:', user); 
+        const user = rows[0];
+        console.log('Usuario encontrado:', user);
 
         const isMatch = await bcrypt.compare(password, user.password);
-        console.log('¿La contraseña coincide?', isMatch); 
+        console.log('¿La contraseña coincide?', isMatch);
 
         if (!isMatch) {
             return res.status(401).json({ message: 'Credenciales inválidas' });
@@ -55,7 +55,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
         // Generar un token
         const token = jwt.sign(
-            { userId: user.id, role: user.role }, 
+            { userId: user.id, role: user.role, email: user.email, name: user.name }, 
             '1234', 
             { expiresIn: '1h' } 
         );
@@ -63,6 +63,7 @@ export const loginUser = async (req: Request, res: Response) => {
         res.json({ 
             message: 'Inicio de sesión exitoso',
             role: user.role,
+            name: user.name, 
             token: token, 
         });
     } catch (error) {
@@ -70,3 +71,19 @@ export const loginUser = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error al iniciar sesión' });
     }
 };
+
+// Obtener todos los usuarios
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        const [rows] = await db.query<RowDataPacket[]>('SELECT id, email, role FROM users');
+        res.json(rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error al obtener usuarios' });
+    }
+};
+
+
+
+
+
