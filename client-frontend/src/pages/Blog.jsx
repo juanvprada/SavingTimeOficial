@@ -1,4 +1,3 @@
-// Blog.jsx
 import React, { useState, useEffect } from 'react';
 import { getPosts, deletePost } from '../services/services';
 import ButtonIcon from '../components/ButtonIcon';
@@ -23,6 +22,7 @@ const Blog = () => {
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
+  const [likes, setLikes] = useState({}); // Estado para manejar los likes de cada post
   const navigate = useNavigate();
 
   // Obtener rol y token del usuario desde localStorage
@@ -57,6 +57,14 @@ const Blog = () => {
 
   const handleNewPost = (newPost) => {
     setArticles(prevArticles => [newPost, ...prevArticles]);
+  };
+
+  // Función para manejar el click en el icono de like
+  const handleLike = (postId) => {
+    setLikes(prevLikes => ({
+      ...prevLikes,
+      [postId]: !prevLikes[postId]
+    }));
   };
 
   const filteredArticles = articles.filter(article =>
@@ -98,7 +106,7 @@ const Blog = () => {
               <div className="p-6">
                 <h3 className="text-xl font-bold text-green-600 mb-2">{article.name}</h3>
                 <p className="text-gray-700 mb-4">{article.description}</p>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   {/* Icono de Editar visible solo para admin logueado */}
                   {role === 'admin' && token && (
                     <ButtonIcon
@@ -113,6 +121,14 @@ const Blog = () => {
                       icon="fas fa-trash"
                       onClick={() => handleDelete(article.id)}
                       title="Eliminar"
+                    />
+                  )}
+                  {/* Icono de corazón visible para usuarios logueados */}
+                  {token && (
+                    <ButtonIcon
+                      icon={likes[article.id] ? "fas fa-heart text-red-500" : "far fa-heart"}
+                      onClick={() => handleLike(article.id)}
+                      title="Dar like"
                     />
                   )}
                 </div>
@@ -145,7 +161,6 @@ const Blog = () => {
 };
 
 export default Blog;
-
 
 
 
