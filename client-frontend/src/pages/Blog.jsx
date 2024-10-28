@@ -1,3 +1,4 @@
+// Blog.jsx
 import React, { useState, useEffect } from 'react';
 import { getPosts, deletePost } from '../services/services';
 import ButtonIcon from '../components/ButtonIcon';
@@ -5,7 +6,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate';
 
-// Build the full URL for each image
 const BASE_URL = "http://localhost:5000";
 
 function BlogPost({ post }) {
@@ -24,6 +24,10 @@ const Blog = () => {
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const navigate = useNavigate();
+
+  // Obtener rol y token del usuario desde localStorage
+  const role = localStorage.getItem('role'); // "admin" o "user"
+  const token = localStorage.getItem('token'); // Confirma si el usuario está logueado
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -44,7 +48,6 @@ const Blog = () => {
     if (confirmDelete) {
       try {
         await deletePost(id);
-        // Refresh the list of items after deletion
         setArticles(articles.filter(article => article.id !== id));
       } catch (error) {
         console.error("Error al eliminar el post:", error);
@@ -53,7 +56,6 @@ const Blog = () => {
   };
 
   const handleNewPost = (newPost) => {
-    // Add new post at the end
     setArticles(prevArticles => [newPost, ...prevArticles]);
   };
 
@@ -97,16 +99,22 @@ const Blog = () => {
                 <h3 className="text-xl font-bold text-green-600 mb-2">{article.name}</h3>
                 <p className="text-gray-700 mb-4">{article.description}</p>
                 <div className="flex justify-between">
-                  <ButtonIcon
-                    icon="fas fa-edit"
-                    onClick={() => navigate(`/editar/${article.id}`)}
-                    title="Editar"
-                  />
-                  <ButtonIcon
-                    icon="fas fa-trash"
-                    onClick={() => handleDelete(article.id)}
-                    title="Eliminar"
-                  />
+                  {/* Icono de Editar visible solo para admin logueado */}
+                  {role === 'admin' && token && (
+                    <ButtonIcon
+                      icon="fas fa-edit"
+                      onClick={() => navigate(`/editar/${article.id}`)}
+                      title="Editar"
+                    />
+                  )}
+                  {/* Icono de Eliminar visible solo para admin logueado */}
+                  {role === 'admin' && token && (
+                    <ButtonIcon
+                      icon="fas fa-trash"
+                      onClick={() => handleDelete(article.id)}
+                      title="Eliminar"
+                    />
+                  )}
                 </div>
                 <Link
                   to={`/post/${article.id}`}
@@ -119,22 +127,26 @@ const Blog = () => {
           ))}
         </div>
 
-        {/* Create component to create a new post */}
-        {showCreate && (
+        {/* Componente de creación de nuevo post, visible solo para admin logueado */}
+        {showCreate && role === 'admin' && token && (
           <Create
             onCancel={() => setShowCreate(false)}
             onSubmit={handleNewPost}
           />
         )}
 
-        {/* IconCreate component for new post button */}
-        <IconCreate onClick={() => setShowCreate(true)} />
+        {/* Ícono de crear nuevo post visible solo para admin logueado */}
+        {role === 'admin' && token && (
+          <IconCreate onClick={() => setShowCreate(true)} />
+        )}
       </section>
     </div>
   );
 };
 
 export default Blog;
+
+
 
 
 
