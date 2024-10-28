@@ -15,14 +15,14 @@ const Navbar = ({ onSearch }) => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const name = localStorage.getItem('name'); 
+        const name = localStorage.getItem('name');
 
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             const userRole = decodedToken.role;
             setIsAdmin(userRole === 'admin');
             setIsLoggedIn(true);
-            if (name) setUsername(name); 
+            if (name) setUsername(name);
         }
     }, []);
 
@@ -36,7 +36,7 @@ const Navbar = ({ onSearch }) => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('name'); 
+        localStorage.removeItem('name');
         setIsLoggedIn(false);
         setIsAdmin(false);
         setUsername('');
@@ -56,7 +56,7 @@ const Navbar = ({ onSearch }) => {
                     <div>
                         <ButtonIcon
                             icon="fas fa-user-plus fa-2x"
-                            onClick={navigateToRegister} 
+                            onClick={navigateToRegister}
                             title="Regístrate aquí"
                         />
                     </div>
@@ -64,8 +64,10 @@ const Navbar = ({ onSearch }) => {
 
                 {/* Show greeting with user's name if logged in */}
                 {isLoggedIn && (
-                    <div className="text-white mr-4">
-                        Hola, {username}
+                    <div className="mr-4">
+                        <span className="text-sm md:text-xl text-white font-bold flex items-center">
+                            Hola, {username}
+                        </span>
                     </div>
                 )}
 
