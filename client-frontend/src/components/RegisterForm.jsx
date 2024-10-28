@@ -18,7 +18,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     }, [initialData, editMode]);
 
     // ===============================
-    // Validación de la contraseña
+    // Password validation
     // ===============================
     const validatePasswordStrength = (password) => {
         const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -36,15 +36,15 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
         }
     };
 
-    // ===============================
-    // Manejo del envío del formulario
-    // ===============================
+    // ===================================
+    // Handling the submission of the form
+    // ===================================
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             if (editMode) {
-                // Actualización de usuario existente
+                // Upgrading existing user
                 await axios.put('http://localhost:5000/api/users/' + initialData._id, {
                     name,
                     email,
@@ -52,7 +52,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 });
                 setMessage('Usuario actualizado correctamente.');
             } else {
-                // Registro de un nuevo usuario
+                // New user registration
                 const response = await axios.post('http://localhost:5000/api/users/register', {
                     name,
                     email,
@@ -65,7 +65,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 }, 2000);
             }
         } catch (error) {
-            // Manejo de errores
+            // Error handling
             if (error.response) {
                 setMessage(error.response.data.message || 'Error al registrar usuario');
             } else if (error.request) {
@@ -77,7 +77,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     };
 
     // ====================================
-    // Función para reiniciar el formulario
+    // Function to reset the form
     // ====================================
     const resetRegisterForm = () => {
         setName('');
@@ -89,7 +89,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     };
 
     // ==========================
-    // Renderizado del componente
+    // Rendering of the component
     // ==========================
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">

@@ -1,3 +1,4 @@
+// LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logoImg } from '../utils';
@@ -9,7 +10,7 @@ const LoginForm = () => {
     
     const navigate = useNavigate();
 
-    // Manejo del envío del formulario de login
+    // Handling of the login form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -27,22 +28,22 @@ const LoginForm = () => {
                 body: JSON.stringify({ email, password }),
             });
     
-            // Verifica si la respuesta fue exitosa
+            // Check if the response was successful
             if (!response.ok) {
                 const errorData = await response.json();
                 console.log('Error de respuesta del servidor:', errorData);
                 throw new Error(errorData.message || 'Error al iniciar sesión');
             }
-    
-            // Procesa la respuesta en caso de éxito
+            console.log('Respuesta de la API:', response.data);
+            // Processes the response in case of success
             const data = await response.json();
+            console.log('Nombre recibido de la API:', data.name);
             if (data.token) {
-                // Almacena el token y el rol en localStorage
+                // Stores token, role and user name in localStorage
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('role', data.role);
-                console.log('Token guardado en localStorage:', localStorage.getItem('token'));
-                console.log('Rol guardado en localStorage:', data.role);
-                // Redirige al perfil
+                localStorage.setItem('name', data.name); 
+                
                 navigate('/blog');
             } else {
                 setError('Correo electrónico o contraseña incorrectos.');
@@ -104,6 +105,7 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
 
 
 

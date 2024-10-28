@@ -22,7 +22,7 @@ const PostDetail = () => {
     fetchPost();
   }, [id]);
 
-  // Maneja el clic fuera del post
+  // Handles click out of post
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (postRef.current && !postRef.current.contains(event.target)) {
@@ -30,10 +30,10 @@ const PostDetail = () => {
       }
     };
 
-    // Añade el evento de clic al documento
+    // Add the click event to the document
     document.addEventListener('mousedown', handleClickOutside);
 
-    // Limpieza del evento
+    // Cleaning up the event
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -50,7 +50,7 @@ const PostDetail = () => {
         <h1 className="text-2xl font-bold text-green-600 mb-2">{post.name}</h1>
         <img src={post.image} alt={post.name} className="w-full h-48 object-cover mb-4" />
         <p className="text-gray-700">{post.description}</p>
-        {/* Reutilizando ButtonIcon para Editar y Volver */}
+        {/* Reusing ButtonIcon for Edit and Return */}
         <div className="mt-4 flex justify-between">
           <ButtonIcon
             icon="fas fa-edit"

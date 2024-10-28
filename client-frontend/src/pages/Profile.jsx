@@ -1,4 +1,3 @@
-// Profile.jsx
 import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
@@ -7,20 +6,20 @@ const Profile = () => {
 
     useEffect(() => {
         const fetchProfile = async () => {
-            const token = localStorage.getItem('token'); // Obtener el token de localStorage
+            const token = localStorage.getItem('token');
             const response = await fetch('http://localhost:5000/api/auth/perfil', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Asegúrate de que el token se envía aquí
+                    'Authorization': `Bearer ${token}`, 
                 },
             });
 
-            // Verifica si la respuesta fue exitosa
+            
             if (!response.ok) {
-                const errorData = await response.json(); // Obtener el mensaje de error
+                const errorData = await response.json(); 
                 setError(errorData.message);
             } else {
-                const data = await response.json(); // Procesar los datos
+                const data = await response.json(); 
                 setUser(data);
             }
         };

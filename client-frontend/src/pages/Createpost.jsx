@@ -11,17 +11,17 @@ export const Create = ({ post, onSubmit, onCancel }) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    // Cargar los datos del post en caso de editar
+    // Upload post data in case of editing
     useEffect(() => {
         if (post) {
             setTitle(post.name || "");
             setKindOfPost(post.kindOfPost || "");
             setDescription(post.description || "");
-            setImage(null); 
+            setImage(null);
         }
     }, [post]);
 
-    // Manejar cambio de imagen
+    // Handling image change
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
         if (!selectedImage) {
@@ -33,52 +33,36 @@ export const Create = ({ post, onSubmit, onCancel }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
-        // Usar FormData para enviar el archivo de imagen
+
         const formData = new FormData();
-        formData.append('name', title); 
+        formData.append('name', title);
         formData.append('kindOfPost', kindOfPost);
         formData.append('description', description);
-        
-        // Si hay una nueva imagen, se agrega a FormData
+
         if (image) {
             formData.append('image', image);
-        } else if (post) {
-            // Si no hay nueva imagen, se agrega la imagen existente del post
-            formData.append('image', post.image); // Asegúrate de que post.image tenga la ruta correcta
         }
-    
-        // Para verificar qué datos se están enviando
-        console.log('Datos que se están enviando:', {
-            name: title,
-            kindOfPost,
-            description,
-            image: image ? image.name : (post ? post.image : 'No hay imagen'),
-        });
-    
+
         try {
             let newPost;
             if (post) {
-                // Editar un post existente
                 await updatePost(post.id, formData);
                 alert('Post actualizado exitosamente');
                 newPost = { ...post, ...{ name: title, kindOfPost, description, image: image ? image.name : post.image } };
             } else {
-                // Crear un nuevo post
                 newPost = await createPost(formData);
-                newPost.image = `http://localhost:5000/uploads/${newPost.image}`;
                 alert('Post creado exitosamente');
             }
-    
+
+            console.log('Nuevo Post:', newPost);
             onSubmit(newPost);
             onCancel();
-            navigate('/blog');
         } catch (error) {
             console.error("Error al procesar el Post:", error);
             setError('Hubo un error al procesar el Post: ' + error.message);
         }
     };
-
+    
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-5 relative z-10">

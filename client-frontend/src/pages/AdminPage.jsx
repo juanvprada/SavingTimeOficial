@@ -1,28 +1,45 @@
 import React, { useEffect, useState } from 'react';
-
-// Simulando un almacenamiento de usuarios
-const usersDB = [
-  { id: 1, email: 'user1@example.com', isAdmin: false },
-  { id: 2, email: 'user2@example.com', isAdmin: false },
-  { id: 3, email: 'proyectoBioBlog@gmail.com', isAdmin: true }, 
-];
+import axios from 'axios';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
 
-  // Simulando la carga de usuarios
   useEffect(() => {
-    // Aquí deberías realizar una llamada a la API para obtener los usuarios
-    setUsers(usersDB);
+    const fetchUsers = async () => {
+      try {
+        const token = localStorage.getItem('token'); 
+        const response = await axios.get('http://localhost:5000/api/users', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUsers(response.data); 
+      } catch (error) {
+        console.error('Error al obtener los usuarios:', error);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
-  const handleToggleAdmin = (userId) => {
-    // Cambia el estado de administrador del usuario
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === userId ? { ...user, isAdmin: !user.isAdmin } : user
-      )
-    );
+  const handleToggleAdmin = async (userId) => {
+    try {
+      const token = localStorage.getItem('token');
+      const user = users.find((user) => user.id === userId);
+      const newRole = user.role === 'admin' ? 'user' : 'admin';
+
+      await axios.patch(
+        `http://localhost:5000/api/roles/${userId}/role`,
+        { role: newRole },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, role: newRole } : user
+        )
+      );
+    } catch (error) {
+      console.error('Error al actualizar el rol del usuario:', error);
+    }
   };
 
   return (
@@ -40,15 +57,15 @@ const AdminPage = () => {
           {users.map((user) => (
             <tr key={user.id}>
               <td className="border-b p-2">{user.email}</td>
-              <td className="border-b p-2">{user.isAdmin ? 'Admin' : 'User'}</td>
+              <td className="border-b p-2">{user.role === 'admin' ? 'Admin' : 'User'}</td>
               <td className="border-b p-2">
                 <button
                   onClick={() => handleToggleAdmin(user.id)}
                   className={`py-1 px-3 text-white rounded ${
-                    user.isAdmin ? 'bg-red-500' : 'bg-blue-500'
+                    user.role === 'admin' ? 'bg-red-500' : 'bg-blue-500'
                   }`}
                 >
-                  {user.isAdmin ? 'Remove Admin' : 'Make Admin'}
+                  {user.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                 </button>
               </td>
             </tr>
@@ -60,4 +77,5 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
 

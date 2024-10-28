@@ -1,4 +1,3 @@
-// Mantén el resto de tus importaciones
 import React, { useState, useEffect } from 'react';
 import { getPosts, deletePost } from '../services/services';
 import ButtonIcon from '../components/ButtonIcon';
@@ -6,18 +5,18 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate';
 
-// Construye la URL completa para cada imagen
+// Build the full URL for each image
 const BASE_URL = "http://localhost:5000";
 
 function BlogPost({ post }) {
-    return (
-        <div>
-            <h2>{post.name}</h2>
-            <p>{post.kindOfPost}</p>
-            <p>{post.description}</p>
-            <img src={`${BASE_URL}${post.image}`} alt={post.name} />
-        </div>
-    );
+  return (
+    <div>
+      <h2>{post.name}</h2>
+      <p>{post.kindOfPost}</p>
+      <p>{post.description}</p>
+      <img src={`${BASE_URL}${post.image}`} alt={post.name} />
+    </div>
+  );
 }
 
 const Blog = () => {
@@ -30,7 +29,7 @@ const Blog = () => {
     const fetchPosts = async () => {
       try {
         const posts = await getPosts();
-        console.log(posts);  
+        console.log('Artículos obtenidos:', posts);
         setArticles(posts);
       } catch (error) {
         console.error('Error al obtener los artículos:', error);
@@ -38,14 +37,14 @@ const Blog = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [articles.length]);
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este post?");
     if (confirmDelete) {
       try {
         await deletePost(id);
-        // Refresca la lista de artículos después de eliminar
+        // Refresh the list of items after deletion
         setArticles(articles.filter(article => article.id !== id));
       } catch (error) {
         console.error("Error al eliminar el post:", error);
@@ -54,8 +53,8 @@ const Blog = () => {
   };
 
   const handleNewPost = (newPost) => {
-    // Asegúrate de que el nuevo post se agregue al final
-    setArticles(prevArticles => [...prevArticles, newPost]);
+    // Add new post at the end
+    setArticles(prevArticles => [newPost, ...prevArticles]);
   };
 
   const filteredArticles = articles.filter(article =>
@@ -90,8 +89,8 @@ const Blog = () => {
                 alt={article.name}
                 className="w-full h-48 object-cover"
                 onError={(e) => {
-                  e.target.onerror = null; 
-                  e.target.src = 'ruta_a_imagen_por_defecto'; 
+                  e.target.onerror = null;
+                  e.target.src = 'ruta_a_imagen_por_defecto';
                 }}
               />
               <div className="p-6">
@@ -120,7 +119,7 @@ const Blog = () => {
           ))}
         </div>
 
-        {/* Componente Create para crear un nuevo post */}
+        {/* Create component to create a new post */}
         {showCreate && (
           <Create
             onCancel={() => setShowCreate(false)}
@@ -128,7 +127,7 @@ const Blog = () => {
           />
         )}
 
-        {/* Componente IconCreate para el botón de nuevo post */}
+        {/* IconCreate component for new post button */}
         <IconCreate onClick={() => setShowCreate(true)} />
       </section>
     </div>

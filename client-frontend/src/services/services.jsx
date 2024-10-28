@@ -8,7 +8,7 @@ const handleError = (error, action) => {
   throw error;
 };
 
-// Crear un nuevo Post
+// Create a new Post
 export const createPost = async (formData) => {
   try {
     const response = await axios.post(API_URL, formData);
@@ -19,7 +19,7 @@ export const createPost = async (formData) => {
   }
 };
 
-// Traer todos los Posts
+// Get all posts
 export const getPosts = async () => {
   try {
     const response = await axios.get(API_URL);
@@ -29,7 +29,7 @@ export const getPosts = async () => {
   }
 };
 
-// Traer un solo Post
+// Get one post
 export const getOnePost = async (id) => {
   try {
     const response = await axios.get(`${API_URL}/${id}`);
@@ -39,7 +39,7 @@ export const getOnePost = async (id) => {
   }
 };
 
-// Actualizar un Post
+// Update one post
 export const updatePost = async (id, postData) => {
   try {
     const response = await axios.put(`${API_URL}/${id}`, postData);
@@ -49,7 +49,7 @@ export const updatePost = async (id, postData) => {
   }
 };
 
-// Eliminar un Post
+// Delete one post
 export const deletePost = async (id) => {
   try {
     const response = await axios.delete(`${API_URL}/${id}`);
