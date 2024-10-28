@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
-import catMeme from '../models/catModel'
+import PostBlog from '../model/blogModel'
 
 //CRUD
 //READ - GET
 
-export const getAllMemes = async (req: Request, res: Response) => {
+export const getAllPosts = async (req: Request, res: Response) => {
   try {
-    const meme = await catMeme.findAll(); // aqui cambia el metodo mongo
-    res.json(meme);
+    const post = await PostBlog.findAll(); // aqui cambia el metodo mongo
+    res.json(post);
   } catch (error) {
     res.json({ message: "Ha ocurrido un error", error });
   }
@@ -17,10 +17,10 @@ export const getAllMemes = async (req: Request, res: Response) => {
 //obtener meme POR ID
 
 //CREATE - POST
-export const createMeme = async (req: Request, res: Response) => {
+export const createPost = async (req: Request, res: Response) => {
   try {
     const { name, description, category, image, date, likes } = req.body;
-    const meme = await catMeme.create({
+    const post = await PostBlog.create({
       name,
       description,
       category,
@@ -28,7 +28,7 @@ export const createMeme = async (req: Request, res: Response) => {
       date,
       likes,
     });
-    res.json(meme);
+    res.json(post);
   } catch (error) {
     res.json({ message: "Ha ocurrido un error", error });
   }
@@ -36,18 +36,18 @@ export const createMeme = async (req: Request, res: Response) => {
 
 //DELETE - DELETE
 
-export const deleteMeme = async (req: Request, res: Response) => {
+export const deletePost = async (req: Request, res: Response) => {
   
   try {
-    const memeId = req.params.id;
-    const meme = await catMeme.findByPk(memeId)
+    const postId = req.params.id;
+    const post = await PostBlog.findByPk(postId)
 
-    if (!meme) {
+    if (!post) {
       return res.status(404).json({ message: 'El meme no existe' });
     }
     
-    await meme?.destroy();
-    res.json(meme);
+    await post?.destroy();
+    res.json(post);
     
   } catch (error) {
     console.log('El meme no se pudo eliminar', error);
@@ -56,12 +56,12 @@ export const deleteMeme = async (req: Request, res: Response) => {
 
 //UPDATE - PUT
 
-export const putMeme = async (req: Request, res: Response) => {
+export const putPost = async (req: Request, res: Response) => {
   try {
-    const memeId = req.params.id;
+    const postId = req.params.id;
     const { name, description, category, image, date, likes } = req.body;
-    const meme = await catMeme.findByPk(memeId);
-    await meme?.update({
+    const post = await PostBlog.findByPk(postId);
+    await post?.update({
       name,
       description,
       category,
@@ -69,7 +69,7 @@ export const putMeme = async (req: Request, res: Response) => {
       date,
       likes,
     });
-    res.json(meme);
+    res.json(post);
   } catch (error) {
     console.log('El meme no se pudo actualizar', error);
   }
