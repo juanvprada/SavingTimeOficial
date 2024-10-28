@@ -29,5 +29,19 @@ describe('Navbar', () => {
   
     });
 
-
+    test('verifies that clicking the logo redirects to the home page', async () => {
+        render(
+          <MemoryRouter>
+            <Navbar />
+          </MemoryRouter>
+        );
+    
+        const user = userEvent.setup();
+    
+        /* Simulo el clic en el logo (que incluye el enlace a "/") */
+        const logoLink = screen.getByText('Bio Blog').closest('a');
+        expect(logoLink).toHaveAttribute('href', '/');
+    
+        await user.click(logoLink);
+    });
 });  
