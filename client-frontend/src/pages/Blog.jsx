@@ -4,6 +4,7 @@ import ButtonIcon from '../components/ButtonIcon';
 import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate';
+import { addLike, removeLike } from '../api/likesApi';
 
 const BASE_URL = "http://localhost:5000";
 
@@ -22,12 +23,12 @@ const Blog = () => {
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
-  const [likes, setLikes] = useState({}); // Estado para manejar los likes de cada post
+  const [likes, setLikes] = useState({}); 
   const navigate = useNavigate();
 
   // Obtener rol y token del usuario desde localStorage
-  const role = localStorage.getItem('role'); // "admin" o "user"
-  const token = localStorage.getItem('token'); // Confirma si el usuario está logueado
+  const role = localStorage.getItem('role'); 
+  const token = localStorage.getItem('token'); 
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -41,7 +42,7 @@ const Blog = () => {
     };
 
     fetchPosts();
-  }, [articles.length]);
+  }, []);
 
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este post?");
@@ -60,11 +61,22 @@ const Blog = () => {
   };
 
   // Función para manejar el click en el icono de like
-  const handleLike = (postId) => {
-    setLikes(prevLikes => ({
-      ...prevLikes,
-      [postId]: !prevLikes[postId]
-    }));
+  const handleLike = async (postId) => {
+    console.log(postId);
+    try {
+      setLikes(prevLikes => ({
+        ...prevLikes,
+        [postId]: !prevLikes[postId]
+      }));
+      
+      if (likes[postId]) {
+        await removeLike(postId); 
+      } else {
+        await addLike(postId); 
+      }
+    } catch (error) {
+      console.error('Error al manejar el like:', error);
+    }
   };
 
   const filteredArticles = articles.filter(article =>
@@ -161,6 +173,7 @@ const Blog = () => {
 };
 
 export default Blog;
+
 
 
 

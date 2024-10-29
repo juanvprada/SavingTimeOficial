@@ -41,7 +41,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     // ===================================
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         try {
             if (editMode) {
                 // Upgrading existing user
@@ -59,13 +59,18 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                     password,
                 });
                 setMessage('Usuario registrado con éxito.');
+    
+                // Almacenar el nombre y el token en localStorage
+                localStorage.setItem('name', name);
+                localStorage.setItem('role', response.data.role);
+                localStorage.setItem('token', response.data.token); 
+    
                 resetRegisterForm();
                 setTimeout(() => {
-                    navigate('/acceso'); 
+                    navigate('/blog'); 
                 }, 2000);
             }
         } catch (error) {
-            // Error handling
             if (error.response) {
                 setMessage(error.response.data.message || 'Error al registrar usuario');
             } else if (error.request) {
@@ -144,6 +149,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 };
 
 export default RegisterForm;
+
 
 
 

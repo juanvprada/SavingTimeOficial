@@ -16,13 +16,13 @@ const Navbar = ({ onSearch }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const name = localStorage.getItem('name');
-
+    
         if (token) {
             const decodedToken = JSON.parse(atob(token.split('.')[1]));
             const userRole = decodedToken.role;
             setIsAdmin(userRole === 'admin');
             setIsLoggedIn(true);
-            if (name) setUsername(name);
+            if (name) setUsername(name); 
         }
     }, []);
 
@@ -78,7 +78,7 @@ const Navbar = ({ onSearch }) => {
                         <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
                         {isAdmin && (
-                            <li><Link className="text-gray-400 hover:text-white" to="/adminPage">AdminPage</Link></li>
+                            <li><Link className="text-gray-400 hover:text-white" to="/admin">AdminPage</Link></li>
                         )}
                         {isLoggedIn && (
                             <li>
