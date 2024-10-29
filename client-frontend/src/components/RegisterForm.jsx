@@ -41,7 +41,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     // ===================================
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         try {
             if (editMode) {
                 // Upgrading existing user
@@ -59,15 +59,15 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                     password,
                 });
                 setMessage('Usuario registrado con éxito.');
-    
-                // Almacenar el nombre y el token en localStorage
+
+                // Store name and token in localStorage
                 localStorage.setItem('name', name);
                 localStorage.setItem('role', response.data.role);
-                localStorage.setItem('token', response.data.token); 
-    
+                localStorage.setItem('token', response.data.token);
+
                 resetRegisterForm();
                 setTimeout(() => {
-                    navigate('/blog'); 
+                    navigate('/blog');
                 }, 2000);
             }
         } catch (error) {

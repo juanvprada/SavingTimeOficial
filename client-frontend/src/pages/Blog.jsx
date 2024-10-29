@@ -20,19 +20,21 @@ function BlogPost({ post }) {
 }
 
 const Blog = () => {
+  // Inicializamos el estado para la búsqueda, artículos, visibilidad del componente de creación y likes
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
-  const [likes, setLikes] = useState({}); 
+  const [likes, setLikes] = useState({});
   const navigate = useNavigate();
 
-  // Obtener rol y token del usuario desde localStorage
-  const role = localStorage.getItem('role'); 
-  const token = localStorage.getItem('token'); 
+  // Obtenemos rol y token del usuario desde localStorage
+  const role = localStorage.getItem('role');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        // Obtenemos los posts desde el servicio
         const posts = await getPosts();
         console.log('Artículos obtenidos:', posts);
         setArticles(posts);
@@ -41,15 +43,16 @@ const Blog = () => {
       }
     };
 
-    fetchPosts();
+    fetchPosts(); 
   }, []);
 
   const handleDelete = async (id) => {
+    // Confirmamos la eliminación del post
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este post?");
     if (confirmDelete) {
       try {
-        await deletePost(id);
-        setArticles(articles.filter(article => article.id !== id));
+        await deletePost(id); 
+        setArticles(articles.filter(article => article.id !== id)); 
       } catch (error) {
         console.error("Error al eliminar el post:", error);
       }
@@ -57,28 +60,32 @@ const Blog = () => {
   };
 
   const handleNewPost = (newPost) => {
+    // Actualizamos la lista de artículos al agregar uno nuevo
     setArticles(prevArticles => [newPost, ...prevArticles]);
   };
 
-  // Función para manejar el click en el icono de like
+  // Función para manejar el clic en el icono de like
   const handleLike = async (postId) => {
     console.log(postId);
     try {
+      // Alternamos el estado de like para el post específico
       setLikes(prevLikes => ({
         ...prevLikes,
         [postId]: !prevLikes[postId]
       }));
-      
+
+      // Si el post ya tiene un like, lo eliminamos, de lo contrario, lo agregamos
       if (likes[postId]) {
-        await removeLike(postId); 
+        await removeLike(postId);
       } else {
-        await addLike(postId); 
+        await addLike(postId);
       }
     } catch (error) {
       console.error('Error al manejar el like:', error);
     }
   };
 
+  // Filtramos los artículos según el término de búsqueda
   const filteredArticles = articles.filter(article =>
     (article.name && article.name.toLowerCase().includes(search.toLowerCase())) ||
     (article.description && article.description.toLowerCase().includes(search.toLowerCase()))
@@ -112,7 +119,7 @@ const Blog = () => {
                 className="w-full h-48 object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'ruta_a_imagen_por_defecto';
+                  e.target.src = 'ruta_a_imagen_por_defecto'; 
                 }}
               />
               <div className="p-6">
@@ -173,6 +180,7 @@ const Blog = () => {
 };
 
 export default Blog;
+
 
 
 

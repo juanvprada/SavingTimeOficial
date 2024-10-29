@@ -3,7 +3,9 @@ import { createPost, updatePost } from '../services/services';
 import { logoImg } from '../utils';
 import { useNavigate } from 'react-router-dom';
 
+// Componente para crear o editar un post
 export const Create = ({ post, onSubmit, onCancel }) => {
+    // Definimos estados para gestionar el formulario
     const [image, setImage] = useState(null);
     const [title, setTitle] = useState("");
     const [kindOfPost, setKindOfPost] = useState("");
@@ -11,27 +13,30 @@ export const Create = ({ post, onSubmit, onCancel }) => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    // Upload post data in case of editing
+    // Cargamos los datos del post en caso de estar editando
     useEffect(() => {
         if (post) {
             setTitle(post.name || "");
             setKindOfPost(post.kindOfPost || "");
             setDescription(post.description || "");
+            // Reseteamos la imagen
             setImage(null);
         }
     }, [post]);
 
-    // Handling image change
+    // Maneja el cambio de imagen
     const handleImageChange = (event) => {
         const selectedImage = event.target.files[0];
         if (!selectedImage) {
             alert("Debes seleccionar una imagen.");
             return;
         }
+        // Almacenamos la imagen seleccionada
         setImage(selectedImage);
     };
 
     const handleSubmit = async (event) => {
+        // Prevenimos el comportamiento por defecto del formulario
         event.preventDefault();
 
         const formData = new FormData();
@@ -46,10 +51,12 @@ export const Create = ({ post, onSubmit, onCancel }) => {
         try {
             let newPost;
             if (post) {
+                // Si estamos editando un post, actualizamos
                 await updatePost(post.id, formData);
                 alert('Post actualizado exitosamente');
                 newPost = { ...post, ...{ name: title, kindOfPost, description, image: image ? image.name : post.image } };
             } else {
+                // Si estamos creando un nuevo post, lo creamos
                 newPost = await createPost(formData);
                 alert('Post creado exitosamente');
             }
@@ -62,7 +69,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
             setError('Hubo un error al procesar el Post: ' + error.message);
         }
     };
-    
+
     return (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-50">
             <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md m-5 relative z-10">
@@ -74,7 +81,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                     />
                 </div>
                 <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">
-                    {post ? 'Editar Post' : 'Nuevo Post'}
+                    {post ? 'Editar Post' : 'Nuevo Post'} {/* Título dinámico según el modo */}
                 </h3>
                 {error && <div className="text-red-500 text-center mb-4">{error}</div>}
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4">
