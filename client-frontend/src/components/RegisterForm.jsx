@@ -142,7 +142,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
             <div className="text-center mt-4">
                 <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/acceso">¿Ya tienes cuenta? Inicia sesión</Link>
                 <br />
-                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/recuperar-contraseña">¿Olvidaste tu contraseña?</Link>
+                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/recuperar-password">¿Olvidaste tu contraseña?</Link>
             </div>
         </section>
     );
