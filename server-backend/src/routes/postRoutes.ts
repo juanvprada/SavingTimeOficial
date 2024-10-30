@@ -11,7 +11,7 @@ router.post('/', upload.single('image'), createPost);
 router.put('/:id', upload.single('image'), updatePost); 
 router.delete('/:id', deletePost); 
 
-// Exporta el router
+
 export default router;
 
 

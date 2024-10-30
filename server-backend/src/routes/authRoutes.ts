@@ -1,5 +1,4 @@
-// authRoutes.ts
-import express, { Request, Response } from 'express'; 
+import express, { Request, Response } from 'express';
 import { loginUser } from '../controllers/userController';
 import { authMiddleware } from '../middleware/authMiddleware';
 
@@ -10,10 +9,10 @@ router.post('/acceso', loginUser);
 
 // Ruta protegida para el perfil
 router.get('/perfil', authMiddleware, (req: Request & { user?: { userId: number; role: string } }, res: Response) => {
-    const userId = req.user?.userId; 
-    const role = req.user?.role; 
+    const userId = req.user?.userId;
+    const role = req.user?.role;
 
-    // Aquí deberías buscar al usuario en la base de datos para devolver su información
+    // Buscamos al usuario en la base de datos para devolver su información
     res.json({
         message: 'Perfil de usuario',
         userId,
