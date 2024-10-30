@@ -7,18 +7,6 @@ import IconCreate from '../components/IconCreate';
 import { addLike, removeLike } from '../api/likesApi';
 import { getLikesCount } from '../api/likesApi';
 
-const BASE_URL = "http://localhost:5000";
-
-function BlogPost({ post }) {
-  return (
-    <div>
-      <h2>{post.name}</h2>
-      <p>{post.kindOfPost}</p>
-      <p>{post.description}</p>
-      <img src={`${BASE_URL}${post.image}`} alt={post.name} />
-    </div>
-  );
-}
 
 const Blog = () => {
   // Inicializamos el estado para la búsqueda, artículos, visibilidad del componente de creación y likes
@@ -87,14 +75,14 @@ const Blog = () => {
         await removeLike(postId);
         setLikesCount(prev => ({
           ...prev,
-          [postId]: prev[postId] - 1, // Decrementar el conteo de likes
+          [postId]: prev[postId] - 1, 
         }));
       } else {
         // Si no ha dado like, agregar un nuevo like
         await addLike(postId);
         setLikesCount(prev => ({
           ...prev,
-          [postId]: (prev[postId] || 0) + 1, // Incrementar el conteo de likes
+          [postId]: (prev[postId] || 0) + 1, 
         }));
       }
     } catch (error) {
