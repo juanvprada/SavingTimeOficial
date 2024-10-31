@@ -1,15 +1,19 @@
+// LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logoImg } from '../utils';
+import useStore from '../store/store';
+import axios from 'axios'; // Asegúrate de importar axios
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    
+    const setToken = useStore((state) => state.setToken);
+    const setRole = useStore((state) => state.setRole);
+    const setUsername = useStore((state) => state.setUsername); // Obtenemos la función para establecer el nombre de usuario
     const navigate = useNavigate();
 
-    // Handling of the login form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
     
@@ -19,31 +23,16 @@ const LoginForm = () => {
         }
     
         try {
-            const response = await fetch('http://localhost:5000/api/auth/acceso', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-    
-            // Check if the response was successful
-            if (!response.ok) {
-                const errorData = await response.json();
-                console.log('Error de respuesta del servidor:', errorData);
-                throw new Error(errorData.message || 'Error al iniciar sesión');
-            }
-            console.log('Respuesta de la API:', response.data);
-            // Processes the response in case of success
-            const data = await response.json();
-            console.log('Nombre recibido de la API:', data.name);
-            if (data.token) {
-                // Stores token, role and user name in localStorage
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('role', data.role);
-                localStorage.setItem('name', data.name); 
-                
-                navigate('/blog');
+            const response = await axios.post('http://localhost:5000/api/auth/acceso', { email, password });
+            const { token, role, name } = response.data;
+
+            if (token) {
+                // Almacena el token y otros datos
+                setToken(token);  // Actualiza el token en Zustand
+                setRole(role);    // Actualiza el rol en Zustand
+                setUsername(name); // Establece el nombre de usuario en Zustand
+
+                navigate('/blog');  // Redirige después de iniciar sesión
             } else {
                 setError('Correo electrónico o contraseña incorrectos.');
             }
@@ -104,6 +93,9 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+
+
+
 
 
 

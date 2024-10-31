@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { logoImg } from '../utils';
+import useStore from '../store/store';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
     const [name, setName] = useState('');
@@ -9,6 +10,9 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+    const setToken = useStore((state) => state.setToken);
+    const setRole = useStore((state) => state.setRole);
+    const setUsername = useStore((state) => state.setUsername); // Agregado para almacenar el nombre de usuario
 
     useEffect(() => {
         if (editMode && initialData) {
@@ -17,9 +21,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
         }
     }, [initialData, editMode]);
 
-    // ===============================
-    // Password validation
-    // ===============================
     const validatePasswordStrength = (password) => {
         const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
         return strongPasswordRegex.test(password);
@@ -28,17 +29,8 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     const handlePasswordChange = (e) => {
         const inputPassword = e.target.value;
         setPassword(inputPassword);
-
-        if (!validatePasswordStrength(inputPassword)) {
-            setMessage('La contraseña debe tener al menos 8 caracteres, incluyendo letras y números.');
-        } else {
-            setMessage('');
-        }
     };
 
-    // ===================================
-    // Handling the submission of the form
-    // ===================================
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -60,15 +52,16 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 });
                 setMessage('Usuario registrado con éxito.');
 
-                // Store name and token in localStorage
-                localStorage.setItem('name', name);
-                localStorage.setItem('role', response.data.role);
-                localStorage.setItem('token', response.data.token);
+                // Store name and token in Zustand
+                const { token, role } = response.data;
+                setToken(token);  // Actualiza el token en Zustand
+                setRole(role);    // Actualiza el rol en Zustand
+                setUsername(name); // Almacena el nombre de usuario en Zustand
 
                 resetRegisterForm();
                 setTimeout(() => {
                     navigate('/blog');
-                }, 2000);
+                },);
             }
         } catch (error) {
             if (error.response) {
@@ -81,9 +74,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
         }
     };
 
-    // ====================================
-    // Function to reset the form
-    // ====================================
     const resetRegisterForm = () => {
         setName('');
         setEmail('');
@@ -93,9 +83,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
         }, 2000);
     };
 
-    // ==========================
-    // Rendering of the component
-    // ==========================
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
             <div className="text-center mb-6">
@@ -149,6 +136,8 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 };
 
 export default RegisterForm;
+
+
 
 
 

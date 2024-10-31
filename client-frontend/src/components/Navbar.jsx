@@ -1,30 +1,17 @@
-import React, { useState, useEffect } from 'react';
+// Navbar.jsx
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoImg } from '../utils';
 import Search from './Search';
 import ButtonIcon from '../components/ButtonIcon';
+import useStore from '../store/store'; // Importar el store
 
 const Navbar = ({ onSearch }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [username, setUsername] = useState('');
-
     const navigate = useNavigate();
     const location = useLocation();
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        const name = localStorage.getItem('name');
-    
-        if (token) {
-            const decodedToken = JSON.parse(atob(token.split('.')[1]));
-            const userRole = decodedToken.role;
-            setIsAdmin(userRole === 'admin');
-            setIsLoggedIn(true);
-            if (name) setUsername(name); 
-        }
-    }, []);
+    const isLoggedIn = useStore((state) => !!state.token); // Verifica si el usuario está logueado
+    const username = useStore((state) => state.username); // Obtiene el nombre de usuario
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -37,9 +24,10 @@ const Navbar = ({ onSearch }) => {
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('name');
-        setIsLoggedIn(false);
-        setIsAdmin(false);
-        setUsername('');
+        // Limpiar el estado de Zustand
+        useStore.getState().setToken(null);
+        useStore.getState().setRole(null);
+        useStore.getState().setUsername(null);
         navigate('/');
     };
 
@@ -77,9 +65,6 @@ const Navbar = ({ onSearch }) => {
                         <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
-                        {isAdmin && (
-                            <li><Link className="text-gray-400 hover:text-white" to="/admin">AdminPage</Link></li>
-                        )}
                         {isLoggedIn && (
                             <li>
                                 <ButtonIcon
@@ -121,9 +106,6 @@ const Navbar = ({ onSearch }) => {
                         <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
-                        {isAdmin && (
-                            <li><Link className="text-gray-400 hover:text-white" to="/admin">AdminPage</Link></li>
-                        )}
                         {isLoggedIn && (
                             <li>
                                 <ButtonIcon
@@ -141,6 +123,8 @@ const Navbar = ({ onSearch }) => {
 };
 
 export default Navbar;
+
+
 
 
 

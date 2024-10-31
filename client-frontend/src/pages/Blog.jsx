@@ -4,9 +4,7 @@ import ButtonIcon from '../components/ButtonIcon';
 import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate';
-import { addLike, removeLike } from '../api/likesApi';
-import { getLikesCount } from '../api/likesApi';
-
+import { getLikesCount, toggleLike } from '../services/likeServices'; // Actualizado para usar likeServices
 
 const Blog = () => {
   // Inicializamos el estado para la búsqueda, artículos, visibilidad del componente de creación y likes
@@ -16,11 +14,30 @@ const Blog = () => {
   const [likes, setLikes] = useState({});
   const [likesCount, setLikesCount] = useState({});
   const navigate = useNavigate();
-  
 
   // Obtenemos rol y token del usuario desde localStorage
   const role = localStorage.getItem('role');
   const token = localStorage.getItem('token');
+
+  const fetchPosts = async () => {
+    try {
+        const posts = await getPosts();
+        setArticles(posts);
+
+        // Cargar el conteo de likes para cada post
+        const likesCountPromises = posts.map(post => getLikesCount(post.id));
+        const likesCounts = await Promise.all(likesCountPromises);
+        
+        // Establecemos los likes en el estado
+        const initialLikes = {};
+        likesCounts.forEach((count, index) => {
+            initialLikes[posts[index].id] = count.count;
+        });
+        setLikes(initialLikes);
+    } catch (error) {
+        console.error('Error al obtener los artículos:', error);
+    }
+};
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -29,7 +46,7 @@ const Blog = () => {
         setArticles(posts);
 
         // Cargar el conteo de likes para cada post
-        const likesCountPromises = posts.map(post => getLikesCount(post.id)); 
+        const likesCountPromises = posts.map(post => getLikesCount(post.id));
         const likesCounts = await Promise.all(likesCountPromises);
         
         // Establecemos los likes en el estado
@@ -59,37 +76,28 @@ const Blog = () => {
     }
   };
 
-  const handleNewPost = (newPost) => {
+  const handleNewPost = async (newPost) => {
     // Actualizamos la lista de artículos al agregar uno nuevo
     setArticles(prevArticles => [newPost, ...prevArticles]);
+    await fetchPosts();
   };
 
   // Función para manejar el clic en el icono de like
   const handleLike = async (postId) => {
-    try {
-      // Verificar si el usuario ya ha dado like
-      const hasLiked = likesCount[postId] > 0;
+    const trimmedPostId = postId.trim();
   
-      // Si ya ha dado like, eliminar el like
-      if (hasLiked) {
-        await removeLike(postId);
-        setLikesCount(prev => ({
-          ...prev,
-          [postId]: prev[postId] - 1, 
-        }));
-      } else {
-        // Si no ha dado like, agregar un nuevo like
-        await addLike(postId);
-        setLikesCount(prev => ({
-          ...prev,
-          [postId]: (prev[postId] || 0) + 1, 
-        }));
-      }
+    try {
+      const response = await toggleLike(trimmedPostId);
+  
+      // Actualizar el estado de "likes" según la respuesta del backend
+      setLikes(prev => ({
+        ...prev,
+        [trimmedPostId]: response.liked ? (prev[trimmedPostId] || 0) + 1 : prev[trimmedPostId] - 1,
+      }));
     } catch (error) {
       console.error('Error al manejar el like:', error);
     }
   };
-
   // Filtramos los artículos según el término de búsqueda
   const filteredArticles = articles.filter(article =>
     (article.name && article.name.toLowerCase().includes(search.toLowerCase())) ||
@@ -152,7 +160,7 @@ const Blog = () => {
                     <div className="flex items-center">
                     <ButtonIcon
                       icon={likes[article.id] ? "fas fa-heart text-red-500" : "far fa-heart"}
-                      onClick={() => handleLike(article.id)}
+                      onClick={() => handleLike(article.id)} // Asegúrate de pasar el id correcto
                       title="Dar like"
                     />
                     <span className="ml-2">{likes[article.id] || 0}</span>
@@ -188,6 +196,16 @@ const Blog = () => {
 };
 
 export default Blog;
+
+
+
+
+
+
+
+
+
+
 
 
 
