@@ -4,10 +4,10 @@ import ButtonIcon from '../components/ButtonIcon';
 import { useNavigate, Link } from 'react-router-dom';
 import { Create } from './Createpost';
 import IconCreate from '../components/IconCreate';
-import { getLikesCount, toggleLike } from '../services/likeServices'; // Actualizado para usar likeServices
+import { getLikesCount, toggleLike } from '../services/likeServices';
 
 const Blog = () => {
-  // Inicializamos el estado para la búsqueda, artículos, visibilidad del componente de creación y likes
+
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
@@ -15,29 +15,26 @@ const Blog = () => {
   const [likesCount, setLikesCount] = useState({});
   const navigate = useNavigate();
 
-  // Obtenemos rol y token del usuario desde localStorage
   const role = localStorage.getItem('role');
   const token = localStorage.getItem('token');
 
   const fetchPosts = async () => {
     try {
-        const posts = await getPosts();
-        setArticles(posts);
+      const posts = await getPosts();
+      setArticles(posts);
 
-        // Cargar el conteo de likes para cada post
-        const likesCountPromises = posts.map(post => getLikesCount(post.id));
-        const likesCounts = await Promise.all(likesCountPromises);
-        
-        // Establecemos los likes en el estado
-        const initialLikes = {};
-        likesCounts.forEach((count, index) => {
-            initialLikes[posts[index].id] = count.count;
-        });
-        setLikes(initialLikes);
+      const likesCountPromises = posts.map(post => getLikesCount(post.id));
+      const likesCounts = await Promise.all(likesCountPromises);
+
+      const initialLikes = {};
+      likesCounts.forEach((count, index) => {
+        initialLikes[posts[index].id] = count.count;
+      });
+      setLikes(initialLikes);
     } catch (error) {
-        console.error('Error al obtener los artículos:', error);
+      console.error('Error al obtener los artículos:', error);
     }
-};
+  };
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -45,11 +42,9 @@ const Blog = () => {
         const posts = await getPosts();
         setArticles(posts);
 
-        // Cargar el conteo de likes para cada post
         const likesCountPromises = posts.map(post => getLikesCount(post.id));
         const likesCounts = await Promise.all(likesCountPromises);
-        
-        // Establecemos los likes en el estado
+
         const initialLikes = {};
         likesCounts.forEach((count, index) => {
           initialLikes[posts[index].id] = count.count;
@@ -60,16 +55,16 @@ const Blog = () => {
       }
     };
 
-    fetchPosts(); 
+    fetchPosts();
   }, []);
 
   const handleDelete = async (id) => {
-    // Confirmamos la eliminación del post
+    
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este post?");
     if (confirmDelete) {
       try {
-        await deletePost(id); 
-        setArticles(articles.filter(article => article.id !== id)); 
+        await deletePost(id);
+        setArticles(articles.filter(article => article.id !== id));
       } catch (error) {
         console.error("Error al eliminar el post:", error);
       }
@@ -77,18 +72,17 @@ const Blog = () => {
   };
 
   const handleNewPost = async (newPost) => {
-    // Actualizamos la lista de artículos al agregar uno nuevo
+    
     setArticles(prevArticles => [newPost, ...prevArticles]);
     await fetchPosts();
   };
 
-  // Función para manejar el clic en el icono de like
   const handleLike = async (postId) => {
     const trimmedPostId = postId.trim();
-  
+
     try {
       const response = await toggleLike(trimmedPostId);
-  
+
       // Actualizar el estado de "likes" según la respuesta del backend
       setLikes(prev => ({
         ...prev,
@@ -132,7 +126,7 @@ const Blog = () => {
                 className="w-full h-48 object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'ruta_a_imagen_por_defecto'; 
+                  e.target.src = 'ruta_a_imagen_por_defecto';
                 }}
               />
               <div className="p-6">
@@ -158,12 +152,12 @@ const Blog = () => {
                   {/* Icono de corazón visible para usuarios logueados */}
                   {token && (
                     <div className="flex items-center">
-                    <ButtonIcon
-                      icon={likes[article.id] ? "fas fa-heart text-red-500" : "far fa-heart"}
-                      onClick={() => handleLike(article.id)} // Asegúrate de pasar el id correcto
-                      title="Dar like"
-                    />
-                    <span className="ml-2">{likes[article.id] || 0}</span>
+                      <ButtonIcon
+                        icon={likes[article.id] ? "fas fa-heart text-red-500" : "far fa-heart"}
+                        onClick={() => handleLike(article.id)} 
+                        title="Dar like"
+                      />
+                      <span className="ml-2">{likes[article.id] || 0}</span>
                     </div>
                   )}
                 </div>

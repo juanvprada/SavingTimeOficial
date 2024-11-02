@@ -12,7 +12,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     const navigate = useNavigate();
     const setToken = useStore((state) => state.setToken);
     const setRole = useStore((state) => state.setRole);
-    const setUsername = useStore((state) => state.setUsername); // Agregado para almacenar el nombre de usuario
+    const setUsername = useStore((state) => state.setUsername); 
 
     useEffect(() => {
         if (editMode && initialData) {
@@ -36,7 +36,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 
         try {
             if (editMode) {
-                // Upgrading existing user
                 await axios.put('http://localhost:5000/api/users/' + initialData._id, {
                     name,
                     email,
@@ -44,7 +43,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 });
                 setMessage('Usuario actualizado correctamente.');
             } else {
-                // New user registration
                 const response = await axios.post('http://localhost:5000/api/users/register', {
                     name,
                     email,
@@ -54,9 +52,9 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 
                 // Store name and token in Zustand
                 const { token, role } = response.data;
-                setToken(token);  // Actualiza el token en Zustand
-                setRole(role);    // Actualiza el rol en Zustand
-                setUsername(name); // Almacena el nombre de usuario en Zustand
+                setToken(token);  
+                setRole(role);    
+                setUsername(name); 
 
                 resetRegisterForm();
                 setTimeout(() => {

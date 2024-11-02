@@ -1,5 +1,5 @@
 // Navbar.jsx
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoImg } from '../utils';
 import Search from './Search';
@@ -12,6 +12,7 @@ const Navbar = ({ onSearch }) => {
     const location = useLocation();
     const isLoggedIn = useStore((state) => !!state.token); // Verifica si el usuario está logueado
     const username = useStore((state) => state.username); // Obtiene el nombre de usuario
+    const role = useStore((state) => state.role)
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -22,12 +23,12 @@ const Navbar = ({ onSearch }) => {
     };
 
     const handleLogout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('name');
         // Limpiar el estado de Zustand
         useStore.getState().setToken(null);
         useStore.getState().setRole(null);
         useStore.getState().setUsername(null);
+        localStorage.removeItem('token');
+        localStorage.removeItem('name');
         navigate('/');
     };
 
@@ -65,6 +66,9 @@ const Navbar = ({ onSearch }) => {
                         <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
+                        {role == 'admin' && (
+                            <li><Link className="text-gray-400 hover:text-white" to="/admin">AdminPage</Link></li>
+                        )}
                         {isLoggedIn && (
                             <li>
                                 <ButtonIcon
@@ -123,13 +127,3 @@ const Navbar = ({ onSearch }) => {
 };
 
 export default Navbar;
-
-
-
-
-
-
-
-
-
-

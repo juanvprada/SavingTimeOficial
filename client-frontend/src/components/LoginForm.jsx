@@ -1,9 +1,8 @@
-// LoginForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logoImg } from '../utils';
 import useStore from '../store/store';
-import axios from 'axios'; // Asegúrate de importar axios
+import axios from 'axios';
 
 const LoginForm = () => {
     const [email, setEmail] = useState('');
@@ -11,28 +10,28 @@ const LoginForm = () => {
     const [error, setError] = useState('');
     const setToken = useStore((state) => state.setToken);
     const setRole = useStore((state) => state.setRole);
-    const setUsername = useStore((state) => state.setUsername); // Obtenemos la función para establecer el nombre de usuario
+    const setUsername = useStore((state) => state.setUsername);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!email || !password) {
             setError('Por favor, completa todos los campos.');
             return;
         }
-    
+
         try {
             const response = await axios.post('http://localhost:5000/api/auth/acceso', { email, password });
             const { token, role, name } = response.data;
 
             if (token) {
-                // Almacena el token y otros datos
-                setToken(token);  // Actualiza el token en Zustand
-                setRole(role);    // Actualiza el rol en Zustand
-                setUsername(name); // Establece el nombre de usuario en Zustand
+                // Almacena el token y otros datos Zustand
+                setToken(token);
+                setRole(role);
+                setUsername(name);
 
-                navigate('/blog');  // Redirige después de iniciar sesión
+                navigate('/blog');
             } else {
                 setError('Correo electrónico o contraseña incorrectos.');
             }
