@@ -1,7 +1,6 @@
-// src/AdminPage.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import useStore from '../store/store'; // Importamos la tienda Zustand
+import useStore from '../store/store';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);

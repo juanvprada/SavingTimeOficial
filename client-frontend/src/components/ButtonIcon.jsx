@@ -1,4 +1,3 @@
-// ButtonIcon.jsx
 import React from 'react';
 
 const ButtonIcon = ({ icon, onClick, title, isLiked }) => {

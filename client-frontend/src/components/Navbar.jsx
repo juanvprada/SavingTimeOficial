@@ -1,17 +1,16 @@
-// Navbar.jsx
 import React, { useState,useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoImg } from '../utils';
 import Search from './Search';
 import ButtonIcon from '../components/ButtonIcon';
-import useStore from '../store/store'; // Importar el store
+import useStore from '../store/store'; 
 
 const Navbar = ({ onSearch }) => {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const isLoggedIn = useStore((state) => !!state.token); // Verifica si el usuario está logueado
-    const username = useStore((state) => state.username); // Obtiene el nombre de usuario
+    const isLoggedIn = useStore((state) => !!state.token); 
+    const username = useStore((state) => state.username); 
     const role = useStore((state) => state.role)
 
     const toggleMenu = () => {
