@@ -39,6 +39,15 @@ const AdminPage = () => {
       );
     } catch (error) {
       console.error('Error al actualizar el rol del usuario:', error);
+      if (error.response) {
+        console.error('Datos del error:', error.response.data);
+        console.error('Status del error:', error.response.status);
+        console.error('Headers del error:', error.response.headers);
+      } else if (error.request) {
+        console.error('No se recibió respuesta del servidor:', error.request);
+      } else {
+        console.error('Error al configurar la solicitud:', error.message);
+      }
     }
   };
 

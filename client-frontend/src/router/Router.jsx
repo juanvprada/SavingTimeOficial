@@ -14,7 +14,7 @@ import PostDetail from "../pages/PostDetail.jsx";
 import Profile from "../pages/Profile.jsx";
 import AdminPage from "../pages/AdminPage.jsx"; 
 
-const userEmail = 'proyectoBioBlog@gmail.com';
+const userEmail = 'admin@gmail.com';
 
 export const router = createBrowserRouter([
     {
@@ -70,7 +70,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "admin",
-                element: userEmail === 'proyectoBioBlog@gmail.com' ? <AdminPage /> : <Navigate to="/" />
+                element: userEmail === 'admin@gmail.com' ? <AdminPage /> : <Navigate to="/" />
             },
         ]
     }
