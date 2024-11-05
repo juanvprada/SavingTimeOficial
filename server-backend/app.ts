@@ -9,7 +9,7 @@ import UserModel from './model/userModel';
 const app = express();
 
 app.use(cors({
-  origin: 'http://localhost:5173', // el localhost donde esta corriendo el front
+  origin: 'http://localhost:5173', 
 }));
 app.use(express.json());
 
@@ -17,7 +17,7 @@ app.use('/api/posts', router);
 
   const initializeDatabase = async () => {
     try {
-      await conectionDB.authenticate();  // Autheticas the database
+      await conectionDB.authenticate();  
       console.log('Conexión a la base de datos exitosa');
   
       // Fetch all memes
@@ -35,7 +35,7 @@ app.use('/api/posts', router);
   initializeDatabase();
 
 
-export const server = app.listen((PORT || 3000), () => {
+export const server = app.listen((PORT || 5000), () => {
   console.log(`Servidor corriendo en el puerto http://localhost:${PORT}/`);;
 });
 
