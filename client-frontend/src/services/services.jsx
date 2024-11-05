@@ -1,70 +1,74 @@
+import axios from 'axios';
 
+const API_URL = 'http://localhost:5000/api/posts';
+const BASE_IMAGE_URL = 'http://localhost:5000/uploads/';
 
-const API_URL = ''; 
-
-// ===========================
-// Crear un nuevo Post
-// ===========================
-export const createPost = async (newPost) => {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(nePost),
-        });
-        return response; 
-    } catch (error) {
-        console.error("Error al crear Post:", error);
-        throw error; 
-    }
+const handleError = (error, action) => {
+  console.error(`Error al ${action}:`, error.response ? error.response.data : error.message);
+  throw error;
 };
-// =====================
-// Traer todos los Posts
-// =====================
+
+//==================
+// Create a new Post
+//==================
+export const createPost = async (formData) => {
+  try {
+    const response = await axios.post(API_URL, formData);
+    response.data.image = `${BASE_IMAGE_URL}${response.data.image}`;
+    return response.data; 
+  } catch (error) {
+    handleError(error, "crear Post");
+  }
+};
+
+//==============
+// Get all posts
+//==============
 export const getPosts = async () => {
-    try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-            throw new Error('Error al obtener los Posts');
-        }
-        const posts = await response.json();
-        return posts; 
-    } catch (error) {
-        console.error("Error al obtener Posts:", error);
-        throw error; 
-    }
+  try {
+    const response = await axios.get(API_URL);
+    return response.data;
+  } catch (error) {
+    handleError(error, "obtener Posts");
+  }
 };
-// ==================
-// Actualizar un Post
-// ==================
-export const updatePost = async (id, updatedPost) => {
-    try {
-        const response = await fetch(`${API_URL}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updatedPost),
-        });
-        return response;
-    } catch (error) {
-        console.error("Error al actualizar Post:", error);
-        throw error;
-    }
+
+//=============
+// Get one post
+//=============
+export const getOnePost = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/${id}`);
+    return response.data;
+  } catch (error) {
+    handleError(error, "obtener el Post");
+  }
 };
-// ================
-// Eliminar un Post
-// ================
+
+//================
+// Update one post
+//================
+export const updatePost = async (id, postData) => {
+  try {
+    const response = await axios.put(`${API_URL}/${id}`, postData);
+    return response.data;
+  } catch (error) {
+    handleError(error, "actualizar Post");
+  }
+};
+
+//================
+// Delete one post
+//================
 export const deletePost = async (id) => {
-    try {
-        const response = await fetch(`${API_URL}/${id}`, {
-            method: 'DELETE',
-        });
-        return response;
-    } catch (error) {
-        console.error("Error al eliminar Post:", error);
-        throw error;
-    }
+  try {
+    const response = await axios.delete(`${API_URL}/${id}`);
+    return response;
+  } catch (error) {
+    handleError(error, "eliminar Post");
+  }
 };
+
+
+
+
