@@ -1,18 +1,17 @@
 import { Request, Response } from 'express';
 import { db } from '../database/db';
 
+//================================
 // Actualizar el rol de un usuario
+//================================
 export const updateUserRole = async (req: Request & { user?: { userId: string; role: string } }, res: Response) => {
     const user = req.user;
 
-    // Verificamos si el usuario es administrador
+    
     if (user?.role !== 'admin') {
-        // Denegamos el acceso si no es administrador
         return res.status(403).json({ message: 'Acceso denegado' });
     }
-    // Obtenemos el ID del usuario desde los parámetros de la solicitud
     const { id } = req.params;
-    // Obtenemos el nuevo rol desde el cuerpo de la solicitud
     const { role } = req.body;
 
     try {

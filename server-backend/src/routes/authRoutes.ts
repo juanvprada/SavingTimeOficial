@@ -12,7 +12,6 @@ router.get('/perfil', authMiddleware, (req: Request & { user?: { userId: number;
     const userId = req.user?.userId;
     const role = req.user?.role;
 
-    // Buscamos al usuario en la base de datos para devolver su información
     res.json({
         message: 'Perfil de usuario',
         userId,
