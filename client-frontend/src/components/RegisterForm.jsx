@@ -2,56 +2,66 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { logoImg } from '../utils';
+import useStore from '../store/store';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
-    
-    const [name, setName] = useState(initialData.name || '');
-    const [email, setEmail] = useState(initialData.email || '');
-    const [password, setPassword] = useState(initialData.password || '');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-
     const navigate = useNavigate();
+    const setToken = useStore((state) => state.setToken);
+    const setRole = useStore((state) => state.setRole);
+    const setUsername = useStore((state) => state.setUsername); 
 
     useEffect(() => {
-        setName(initialData.name || '');
-        setEmail(initialData.email || '');
-        setPassword('');
-    }, [initialData]);
+        if (editMode && initialData) {
+            setName(initialData.name || '');
+            setEmail(initialData.email || '');
+        }
+    }, [initialData, editMode]);
 
-    // ===============================
-    // Manejo del envío del formulario
-    // ===============================
+    const validatePasswordStrength = (password) => {
+        const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        return strongPasswordRegex.test(password);
+    };
+
+    const handlePasswordChange = (e) => {
+        const inputPassword = e.target.value;
+        setPassword(inputPassword);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
             if (editMode) {
-                // ==================================
-                // Actualización de usuario existente
-                // ==================================
-                const response = await axios.put('http://localhost:5000/api/users/' + initialData._id, {
+                await axios.put('http://localhost:5000/api/users/' + initialData._id, {
                     name,
                     email,
                     password,
                 });
                 setMessage('Usuario actualizado correctamente.');
             } else {
-                // ============================
-                // Registro de un nuevo usuario
-                // ============================
                 const response = await axios.post('http://localhost:5000/api/users/register', {
                     name,
                     email,
                     password,
                 });
-                setMessage(response.data.message);
+                setMessage('Usuario registrado con éxito.');
+
+                // Store name and token in Zustand
+                const { token, role } = response.data;
+                setToken(token);  
+                setRole(role);    
+                setUsername(name); 
+
                 resetRegisterForm();
-                navigate('/acceso');
+                setTimeout(() => {
+                    navigate('/blog');
+                },);
             }
         } catch (error) {
-            // =================
-            // Manejo de errores
-            // =================
             if (error.response) {
                 setMessage(error.response.data.message || 'Error al registrar usuario');
             } else if (error.request) {
@@ -62,9 +72,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
         }
     };
 
-    // ====================================
-    // Función para reiniciar el formulario
-    // ====================================
     const resetRegisterForm = () => {
         setName('');
         setEmail('');
@@ -74,9 +81,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
         }, 2000);
     };
 
-    // ==========================
-    // Renderizado del componente
-    // ==========================
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
             <div className="text-center mb-6">
@@ -110,7 +114,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                     <input
                         type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         required
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
@@ -123,13 +127,17 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
             <div className="text-center mt-4">
                 <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/acceso">¿Ya tienes cuenta? Inicia sesión</Link>
                 <br />
-                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/recuperar-contraseña">¿Olvidaste tu contraseña?</Link>
+                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/recuperar-password">¿Olvidaste tu contraseña?</Link>
             </div>
         </section>
     );
 };
 
 export default RegisterForm;
+
+
+
+
 
 
 

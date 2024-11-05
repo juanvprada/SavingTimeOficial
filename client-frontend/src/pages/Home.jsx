@@ -5,7 +5,7 @@ import Carousel from '../components/Carousel';
 const Home = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Video de inicio */}
+      {/* Video home */}
       <div className="relative">
         <video autoPlay loop muted playsInline={true} className="w-full h-50 object-cover">
           <source src= {homeVid} type="video/mp4" />
@@ -16,7 +16,7 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Apartados para información adicional */}
+      {/* Additional information boxes */}
       <section className="container mx-auto py-12 px-4">
         <div className="w-full">
           <Carousel />
