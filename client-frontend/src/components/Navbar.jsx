@@ -18,7 +18,7 @@ const Navbar = ({ onSearch }) => {
     };
 
     const navigateToRegister = () => {
-        navigate(location.pathname === '/registro' ? '/' : '/registro');
+        navigate(location.pathname === '/acceso' ? '/' : '/acceso');
     };
 
     const handleLogout = () => {

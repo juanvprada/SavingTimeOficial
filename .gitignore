@@ -2,4 +2,8 @@ node_modules
 package-lock.json
 package.json
 *.env
-uploads
+server-backend/src/uploads
+*.jpeg
+*.jpg
+*.png
+*.webp

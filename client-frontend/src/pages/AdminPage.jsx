@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import useStore from '../store/store';
+import { useNavigate } from 'react-router-dom';
 
 const AdminPage = () => {
   const [users, setUsers] = useState([]);
   const token = useStore((state) => state.token);
+  const role = useStore((state) => state.role);
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
+    if (role !== 'admin') {
+      navigate('/'); 
+      return;
+    }
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/users', {
@@ -19,7 +27,7 @@ const AdminPage = () => {
     };
 
     fetchUsers();
-  }, [token]);
+  }, [token,role, navigate]);
 
   const handleToggleAdmin = async (userId) => {
     try {
