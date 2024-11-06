@@ -12,7 +12,7 @@ const AdminPage = () => {
 
   useEffect(() => {
     if (role !== 'admin') {
-      navigate('/'); 
+      navigate('/acceso'); 
       return;
     }
     const fetchUsers = async () => {
