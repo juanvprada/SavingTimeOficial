@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { logoImg } from '../utils';
-import useStore from '../store/store';
+
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
