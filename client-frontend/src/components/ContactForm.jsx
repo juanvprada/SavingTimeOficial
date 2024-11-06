@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "emailjs-com";
+import VoiceAssistButton from "./VoiceAssistButton";
 
 const ContactForm = () => {
   const [name, setName] = useState("");
@@ -50,6 +51,7 @@ const ContactForm = () => {
           >
             Nombre
           </label>
+          <VoiceAssistButton text="Introduce tu nombre" />
           <input
             type="text"
             id="name"
@@ -67,6 +69,7 @@ const ContactForm = () => {
           >
             Correo Electrónico
           </label>
+          <VoiceAssistButton text="Introduce tu correo electrónico " />
           <input
             type="email"
             id="email"
@@ -83,6 +86,7 @@ const ContactForm = () => {
           >
             Mensaje (máx. 100 caracteres)
           </label>
+          <VoiceAssistButton text="Introduce tu mensaje " />
           <textarea
             id="message"
             value={message}
@@ -107,6 +111,7 @@ const ContactForm = () => {
             <h3 className="text-lg font-semibold text-green-600 mb-2">
               ¡Mensaje enviado!
             </h3>
+            <VoiceAssistButton text="El mensaje ha sido enviado correctamente. Te responderemos lo más pronto posible." />
             <p className="text-sm text-gray-700">
               El mensaje ha sido enviado correctamente. Te responderemos lo más
               pronto posible.

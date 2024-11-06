@@ -87,15 +87,7 @@ const LoginForm = () => {
                     Recuperar contraseña
                 </button>
             </p>
-            <p className="mt-4 text-center">
-                <span className="text-gray-600">¿Aún no tienes cuenta? </span>
-                <button
-                    onClick={() => navigate('/registro')}
-                    className="text-green-600 hover:underline focus:outline-none"
-                >
-                    Regístrate aquí
-                </button>
-            </p>
+
         </section>
     );
 };

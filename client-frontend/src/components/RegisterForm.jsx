@@ -124,24 +124,15 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 </button>
             </form>
             {message && <p className="text-red-500 text-center mt-4">{message}</p>}
-            <div className="text-center mt-4">
-                <Link className="text-gray-500 hover:text-blue-700 text-sm" to="/acceso">
-                    ¿Ya tienes cuenta?
-                </Link>
-                <Link
-                    className="text-green-600 hover:text-green-700 hover:underline text-m ml-1" // Agregar margen a la izquierda
-                    to="/acceso"
+            <p className="mt-4 text-center">
+                <span className="text-gray-600">¿Has olvidado tu contraseña?</span>{' '}
+                <button
+                    onClick={() => navigate('/recuperar-password')}
+                    className="text-green-600 hover:underline focus:outline-none"
                 >
-                    Inicia sesión
-                </Link>
-                <br />
-                <Link
-                    className="text-green-600 hover:text-green-700 hover:underline text-sm"
-                    to="/recuperar-password"
-                >
-                    ¿Olvidaste tu contraseña?
-                </Link>
-            </div>
+                    Recuperar contraseña
+                </button>
+            </p>
         </section>
     );
 };
