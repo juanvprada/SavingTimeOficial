@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { logoImg } from '../utils';
+// import { logoImg } from '../utils';
 import useStore from '../store/store';
 import axios from 'axios';
 
@@ -43,11 +43,11 @@ const LoginForm = () => {
 
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-            <div className="text-center mb-6">
+            {/* <div className="text-center mb-6">
                 <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">Iniciar Sesión</h2>
                 <p className="text-gray-500">Accede a tu cuenta para continuar.</p>
-            </div>
+            </div> */}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
                     <label className="block text-gray-700" htmlFor="email">Correo Electrónico</label>
@@ -85,6 +85,15 @@ const LoginForm = () => {
                     className="text-green-600 hover:underline focus:outline-none"
                 >
                     Recuperar contraseña
+                </button>
+            </p>
+            <p className="mt-4 text-center">
+                <span className="text-gray-600">¿Aún no tienes cuenta? </span>
+                <button
+                    onClick={() => navigate('/registro')}
+                    className="text-green-600 hover:underline focus:outline-none"
+                >
+                    Regístrate aquí
                 </button>
             </p>
         </section>
