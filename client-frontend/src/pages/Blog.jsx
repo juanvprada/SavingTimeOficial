@@ -131,7 +131,7 @@ const Blog = () => {
               />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-green-600 mb-2">{article.name}</h3>
-                <p className="text-gray-700 mb-4">{article.description}</p>
+                <p className="text-gray-700 mb-4 line-clamp-4">{article.description}</p>
                 <div className="flex justify-between items-center">
                   {/* Icono de Editar visible solo para admin logueado */}
                   {role === 'admin' && token && (

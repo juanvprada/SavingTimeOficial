@@ -22,7 +22,6 @@ const PostDetail = ({ role, token }) => {
     fetchPost();
   }, [id]);
 
-  // Handles click out of post
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (postRef.current && !postRef.current.contains(event.target)) {
@@ -39,27 +38,17 @@ const PostDetail = ({ role, token }) => {
 
   if (!post) return <div>Loading...</div>;
 
-  const handleDelete = (postId) => {
-    console.log(`Eliminar post con ID: ${postId}`);
-  };
-
-  const handleLike = (postId) => {
-    console.log(`Dar like al post con ID: ${postId}`);
-  };
-
   return (
-    <div className="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
       <div
-        className="bg-white shadow-md rounded-lg overflow-hidden max-w-md w-full p-6"
+        className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-4xl p-10 h-full"
         ref={postRef}
       >
-        <h1 className="text-2xl font-bold text-green-600 mb-2">{post.name}</h1>
-        <img src={post.image} alt={post.name} className="w-full h-48 object-cover mb-4" />
-        <p className="text-gray-700">{post.description}</p>
+        <h1 className="text-4xl font-bold text-green-600 mb-6">{post.name}</h1>
+        <img src={post.image} alt={post.name} className="w-full h-96 object-cover mb-6" />
+        <p className="text-lg text-gray-700 leading-relaxed mb-6">{post.description}</p>
 
-        {/* Iconos visibles según el rol y token */}
-        <div className="mt-4 flex justify-between items-center">
-          {/* Icono de Editar visible solo para admin logueado */}
+        <div className="mt-6 flex justify-between items-center">
           {role === 'admin' && token && (
             <ButtonIcon
               icon="fas fa-edit"
@@ -67,7 +56,6 @@ const PostDetail = ({ role, token }) => {
               title="Editar"
             />
           )}
-          {/* Icono de Eliminar visible solo para admin logueado */}
           {role === 'admin' && token && (
             <ButtonIcon
               icon="fas fa-trash"
@@ -77,18 +65,22 @@ const PostDetail = ({ role, token }) => {
           )}
         </div>
 
-        {/* Botón para volver */}
-        <ButtonIcon
-          icon="fas fa-arrow-left"
-          onClick={() => navigate('/blog')}
-          title="Volver"
-        />
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={() => navigate('/blog')}
+            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition duration-300"
+          >
+            Volver
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default PostDetail;
+
+
 
 
 
