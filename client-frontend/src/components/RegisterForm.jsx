@@ -128,7 +128,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 <span className="text-white">¿Has olvidado tu contraseña?</span>{' '}
                 <button
                     onClick={() => navigate('/recuperar-password')}
-                    className="text-green-600 hover:underline focus:outline-none"
+                    className="text-customGreen hover:underline focus:outline-none"
                 >
                     Recuperar contraseña
                 </button>

@@ -43,6 +43,7 @@ export default {
           "900": "#064E3B",
           "950": "#022C22",
         },
+        customGreen: '#6BE73E',
         first: "#00040f",
         second: "#00f6ff",
         dimWhite: "rgba(255, 255, 255, 0.7)",

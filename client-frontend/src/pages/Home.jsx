@@ -13,34 +13,33 @@ const Home = () => {
           Tu navegador no soporta el elemento de video.
         </video>
 
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-          <h1 className="text-white text-opacity-30 text-9xl font-bold sm:text-md transform -translate-x-2/3 -translate-y-24">
+        {/* Título y AuthForm */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black bg-opacity-70 px-4">
+          <h1 className="text-white text-opacity-30 font-bold text-5xl sm:text-6xl md:text-7xl lg:text-9xl mb-4 mt-10 sm:mt-0">
             Bio Blog
           </h1>
-        </div>
-
-
-        <div className="absolute top-1/4 right-1/4 transform -translate-x-2/5 -translate-y-48">
-          <AuthForm />
+          <div className="w-full max-w-md">
+            <AuthForm />
+          </div>
         </div>
       </div>
 
-      {/* Additional information boxes */}
+      {/* Sección adicional */}
       <section className="container mx-auto py-12 px-4">
-        <div className="w-full">
+        <div className="w-full mb-8">
           <Carousel />
         </div>
-        <div className="flex flex-col md:grid-cols-3 gap-8 mt-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-6">
           <div className="bg-white p-6 shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold text-green-600 mb-4">Apartado 1</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-green-600 mb-4">Apartado 1</h2>
             <p className="text-gray-700">Contenido para el Apartado 1...</p>
           </div>
           <div className="bg-white p-6 shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold text-green-600 mb-4">Apartado 2</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-green-600 mb-4">Apartado 2</h2>
             <p className="text-gray-700">Contenido para el Apartado 2...</p>
           </div>
           <div className="bg-white p-6 shadow-md rounded-lg">
-            <h2 className="text-2xl font-bold text-green-600 mb-4">Apartado 3</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-green-600 mb-4">Apartado 3</h2>
             <p className="text-gray-700">Contenido para el Apartado 3...</p>
           </div>
         </div>
@@ -50,4 +49,5 @@ const Home = () => {
 };
 
 export default Home;
+
 
