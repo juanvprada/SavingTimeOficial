@@ -40,7 +40,7 @@ const Navbar = ({ onSearch }) => {
                 </div>
 
                 {/* Show registration button only if not logged in */}
-                {!isLoggedIn && (
+                {/* {!isLoggedIn && (
                     <div>
                         <ButtonIcon
                             icon="fas fa-user-plus fa-2x"
@@ -48,7 +48,7 @@ const Navbar = ({ onSearch }) => {
                             title="Regístrate aquí"
                         />
                     </div>
-                )}
+                )} */}
 
                 {/* Show greeting with user's name if logged in */}
                 {isLoggedIn && (

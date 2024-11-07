@@ -2,8 +2,11 @@ import React from 'react';
 import { homeVid } from '../utils';
 import Carousel from '../components/Carousel';
 import AuthForm from '../components/AuthForm'; 
+import useStore from '../store/store';
+
 
 const Home = () => {
+  const isLoggedIn = useStore((state) => !!state.token); 
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Video de fondo */}
@@ -18,9 +21,11 @@ const Home = () => {
           <h1 className="text-white text-opacity-30 font-bold text-5xl sm:text-6xl md:text-7xl lg:text-9xl mb-4 mt-10 sm:mt-0">
             Bio Blog
           </h1>
+          {!isLoggedIn && (
           <div className="w-full max-w-md">
             <AuthForm />
           </div>
+          )}
         </div>
       </div>
 
