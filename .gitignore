@@ -1,6 +1,8 @@
+.gitignore
 node_modules
 package-lock.json
 package.json
+server-backend/.env
 .env
 server-backend/src/uploads
 *.jpeg
