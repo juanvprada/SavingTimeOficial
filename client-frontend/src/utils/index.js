@@ -16,20 +16,20 @@ export const construccionImg = fotoConstruccion;
 
 //Definir los links de enlaces
 export const navLinks = [
-    {
-      id: "inicio",
-      title: "Inicio",
-    },
-    {
-      id: "blog",
-      title: "Blog",
-    },
-    {
-      id: "nosotros",
-      title: "Nosotros",
-    },
-    {
-      id: "contacto",
-      title: "Contacto",
-    },
-  ];
+  {
+    id: "inicio",
+    title: "Inicio",
+  },
+  {
+    id: "blog",
+    title: "Blog",
+  },
+  {
+    id: "nosotros",
+    title: "Nosotros",
+  },
+  {
+    id: "contacto",
+    title: "Contacto",
+  },
+];

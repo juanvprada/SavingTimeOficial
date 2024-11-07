@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import { logoImg } from '../utils';
+// import { logoImg } from '../utils';
 import useStore from '../store/store';
 
 const RegisterForm = ({ initialData = {}, editMode = false }) => {
@@ -12,7 +12,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     const navigate = useNavigate();
     const setToken = useStore((state) => state.setToken);
     const setRole = useStore((state) => state.setRole);
-    const setUsername = useStore((state) => state.setUsername); 
+    const setUsername = useStore((state) => state.setUsername);
 
     useEffect(() => {
         if (editMode && initialData) {
@@ -52,9 +52,9 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 
                 // Store name and token in Zustand
                 const { token, role } = response.data;
-                setToken(token);  
-                setRole(role);    
-                setUsername(name); 
+                setToken(token);
+                setRole(role);
+                setUsername(name);
 
                 resetRegisterForm();
                 setTimeout(() => {
@@ -83,11 +83,11 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 
     return (
         <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-            <div className="text-center mb-6">
+            {/* <div className="text-center mb-6">
                 <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">Registro de Usuario</h2>
                 <p className="text-gray-500">Crea una cuenta para acceder a contenido exclusivo.</p>
-            </div>
+            </div> */}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
                     <label className="block text-gray-700">Nombre de usuario:</label>
@@ -124,11 +124,15 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                 </button>
             </form>
             {message && <p className="text-red-500 text-center mt-4">{message}</p>}
-            <div className="text-center mt-4">
-                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/acceso">¿Ya tienes cuenta? Inicia sesión</Link>
-                <br />
-                <Link className="text-blue-500 hover:text-blue-700 text-sm" to="/recuperar-password">¿Olvidaste tu contraseña?</Link>
-            </div>
+            <p className="mt-4 text-center">
+                <span className="text-gray-600">¿Has olvidado tu contraseña?</span>{' '}
+                <button
+                    onClick={() => navigate('/recuperar-password')}
+                    className="text-green-600 hover:underline focus:outline-none"
+                >
+                    Recuperar contraseña
+                </button>
+            </p>
         </section>
     );
 };
