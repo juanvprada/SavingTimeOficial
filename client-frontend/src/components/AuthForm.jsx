@@ -3,16 +3,15 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { logoImg } from '../utils';
 
-
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
 
     return (
-        <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+        <section className="max-w-md mx-auto p-6 bg-transparent rounded-lg shadow-md mt-10">
             <div className="text-center mb-6">
                 <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">{isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}</h2>
-                <p className="text-gray-500">{isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}</p>
+                <p className="text-white">{isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}</p>
             </div>
 
             {/* Botones para alternar entre Login y Registro */}
@@ -38,3 +37,4 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+

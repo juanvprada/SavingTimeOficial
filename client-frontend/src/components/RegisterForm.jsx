@@ -82,7 +82,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     };
 
     return (
-        <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+        <section className="max-w-md mx-auto p-6 bg-transparent rounded-lg shadow-md mt-10">
             {/* <div className="text-center mb-6">
                 <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">Registro de Usuario</h2>
@@ -90,7 +90,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
             </div> */}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
-                    <label className="block text-gray-700">Nombre de usuario:</label>
+                    <label className="block text-white">Nombre de usuario:</label>
                     <input
                         type="text"
                         value={name}
@@ -100,7 +100,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label className="block text-gray-700">Email:</label>
+                    <label className="block text-white">Email:</label>
                     <input
                         type="email"
                         value={email}
@@ -110,7 +110,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label className="block text-gray-700">Contraseña:</label>
+                    <label className="block text-white">Contraseña:</label>
                     <input
                         type="password"
                         value={password}
@@ -125,7 +125,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
             </form>
             {message && <p className="text-red-500 text-center mt-4">{message}</p>}
             <p className="mt-4 text-center">
-                <span className="text-gray-600">¿Has olvidado tu contraseña?</span>{' '}
+                <span className="text-white">¿Has olvidado tu contraseña?</span>{' '}
                 <button
                     onClick={() => navigate('/recuperar-password')}
                     className="text-green-600 hover:underline focus:outline-none"

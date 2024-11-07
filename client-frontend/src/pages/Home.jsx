@@ -1,18 +1,27 @@
 import React from 'react';
 import { homeVid } from '../utils';
 import Carousel from '../components/Carousel';
+import AuthForm from '../components/AuthForm'; 
 
 const Home = () => {
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Video home */}
+      {/* Video de fondo */}
       <div className="relative">
-        <video autoPlay loop muted playsInline={true} className="w-full h-50 object-cover">
-          <source src= {homeVid} type="video/mp4" />
+        <video autoPlay loop muted playsInline className="w-full h-screen object-cover">
+          <source src={homeVid} type="video/mp4" />
           Tu navegador no soporta el elemento de video.
         </video>
+
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-          <h1 className="text-white text-8xl font-bold sm: text-md">Bio Blog</h1>
+          <h1 className="text-white text-opacity-30 text-9xl font-bold sm:text-md transform -translate-x-2/3 -translate-y-24">
+            Bio Blog
+          </h1>
+        </div>
+
+
+        <div className="absolute top-1/4 right-1/4 transform -translate-x-2/5 -translate-y-48">
+          <AuthForm />
         </div>
       </div>
 
@@ -41,3 +50,4 @@ const Home = () => {
 };
 
 export default Home;
+

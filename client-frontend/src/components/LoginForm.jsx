@@ -42,7 +42,7 @@ const LoginForm = () => {
     };
 
     return (
-        <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+        <section className="max-w-md mx-auto p-6 bg-transparent rounded-lg shadow-md mt-10">
             {/* <div className="text-center mb-6">
                 <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">Iniciar Sesión</h2>
@@ -50,7 +50,7 @@ const LoginForm = () => {
             </div> */}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
-                    <label className="block text-gray-700" htmlFor="email">Correo Electrónico</label>
+                    <label className="block text-white" htmlFor="email">Correo Electrónico</label>
                     <input
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                         type="email"
@@ -62,7 +62,7 @@ const LoginForm = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label className="block text-gray-700" htmlFor="password">Contraseña</label>
+                    <label className="block text-white" htmlFor="password">Contraseña</label>
                     <input
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                         type="password"
@@ -79,7 +79,7 @@ const LoginForm = () => {
                 </button>
             </form>
             <p className="mt-4 text-center">
-                <span className="text-gray-600">¿Has olvidado tu contraseña?</span>{' '}
+                <span className="text-white">¿Has olvidado tu contraseña?</span>{' '}
                 <button
                     onClick={() => navigate('/recuperar-password')}
                     className="text-green-600 hover:underline focus:outline-none"
