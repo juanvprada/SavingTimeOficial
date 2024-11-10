@@ -1,9 +1,9 @@
 import React from "react";
-import { homeVid } from "../utils";
+import { homeVid, handsImg, breadImg, marketImg } from "../utils";
 import Carousel from "../components/Carousel";
-import hands from "../assets/news/hands.jpg";
-import bread from "../assets/news/bread.jpg";
-import market from "../assets/news/market.jpg";
+// import hands from "../assets/news/hands.jpg";
+// import bread from "../assets/news/bread.jpg";
+// import market from "../assets/news/market.jpg";
 
 const Home = () => {
   return (
@@ -56,7 +56,7 @@ const Home = () => {
             {/* Imagen */}
             <div className="w-1/2">
               <img
-                src={hands}
+                src={ handsImg }
                 alt="Reciclaje"
                 className="rounded-lg object-cover w-full h-full"
               />
@@ -81,7 +81,7 @@ const Home = () => {
             </div>
             <div className="w-1/2">
               <img
-                src={bread}
+                src={ breadImg }
                 alt="Reducir desperdicio de alimentos"
                 className="rounded-lg object-cover w-full h-full"
               />
@@ -108,7 +108,7 @@ const Home = () => {
             </div>
             <div className="w-1/2">
               <img
-                src={market}
+                src={ marketImg}
                 alt="Iniciativas de sostenibilidad"
                 className="rounded-lg object-cover w-full h-full"
               />
