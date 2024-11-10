@@ -1,16 +1,13 @@
-.gitignore
-node_modules
-
-.env
-/server-backend/src/uploads
+client-frontend/node_modules
+server-backend/node_modules
+server-backend/src/uploads
+client-frontend/src/blog-content
 *.jpeg
 *.jpg
 *.png
 *.webp
 .vite
 .vscode
-package-lock.json
-package.json
 
 #Logs
 logs
@@ -37,6 +34,6 @@ dist-ssr
 *.mp4
 client-frontend/src/assets/home-video/
 
-
 # Environment variables
-.env
+client-frontend/.env
+server-backend/.env
