@@ -21,15 +21,15 @@ const Home = () => {
 
         {/* Título y AuthForm */}
         <div className="absolute inset-0 flex flex-col sm:flex-row items-center justify-center bg-black bg-opacity-70 px-4">
-          <h1 className="text-white text-opacity-30 font-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-10xl 2xl:text-11xl mb-4 mt-10 sm:mt-0 sm:mb-6">
+          <h1 className="text-white text-opacity-30 font-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-10xl 2xl:text-11xl mb-4 mt-4 sm:mt-0 sm:mb-2">
             Bio Blog
           </h1>
           {!isLoggedIn && (
-          <div className="w-full max-w-md mt-4 sm:ml-16 sm:mt-6">
+          <div className="w-full max-w-md mt-0 sm:ml-16 sm:mt-0 md:max-w-md">
             <AuthForm />
           </div>
           )}
-        </div>
+          </div>
       </div>
 
       {/* Sección adicional */}

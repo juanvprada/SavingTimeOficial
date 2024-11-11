@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { logoImg } from "../utils";
 import useStore from "../store/store";
-import ButtonIcon from "../components/ButtonIcon";
 import { FaBars, FaTimes, FaUserPlus, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = ({ onSearch }) => {
@@ -42,65 +41,59 @@ const Navbar = ({ onSearch }) => {
           </Link>
         </div>
 
-        {/* Show registration button only if not logged in */}
-        {!isLoggedIn && (
-          <div>
-            <ButtonIcon
-              icon="fas fa-user-plus fa-2x"
-              onClick={navigateToRegister}
-              title="Regístrate aquí"
-            />
-          </div>
-        )}
-
-        {/* Show greeting with user's name if logged in */}
-        {isLoggedIn && (
-          <div className="mr-4">
-            <span className="text-sm md:text-xl text-white font-bold flex items-center">
-              Hola, {username}
-            </span>
-          </div>
-        )}
-
-        <div className="hidden md:flex space-x-6">
-          <ul className="flex space-x-6">
+        {/* Menú en pantallas grandes */}
+        <div className="hidden md:flex items-center space-x-8">
+          <ul className="flex items-center space-x-6">
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/">
+              <Link className="text-gray-300 hover:text-green-400" to="/">
                 Inicio
               </Link>
             </li>
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/blog">
+              <Link className="text-gray-300 hover:text-green-400" to="/blog">
                 Blog
               </Link>
             </li>
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/nosotros">
+              <Link className="text-gray-300 hover:text-green-400" to="/nosotros">
                 Nosotros
               </Link>
             </li>
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/contacto">
+              <Link className="text-gray-300 hover:text-green-400" to="/contacto">
                 Contacto
               </Link>
             </li>
-            {role == "admin" && (
+            {role === "admin" && (
               <li>
-                <Link className="text-gray-400 hover:text-white" to="/admin">
-                  AdminPage
+                <Link className="text-gray-300 hover:text-green-400" to="/admin">
+                  Admin
                 </Link>
               </li>
             )}
-            {isLoggedIn && (
-              <li>
-                <ButtonIcon
-                  icon="fas fa-sign-out-alt"
-                  onClick={handleLogout}
-                  title="Cerrar Sesión"
-                />
-              </li>
-            )}
           </ul>
+          {isLoggedIn ? (
+            <>
+              <span className="text-gray-300">
+                Hola, <strong>{username}</strong>
+              </span>
+              <button
+                onClick={handleLogout}
+                className="text-gray-300 hover:text-green-400 focus:outline-none ml-4"
+                title="Cerrar Sesión"
+              >
+                <FaSignOutAlt size={20} />
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={navigateToRegister}
+              className="text-gray-300 hover:text-green-400 focus:outline-none"
+              title="Registrarse"
+            >
+              <FaUserPlus size={20} />
+            </button>
+          )}
         </div>
 
         {/* Botón para menú móvil */}

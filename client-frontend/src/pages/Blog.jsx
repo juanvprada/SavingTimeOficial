@@ -98,7 +98,7 @@ const Blog = () => {
           <p className="mt-4 text-xl">Tu fuente de información para un estilo de vida sostenible y ecológico.</p>
         </div>
       </header>
-      <h2 className="text-3xl font-semibold text-center text-gray-800">Todas las publicaciones</h2>
+      <h2 className="text-3xl font-semibold text-center text-gray-800 mt-4">Todas las publicaciones</h2>
       <section className="container mx-auto py-12 px-4">
         <div className="mb-8 text-center">
           <input

@@ -7,13 +7,13 @@ const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
 
     return (
-        <section className="max-w-full sm:max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-md mt-6 max-h-[80vh] overflow-y-auto">
+        <section className="max-w-full sm:max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-md mt-6 overflow-y-auto">
             <div className="text-center mb-6">
                 {/* <img src={logoImg} alt="Logo" className="mx-auto w-20 h-20 sm:w-24 sm:h-24 mb-4" /> */}
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-customGreen">
                     {isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}
                 </h2>
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-500">
                     {isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}
                 </p>
             </div>
