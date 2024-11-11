@@ -80,7 +80,7 @@ const Carousel = () => {
   return (
     <section className="bg-white py-16">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-semibold text-green-800 mb-12">Beneficios para el Usuario</h2>
+        <h2 className="text-3xl font-bold text-green-600 mb-12">Beneficios para el Usuario</h2>
         {/* Carousel container */}
         <div className="overflow-hidden relative">
           <div

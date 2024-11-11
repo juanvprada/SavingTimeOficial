@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoImg } from '../utils';
 import Search from './Search';
@@ -11,7 +11,7 @@ const Navbar = ({ onSearch }) => {
     const location = useLocation();
     const isLoggedIn = useStore((state) => !!state.token); 
     const username = useStore((state) => state.username); 
-    const role = useStore((state) => state.role)
+    const role = useStore((state) => state.role);
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -22,7 +22,6 @@ const Navbar = ({ onSearch }) => {
     };
 
     const handleLogout = () => {
-        // Limpiar el estado de Zustand
         useStore.getState().setToken(null);
         useStore.getState().setRole(null);
         useStore.getState().setUsername(null);
@@ -32,15 +31,16 @@ const Navbar = ({ onSearch }) => {
     };
 
     return (
-        <nav className="bg-gray-800 p-4">
-            <div className="container mx-auto flex justify-between items-center">
-                <div className="text-white text-xl font-bold flex items-center">
-                    <img src={logoImg} className="w-10" alt="logo" />
-                    <Link to="/" className="ml-2">Bio Blog</Link>
-                </div>
+        <nav className=" fixed top-0 left-0 right-0 p-4 mb-8 bg-gray-800 z-50 shadow-md">
 
-                {/* Show registration button only if not logged in */}
-                {!isLoggedIn && (
+        <div className="container mx-auto flex justify-between items-center">
+            <div className="text-white text-xl font-bold flex items-center">
+                <img src={logoImg} className="w-10" alt="logo" />
+                <Link to="/" className="ml-2 opacity-50">Bio Blog</Link>
+            </div>
+        
+
+                {/* {!isLoggedIn && (
                     <div>
                         <ButtonIcon
                             icon="fas fa-user-plus fa-2x"
@@ -48,9 +48,8 @@ const Navbar = ({ onSearch }) => {
                             title="Regístrate aquí"
                         />
                     </div>
-                )}
+                )} */}
 
-                {/* Show greeting with user's name if logged in */}
                 {isLoggedIn && (
                     <div className="mr-4">
                         <span className="text-sm md:text-xl text-white font-bold flex items-center">
@@ -65,7 +64,7 @@ const Navbar = ({ onSearch }) => {
                         <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
-                        {role == 'admin' && (
+                        {role === 'admin' && (
                             <li><Link className="text-gray-400 hover:text-white" to="/admin">AdminPage</Link></li>
                         )}
                         {isLoggedIn && (
@@ -81,26 +80,18 @@ const Navbar = ({ onSearch }) => {
                 </div>
 
                 <div className="md:hidden">
-                    <button onClick={toggleMenu} className="text-gray-400 hover:text-white focus:outline-none">
-                        <svg
-                            className="w-6 h-6"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth="2"
-                                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-                            />
-                        </svg>
-                    </button>
-                </div>
+    <button onClick={toggleMenu} className="text-gray-400 hover:text-white focus:outline-none">
+        {/* Mostrar un ícono diferente dependiendo del estado `isOpen` */}
+        {isOpen ? (
+            <img src="/src/assets/icons/menu-hamburguesa-close.svg" alt="Cerrar menú" className="w-6 h-6" />
+        ) : (
+            <img src="/src/assets/icons/menu-hamburguesa.svg" alt="Abrir menú" className="w-6 h-6" />
+        )}
+    </button>
+</div>
+
             </div>
 
-            {/* Mobile menu  */}
             {isOpen && (
                 <div className="md:hidden">
                     <Search onSearch={onSearch} />
