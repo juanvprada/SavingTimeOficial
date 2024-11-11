@@ -96,6 +96,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        placeholder="Introduce tu nombre de usuario"
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
@@ -106,6 +107,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        placeholder="Introduce tu correo electrónico"
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
@@ -116,6 +118,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
                         value={password}
                         onChange={handlePasswordChange}
                         required
+                        placeholder="Introduce tu contraseña"
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
@@ -138,7 +141,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 };
 
 export default RegisterForm;
-
 
 
 

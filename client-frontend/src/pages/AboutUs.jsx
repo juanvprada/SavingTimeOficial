@@ -5,13 +5,13 @@ import { logoImg } from '../utils';
 
 const AboutUs = () => {
   return (
-    <div className="bg-green-50 text-gray-900">
+    <div className="bg-gradient-to-br from-green-100 via-orange-50 text-gray-900 mt-16">
 
    
       {/* Header */}
       <header className="bg-green-600 py-6">
         <div className="container mx-auto px-4 text-center ">
-        <h2 className="text-3xl font-semibold text-green-900 mb-2">Alimentación Consciente para un Futuro Sostenible</h2>
+        <h2 className="text-3xl font-bold text-white mb-2">Alimentación Consciente para un Futuro Sostenible</h2>
           <p className="text-green-100 mt-4 text-lg">En Sustainify, creemos que cada decisión que tomamos sobre lo que comemos tiene un impacto
             directo en nuestro planeta. Nuestro objetivo es ayudarte a hacer elecciones alimentarias más sostenibles, sin sacrificar el sabor ni la calidad.
             A través de nuestras guías, recetas y consejos, te mostramos cómo adoptar un enfoque más consciente al alimentarte, apoyando a los agricultores
@@ -25,7 +25,7 @@ const AboutUs = () => {
 
           <div className="relative z-10 flex flex-col items-center justify-center">
           <img src={logoImg} className="w-60 mb-8 transform transition duration-500 ease-in-out hover:scale-110" alt="Logo Bio Blog" />
-            <h2 className="text-3xl font-semibold text-green-800">Nuestra Historia y Misión</h2>
+            <h2 className="text-3xl font-bold text-green-800">Nuestra Historia y Misión</h2>
             <p className="mt-6 text-lg text-gray-600">
               Desde nuestro inicio, hemos estado comprometidos con un solo objetivo: ayudar a las personas a alimentarse
               de manera sostenible. Sabemos que las pequeñas acciones pueden generar grandes cambios, por lo que nos esforzamos
@@ -40,13 +40,13 @@ const AboutUs = () => {
       </section>
 
       {/* Nuestro Equipo */}
-      <section className="bg-white py-16">
+      <section className="bg-green-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-semibold text-green-800 text-center mb-12">Conoce a Nuestro Equipo</h2>
+          <h2 className="text-3xl font-bold text-green-800 text-center mb-12">Conoce a Nuestro Equipo</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4">
 
             {/* Omar - Scrum Master */}
-            <div className="bg-gradient-to-b from-lime-500 to-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105  hover:shadow-2xl transition duration-500 ease-in-out">
+            <div className=" bg-gradient-to-br from-green-100 via-orange-50 to-green-100 shadow-lg rounded-lg overflow-hidden transform hover:scale-105  hover:shadow-2xl transition duration-500 ease-in-out">
               <img src="/src/assets/about-img/provisional.png" alt="Omar" className="w-full h-42 object-cover transition duration-500 grayscale hover:grayscale-0" />
               <div className="p-4 text-center">
                 <h3 className="text-xl font-semibold text-green-700">Omar</h3>
@@ -56,7 +56,7 @@ const AboutUs = () => {
             </div>
 
             {/* Juan - Product Owner */}
-            <div className="bg-gradient-to-b from-lime-500 to-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
+            <div className=" bg-gradient-to-br from-green-100 via-orange-50 to-green-100 shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
               <img src="/src/assets/about-img/provisional.png" alt="Juan" className="w-full h-42 object-cover transition duration-500 grayscale hover:grayscale-0" />
               <div className="p-4 text-center">
                 <h3 className="text-xl font-semibold text-green-700">Juan</h3>
@@ -66,7 +66,7 @@ const AboutUs = () => {
             </div>
 
             {/* Mariela - Desarrolladora Web Fullstack */}
-            <div className="bg-gradient-to-b from-lime-500 to-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
+            <div className=" bg-gradient-to-br from-green-100 via-orange-50 to-green-100 shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
               <img src="/src/assets/about-img/provisional2.png" alt="Mariela" className="w-full h-42 object-cover transition duration-500 grayscale hover:grayscale-0" />
               <div className="p-4 text-center">
                 <h3 className="text-xl font-semibold text-green-700">Mariela</h3>
@@ -76,7 +76,7 @@ const AboutUs = () => {
             </div>
 
             {/* Darío - Desarrollador Web Fullstack */}
-            <div className="bg-gradient-to-b from-lime-500 to-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
+            <div className=" bg-gradient-to-br from-green-100 via-orange-50 to-green-100 shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
               <img src="/src/assets/about-img/provisional.png" alt="Darío" className="w-full h-42 object-cover transition duration-500 grayscale hover:grayscale-0" />
               <div className="p-4 text-center">
                 <h3 className="text-xl font-semibold text-green-700">Darío</h3>
@@ -86,8 +86,8 @@ const AboutUs = () => {
             </div>
 
             {/* Sara - Desarrolladora Web Fullstack */}
-            <div className="bg-gradient-to-b from-lime-500 to-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
-              <img src="/src/assets/about-img/sara.png" alt="Sara" className="w-full h-42 object-cover transition duration-500 grayscale hover:grayscale-0" />
+            <div className=" from bg-gradient-to-br from-green-100 via-orange-50 to-green-100 shadow-lg rounded-lg overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-500 ease-in-out">
+              <img src="/src/assets/about-img/provisional2.png" alt="Sara" className="w-full h-42 object-cover transition duration-500 grayscale hover:grayscale-0" />
               <div className="p-4 text-center">
                 <h3 className="text-xl font-semibold text-green-700">Sara</h3>
                 <p className="text-gray-500 mt-2 text-sm">Desarrolladora Web Fullstack</p>
@@ -99,9 +99,9 @@ const AboutUs = () => {
       </section>
 
       {/* Valores y Sostenibilidad */}
-      <section className="bg-green-100 py-16">
+      <section className="bg-green-50 py-16">
   <div className="container mx-auto px-4 text-center">
-    <h2 className="text-3xl font-semibold text-green-800 mb-12">Nuestros Valores</h2>
+    <h2 className="text-3xl font-bold text-green-800 mb-12">Nuestros Valores</h2>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {[
         {

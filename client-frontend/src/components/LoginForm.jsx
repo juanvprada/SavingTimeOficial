@@ -77,7 +77,7 @@ const LoginForm = () => {
                 <span className="text-gray-800">¿Has olvidado tu contraseña?</span>{' '}
                 <button
                     onClick={() => navigate('/recuperar-password')}
-                    className="text-green-600 hover:underline focus:outline-none"
+                    className="text-customGreen text-green-400 hover:underline focus:outline-none"
                 >
                     Recuperar contraseña
                 </button>

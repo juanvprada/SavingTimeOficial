@@ -91,7 +91,7 @@ const Blog = () => {
   );
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className=" min-h-screen mt-16">
       <header className="bg-green-600 text-white py-8">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold">Bienvenidos a Bio Blog</h1>
@@ -103,7 +103,7 @@ const Blog = () => {
         <div className="mb-8 text-center">
           <input
             type="text"
-            className="px-4 py-2 w-full md:w-1/2 border border-gray-300 rounded-md"
+            className="px-4 py-2 w-full md:w-1/2 border border-green-600 rounded-md"
             placeholder="Buscar..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}

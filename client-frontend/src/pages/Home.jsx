@@ -33,6 +33,7 @@ const Home = () => {
       </div>
 
       {/* Sección adicional */}
+      {/* Sección adicional */}
       <section className="container mx-auto py-12 px-4">
         <div className="w-full mb-8">
           <Carousel />

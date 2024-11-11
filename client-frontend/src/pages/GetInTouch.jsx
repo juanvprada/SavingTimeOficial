@@ -5,7 +5,7 @@ const GetInTouch = () => {
   const [submittedMessages, setSubmittedMessages] = useState([]);
 
   return (
-    <div>
+    <div className=" min-h-screen">
       <ContactForm
         submittedMessages={submittedMessages}
         setSubmittedMessages={setSubmittedMessages}

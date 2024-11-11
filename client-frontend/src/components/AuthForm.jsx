@@ -19,20 +19,22 @@ const AuthForm = () => {
             </div>
 
             {/* Botones para alternar entre Login y Registro */}
-            <div className="flex justify-around mb-4">
-                <button
-                    onClick={() => setIsLogin(true)}
-                    className={`w-full py-2 text-center rounded ${isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
-                >
-                    Iniciar Sesión
-                </button>
-                <button
-                    onClick={() => setIsLogin(false)}
-                    className={`w-full py-2 text-center rounded ${!isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
-                >
-                    Registrarse
-                </button>
-            </div>
+            <div className="flex justify-center mb-4">
+    <button
+        onClick={() => setIsLogin(true)}
+        className={`w-44 py-2 text-center rounded mx-2 ${isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
+    >
+        Iniciar Sesión
+    </button>
+    <button
+        onClick={() => setIsLogin(false)}
+        className={`w-44 py-2 text-center rounded mx-2 ${!isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
+    >
+        Registrarse
+    </button>
+</div>
+
+
 
             {/* Renderizar el formulario de inicio de sesión o registro */}
             <div className="space-y-4">
@@ -54,3 +56,4 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+

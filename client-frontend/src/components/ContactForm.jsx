@@ -37,10 +37,10 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-md mt-6 mb-6 relative">
+    <div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-md mt-20 mb-6 relative">
       <h2 className="text-2xl font-bold mb-4 text-green-600 text-center">
-        ¡Déjanos un mensaje en <span className="text-green-800">Bio</span>{" "}
-        <span className="text-green-600">Blog</span>! Te responderemos lo más
+        ¡Déjanos un mensaje en <span className="text-green-700">Bio</span>{" "}
+        <span className="text-green-700">Blog</span>! Te responderemos lo más
         pronto posible.
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -58,6 +58,7 @@ const ContactForm = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            placeholder="Introduce tu nombre"
             maxLength="50"
             className="mt-1 block w-full border border-green-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
@@ -76,6 +77,7 @@ const ContactForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="Introduce tu correo electrónico"
             className="mt-1 block w-full border border-green-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
@@ -93,6 +95,7 @@ const ContactForm = () => {
             onChange={(e) => setMessage(e.target.value)}
             maxLength="100"
             required
+            placeholder="Introduce tu mensaje aqui..."
             className="mt-1 block w-full border border-green-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
         </div>
