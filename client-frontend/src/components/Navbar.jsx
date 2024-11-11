@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { logoImg } from "../utils";
-import Search from "./Search";
-import ButtonIcon from "../components/ButtonIcon";
 import useStore from "../store/store";
+import ButtonIcon from "../components/ButtonIcon";
+import { FaBars, FaTimes, FaUserPlus, FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = ({ onSearch }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,11 +32,12 @@ const Navbar = ({ onSearch }) => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white text-xl font-bold flex items-center">
-          <img src={logoImg} className="w-10" alt="logo" />
-          <Link to="/" className="ml-2">
+    <nav className="bg-gray-900 shadow-md">
+      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo y título */}
+        <div className="flex items-center">
+          <img src={logoImg} className="w-10 h-10" alt="logo" />
+          <Link to="/" className="ml-3 text-xl font-bold text-white">
             Bio Blog
           </Link>
         </div>
@@ -102,61 +103,99 @@ const Navbar = ({ onSearch }) => {
           </ul>
         </div>
 
+        {/* Botón para menú móvil */}
         <div className="md:hidden">
           <button
             onClick={toggleMenu}
-            className="text-gray-400 hover:text-white focus:outline-none"
+            className="text-gray-300 hover:text-green-400 focus:outline-none"
+            aria-label="Toggle menu"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-              />
-            </svg>
+            {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu  */}
+      {/* Menú móvil */}
       {isOpen && (
-        <div className="md:hidden">
-          <Search onSearch={onSearch} />
-          <ul className="space-y-2 mt-4 flex flex-col items-center">
+        <div className="md:hidden bg-gray-900 shadow-md">
+          <ul className="flex flex-col items-center space-y-4 py-4">
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/">
+              <Link
+                className="text-gray-300 hover:text-green-400"
+                to="/"
+                onClick={toggleMenu}
+              >
                 Inicio
               </Link>
             </li>
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/blog">
+              <Link
+                className="text-gray-300 hover:text-green-400"
+                to="/blog"
+                onClick={toggleMenu}
+              >
                 Blog
               </Link>
             </li>
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/nosotros">
+              <Link
+                className="text-gray-300 hover:text-green-400"
+                to="/nosotros"
+                onClick={toggleMenu}
+              >
                 Nosotros
               </Link>
             </li>
             <li>
-              <Link className="text-gray-400 hover:text-white" to="/contacto">
+              <Link
+                className="text-gray-300 hover:text-green-400"
+                to="/contacto"
+                onClick={toggleMenu}
+              >
                 Contacto
               </Link>
             </li>
-            {isLoggedIn && (
+            {role === "admin" && (
               <li>
-                <ButtonIcon
-                  icon="fas fa-sign-out-alt"
-                  onClick={handleLogout}
-                  title="Cerrar Sesión"
-                />
+                <Link
+                  className="text-gray-300 hover:text-green-400"
+                  to="/admin"
+                  onClick={toggleMenu}
+                >
+                  Admin
+                </Link>
+              </li>
+            )}
+            {isLoggedIn ? (
+              <>
+                <li className="text-gray-300">
+                  Hola, <strong>{username}</strong>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      toggleMenu();
+                    }}
+                    className="text-gray-300 hover:text-green-400 focus:outline-none"
+                    title="Cerrar Sesión"
+                  >
+                    <FaSignOutAlt size={20} />
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <button
+                  onClick={() => {
+                    navigateToRegister();
+                    toggleMenu();
+                  }}
+                  className="text-gray-300 hover:text-green-400 focus:outline-none"
+                  title="Registrarse"
+                >
+                  <FaUserPlus size={20} />
+                </button>
               </li>
             )}
           </ul>

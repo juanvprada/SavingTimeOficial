@@ -7,25 +7,20 @@ import IconCreate from '../components/IconCreate';
 import { getLikesCount, toggleLike } from '../services/likeServices';
 
 const Blog = () => {
-
   const [search, setSearch] = useState('');
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [likes, setLikes] = useState({});
   const [likesCount, setLikesCount] = useState({});
   const navigate = useNavigate();
-
   const role = localStorage.getItem('role');
   const token = localStorage.getItem('token');
-
   const fetchPosts = async () => {
     try {
       const posts = await getPosts();
       setArticles(posts);
-
       const likesCountPromises = posts.map(post => getLikesCount(post.id));
       const likesCounts = await Promise.all(likesCountPromises);
-
       const initialLikes = {};
       likesCounts.forEach((count, index) => {
         initialLikes[posts[index].id] = count.count;
@@ -41,10 +36,8 @@ const Blog = () => {
       try {
         const posts = await getPosts();
         setArticles(posts);
-
         const likesCountPromises = posts.map(post => getLikesCount(post.id));
         const likesCounts = await Promise.all(likesCountPromises);
-
         const initialLikes = {};
         likesCounts.forEach((count, index) => {
           initialLikes[posts[index].id] = count.count;
@@ -56,10 +49,9 @@ const Blog = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, []);  
 
   const handleDelete = async (id) => {
-    
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este post?");
     if (confirmDelete) {
       try {
@@ -102,7 +94,7 @@ const Blog = () => {
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-green-600 text-white py-8">
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl font-bold">Bienvenidos a EcoBlog</h1>
+          <h1 className="text-4xl font-bold">Bienvenidos a Bio Blog</h1>
           <p className="mt-4 text-xl">Tu fuente de información para un estilo de vida sostenible y ecológico.</p>
         </div>
       </header>
@@ -131,7 +123,7 @@ const Blog = () => {
               />
               <div className="p-6">
                 <h3 className="text-xl font-bold text-green-600 mb-2">{article.name}</h3>
-                <p className="text-gray-700 mb-4">{article.description}</p>
+                <p className="text-gray-700 mb-4 line-clamp-4">{article.description}</p>
                 <div className="flex justify-between items-center">
                   {/* Icono de Editar visible solo para admin logueado */}
                   {role === 'admin' && token && (

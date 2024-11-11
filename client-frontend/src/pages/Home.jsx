@@ -4,32 +4,37 @@ import Carousel from "../components/Carousel";
 // import hands from "../assets/news/hands.jpg";
 // import bread from "../assets/news/bread.jpg";
 // import market from "../assets/news/market.jpg";
+import AuthForm from '../components/AuthForm'; 
+import useStore from '../store/store';
+
 
 const Home = () => {
+  const isLoggedIn = useStore((state) => !!state.token); 
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* Video home */}
+      {/* Video de fondo */}
       <div className="relative">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline={true}
-          className="w-full h-50 object-cover"
-        >
+        <video autoPlay loop muted playsInline className="w-full h-screen object-cover">
           <source src={homeVid} type="video/mp4" />
           Tu navegador no soporta el elemento de video.
         </video>
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-          <h1 className="text-white text-8xl font-bold sm: text-md">
+
+        {/* Título y AuthForm */}
+        <div className="absolute inset-0 flex flex-col sm:flex-row items-center justify-center bg-black bg-opacity-70 px-4">
+          <h1 className="text-white text-opacity-30 font-bold text-6xl sm:text-7xl md:text-8xl lg:text-9xl xl:text-10xl 2xl:text-11xl mb-4 mt-10 sm:mt-0 sm:mb-6">
             Bio Blog
           </h1>
+          {!isLoggedIn && (
+          <div className="w-full max-w-md mt-4 sm:ml-16 sm:mt-6">
+            <AuthForm />
+          </div>
+          )}
         </div>
       </div>
 
-      {/* Additional information boxes */}
+      {/* Sección adicional */}
       <section className="container mx-auto py-12 px-4">
-        <div className="w-full">
+        <div className="w-full mb-8">
           <Carousel />
         </div>
         <div className="flex flex-col md:grid-cols-3 gap-8 mt-6">
@@ -121,3 +126,5 @@ const Home = () => {
 };
 
 export default Home;
+
+

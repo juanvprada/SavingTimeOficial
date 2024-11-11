@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import { logoImg } from '../utils';
-
+// import { logoImg } from '../utils';
 
 const AuthForm = () => {
     const [isLogin, setIsLogin] = useState(true);
 
     return (
-        <section className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
+        <section className="max-w-full sm:max-w-md mx-auto p-4 bg-transparent rounded-lg shadow-md mt-6 max-h-[80vh] overflow-y-auto">
             <div className="text-center mb-6">
-                <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
-                <h2 className="text-2xl font-semibold text-green-600">{isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}</h2>
-                <p className="text-gray-500">{isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}</p>
+                {/* <img src={logoImg} alt="Logo" className="mx-auto w-20 h-20 sm:w-24 sm:h-24 mb-4" /> */}
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-customGreen">
+                    {isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}
+                </h2>
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white">
+                    {isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}
+                </p>
             </div>
 
             {/* Botones para alternar entre Login y Registro */}
@@ -32,7 +35,20 @@ const AuthForm = () => {
             </div>
 
             {/* Renderizar el formulario de inicio de sesión o registro */}
-            {isLogin ? <LoginForm /> : <RegisterForm />}
+            <div className="space-y-4">
+                {isLogin ? <LoginForm /> : <RegisterForm />}
+            </div>
+            <footer className="mt-4 text-center text-sm text-gray-400">
+                <p>Al registrarte, aceptas nuestros{' '}
+                    <a href="#" className="text-green-500 underline hover:text-green-300">
+                        Términos y Condiciones
+                    </a>
+                    {' '} y la{' '}
+                    <a href="#" className="text-green-500 underline hover:text-green-300">
+                        Política de Privacidad
+                    </a>.
+                </p>
+            </footer>
         </section>
     );
 };
