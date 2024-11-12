@@ -6,7 +6,7 @@ import { validate as isValidUUID } from 'uuid';
 // Crear un comentario
 export const createComment = async (req: CustomRequest, res: Response) => {
   try {
-    const postId = req.params.postId; // Ahora es un UUID, no un número
+    const postId = req.params.postId;
     const userId = req.user?.userId;
 
     // Verificamos que userId esté presente (esto se hace por si el middleware no lo asignó correctamente)
@@ -28,20 +28,20 @@ export const createComment = async (req: CustomRequest, res: Response) => {
 // Obtener comentarios por postId
 export const getCommentsByPostId = async (req: CustomRequest, res: Response) => {
     try {
-      const postId = req.params.postId; // El postId es un UUID ahora
+      const postId = req.params.postId;
       
-      console.log(`Obteniendo comentarios para el postId: ${postId}`);  // Log de debug
+      console.log(`Obteniendo comentarios para el postId: ${postId}`);
       
       // Validar que el postId sea un UUID
       if (!isValidUUID(postId)) {
-        console.log(`Post ID inválido: ${postId}`);  // Log de error si el UUID no es válido
+        console.log(`Post ID inválido: ${postId}`);
         return res.status(400).json({ message: 'Post ID inválido' });
       }
   
       // Buscar comentarios por postId
       const comments = await CommentModel.findByPostId(postId);
       
-      console.log(`Comentarios encontrados para postId ${postId}: ${comments.length}`);  // Log de la cantidad de comentarios
+      console.log(`Comentarios encontrados para postId ${postId}: ${comments.length}`); 
   
       // Verificar si no hay comentarios
       if (comments.length === 0) {
