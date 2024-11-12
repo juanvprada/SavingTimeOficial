@@ -100,6 +100,9 @@ const Navbar = ({ onSearch }) => {
                         <li><Link className="text-gray-400 hover:text-white" to="/blog">Blog</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/nosotros">Nosotros</Link></li>
                         <li><Link className="text-gray-400 hover:text-white" to="/contacto">Contacto</Link></li>
+                        {role === 'admin' && (
+                            <li><Link className="text-gray-400 hover:text-white" to="/admin">AdminPage</Link></li>
+                        )}
                         {isLoggedIn && (
                             <li>
                                 <ButtonIcon
