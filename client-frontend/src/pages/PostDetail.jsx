@@ -4,12 +4,12 @@ import { getOnePost } from '../services/services';
 import { getComments, addComment } from '../services/commentServices';
 import ButtonIcon from '../components/ButtonIcon';
 import axios from 'axios';
-import CommentForm from '../components/CommentForm'; // Asegúrate de importar el componente
-import useStore from '../store/store'; // Importa tu store Zustand
+import CommentForm from '../components/CommentForm';
+import useStore from '../store/store';
 
 const PostDetail = () => {
   const { id } = useParams();
-  const { token, role } = useStore(); // Accede a token y role desde el store global
+  const { token, role } = useStore();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const navigate = useNavigate();
@@ -51,6 +51,7 @@ const PostDetail = () => {
 
   // Manejar el envío de un nuevo comentario
   const handleCommentAdded = () => {
+
     // Función para actualizar los comentarios cuando se agrega un nuevo comentario
     const fetchComments = async () => {
       try {
@@ -87,7 +88,7 @@ const PostDetail = () => {
           {role === 'admin' && token && (
             <ButtonIcon
               icon="fas fa-trash"
-              onClick={() => handleDelete(post.id)} // Define handleDelete en tu código si es necesario
+              onClick={() => handleDelete(post.id)}
               title="Eliminar"
             />
           )}

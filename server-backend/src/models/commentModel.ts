@@ -23,16 +23,16 @@ export const CommentModel = {
   // Obtener los comentarios por postId (ahora es un UUID)
   findByPostId: async (postId: string): Promise<CommentInterface[]> => {
     try {
-      console.log(`Consultando comentarios para postId: ${postId}`);  // Log de debug
+      console.log(`Consultando comentarios para postId: ${postId}`);
 
       const [comments] = await db.query<mysql2.RowDataPacket[]>(
         'SELECT c.id, c.userId, c.postId, c.content, c.created_at, u.username ' +
         'FROM comments c JOIN users u ON c.userId = u.id WHERE c.postId = ? ' +
         'ORDER BY c.created_at DESC',
-        [postId] // Asegúrate de que postId esté siendo pasado como una cadena
+        [postId]
       );
 
-      console.log(`Comentarios encontrados: ${comments.length}`);  // Log de la cantidad de comentarios
+      console.log(`Comentarios encontrados: ${comments.length}`);
 
       // Mapeamos los resultados para asegurarnos de que se devuelvan en el formato correcto
       return comments.map((comment: any) => {
@@ -42,12 +42,12 @@ export const CommentModel = {
           userId: comment.userId,
           content: comment.content,
           created_at: comment.created_at,
-          username: comment.username || '',  // Aseguramos que `username` siempre esté presente
+          username: comment.username || '',
         } as CommentInterface;
       });
     } catch (error) {
       console.error('Error en la consulta de comentarios:', error);
-      throw error; // Lanza el error para que el controlador lo maneje
+      throw error;
     }
   },
 };
