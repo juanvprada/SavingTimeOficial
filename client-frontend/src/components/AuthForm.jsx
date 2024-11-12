@@ -13,7 +13,7 @@ const AuthForm = () => {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-customGreen">
                     {isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}
                 </h2>
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-500">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200">
                     {isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}
                 </p>
             </div>
@@ -40,7 +40,7 @@ const AuthForm = () => {
             <div className="space-y-4">
                 {isLogin ? <LoginForm /> : <RegisterForm />}
             </div>
-            <footer className="mt-4 text-center text-sm text-gray-400">
+            <footer className="mt-4 text-center text-sm text-gray-200">
                 <p>Al registrarte, aceptas nuestros{' '}
                     <a href="#" className="text-green-500 underline hover:text-green-300">
                         Términos y Condiciones

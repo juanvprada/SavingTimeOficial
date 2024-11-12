@@ -5,7 +5,7 @@ import fotoSolar from '../assets/home-img/solar.webp';
 import vidHome from '../assets/home-video/video-home.mp4';
 import logoNav from '../assets/nav-bar/logo.png';
 import fotoConstruccion from '../assets/construccion.png'
-import fotoHands from '../assets/news/food.webp'
+import fotoHands from '../assets/news/hands.webp'
 import fotoBread from '../assets/news/bread.webp';
 import fotoMarket from '../assets/news/market.webp';
 
