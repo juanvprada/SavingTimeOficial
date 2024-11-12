@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-// Asegúrate de que tu API_URL esté bien configurada
 const API_URL = 'http://localhost:5000/api';
 
 // Crear un comentario

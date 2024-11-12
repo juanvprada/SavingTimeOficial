@@ -6,7 +6,7 @@ const CommentSection = ({ postId }) => {
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    // Obtener los comentarios del post cuando se monta el componente
+   
     const fetchComments = async () => {
       try {
         const response = await axios.get(`/api/posts/${postId}/comments`);
