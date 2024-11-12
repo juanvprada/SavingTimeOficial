@@ -1,14 +1,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getOnePost } from '../services/services';
+import { getComments, addComment } from '../services/commentServices';
 import ButtonIcon from '../components/ButtonIcon';
+import axios from 'axios';
+import CommentForm from '../components/CommentForm'; // Asegúrate de importar el componente
+import useStore from '../store/store'; // Importa tu store Zustand
 
-const PostDetail = ({ role, token }) => {
+const PostDetail = () => {
   const { id } = useParams();
+  const { token, role } = useStore(); // Accede a token y role desde el store global
   const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
   const navigate = useNavigate();
   const postRef = useRef(null);
 
+  // Obtener el post
   useEffect(() => {
     const fetchPost = async () => {
       try {
@@ -22,19 +29,40 @@ const PostDetail = ({ role, token }) => {
     fetchPost();
   }, [id]);
 
+  // Obtener los comentarios del post
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (postRef.current && !postRef.current.contains(event.target)) {
-        navigate('/blog');
+    if (!id) {
+      console.error("Post ID no disponible");
+      return;
+    }
+
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/comments/${id}`);
+        setComments(response.data);
+        console.log('Comentarios obtenidos:', response.data);
+      } catch (error) {
+        console.error('Error obteniendo comentarios:', error);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    fetchComments();
+  }, [id]);
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+  // Manejar el envío de un nuevo comentario
+  const handleCommentAdded = () => {
+    // Función para actualizar los comentarios cuando se agrega un nuevo comentario
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/comments/${id}`);
+        setComments(response.data);
+      } catch (error) {
+        console.error('Error obteniendo comentarios:', error);
+      }
     };
-  }, [navigate]);
+
+    fetchComments();
+  };
 
   if (!post) return <div>Loading...</div>;
 
@@ -59,8 +87,33 @@ const PostDetail = ({ role, token }) => {
           {role === 'admin' && token && (
             <ButtonIcon
               icon="fas fa-trash"
-              onClick={() => handleDelete(post.id)}
+              onClick={() => handleDelete(post.id)} // Define handleDelete en tu código si es necesario
               title="Eliminar"
+            />
+          )}
+        </div>
+
+        {/* Sección de Comentarios */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-800">Comentarios</h2>
+
+          <div className="mt-4 space-y-4">
+            {/* Mostrar comentarios */}
+            {comments.length === 0 && <p>No hay comentarios aún.</p>}
+            {comments.map((comment) => (
+              <div key={comment.id} className="p-4 border-b border-gray-200">
+                <p className="text-gray-600">{comment.content}</p>
+                <p className="text-sm text-gray-500">- {comment.username}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Formulario para agregar un comentario */}
+          {token && (
+            <CommentForm
+              postId={id}
+              token={token}
+              onCommentAdded={handleCommentAdded}
             />
           )}
         </div>
@@ -79,3 +132,7 @@ const PostDetail = ({ role, token }) => {
 };
 
 export default PostDetail;
+
+
+
+
