@@ -12,7 +12,6 @@ const Blog = () => {
   const [articles, setArticles] = useState([]);
   const [showCreate, setShowCreate] = useState(false);
   const [likes, setLikes] = useState({});
-  const [likesCount, setLikesCount] = useState({});
   const navigate = useNavigate();
 
   const role = localStorage.getItem('role');
