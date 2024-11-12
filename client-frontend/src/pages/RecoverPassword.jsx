@@ -56,7 +56,7 @@ const RecoverPassword = () => {
                     onClick={() => navigate('/acceso')}
                     className="text-green-600 hover:underline focus:outline-none"
                 >
-                    Iniciar Sesión
+                   
                 </button>
             </p>
         </section>

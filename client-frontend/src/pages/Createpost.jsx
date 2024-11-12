@@ -78,7 +78,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                         className="h-16 w-auto"
                     />
                 </div>
-                <h3 className="text-center text-2xl font-bold text-gray-800 mb-6">
+                <h3 className="text-center text-2xl font-bold text-green-600 mb-6">
                     {post ? 'Editar Post' : 'Nuevo Post'}
                 </h3>
                 {error && <div className="text-red-500 text-center mb-4">{error}</div>}
@@ -89,7 +89,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                         placeholder="Nombre"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-md bg-white text-lg focus:border-green-500 focus:outline-none"
                         required
                     />
                     <input
@@ -98,7 +98,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                         placeholder="Tipo de Post: receta, entrevista, etc"
                         value={kindOfPost}
                         onChange={(e) => setKindOfPost(e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none"
+                        className="w-full p-3 border border-gray-300 rounded-md bg-white text-lg focus:border-green-500 focus:outline-none"
                         required
                     />
                     <textarea
@@ -106,7 +106,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                         placeholder="Descripción"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full p-3 border border-gray-300 rounded-md bg-gray-100 text-lg focus:border-green-500 focus:outline-none h-24 resize-none"
+                        className="w-full p-3 border border-gray-300 rounded-md bg-white text-lg focus:border-green-500 focus:outline-none h-24 resize-none"
                         required
                     ></textarea>
 
@@ -115,7 +115,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                         id="image"
                         accept="image/*"
                         onChange={handleImageChange}
-                        className="w-full p-2 text-sm border border-gray-300 rounded-md bg-gray-100"
+                        className="w-full p-2 text-sm border border-gray-300 rounded-md bg-white"
                     />
 
                     {image && (
@@ -135,7 +135,7 @@ export const Create = ({ post, onSubmit, onCancel }) => {
                     <button
                         type="button"
                         onClick={onCancel}
-                        className="w-full p-3 text-lg font-bold bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600 transition-colors"
+                        className="w-full p-3 text-lg font-bold bg-orange-500 text-white rounded-md cursor-pointer hover:bg-orange-600 transition-colors"
                     >
                         Cancelar
                     </button>

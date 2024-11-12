@@ -82,7 +82,7 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
     };
 
     return (
-        <section className="max-w-md mx-auto p-6 bg-transparent rounded-lg shadow-md mt-10">
+        <section className="max-w-md mx-auto p-6 bg-white bg-opacity-90 rounded-lg shadow-md mt-10">
             {/* <div className="text-center mb-6">
                 <img src={logoImg} alt="Logo" className="mx-auto w-24 h-24 mb-4" />
                 <h2 className="text-2xl font-semibold text-green-600">Registro de Usuario</h2>
@@ -90,42 +90,45 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
             </div> */}
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
-                    <label className="block text-white">Nombre de usuario:</label>
+                    <label className="block text-gray-800">Nombre de usuario:</label>
                     <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        placeholder="Introduce tu nombre de usuario"
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
                 <div className="form-group">
-                    <label className="block text-white">Email:</label>
+                    <label className="block text-gray-800">Email:</label>
                     <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        placeholder="Introduce tu correo electrónico"
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
                 <div className="form-group">
-                    <label className="block text-white">Contraseña:</label>
+                    <label className="block text-gray-800">Contraseña:</label>
                     <input
                         type="password"
                         value={password}
                         onChange={handlePasswordChange}
                         required
+                        placeholder="Introduce tu contraseña"
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                     />
                 </div>
-                <button type="submit" className="w-full bg-green-600 text-white font-semibold py-2 rounded hover:bg-green-700 transition">
+                <button type="submit" className="w-full bg-green-600 text-gray-800 font-semibold py-2 rounded hover:bg-green-700 transition">
                     Registrar
                 </button>
             </form>
             {message && <p className="text-red-500 text-center mt-4">{message}</p>}
             <p className="mt-4 text-center">
-                <span className="text-white">¿Has olvidado tu contraseña?</span>{' '}
+                <span className="text-gray-800">¿Has olvidado tu contraseña?</span>{' '}
                 <button
                     onClick={() => navigate('/recuperar-password')}
                     className="text-customGreen hover:underline focus:outline-none"
@@ -138,7 +141,6 @@ const RegisterForm = ({ initialData = {}, editMode = false }) => {
 };
 
 export default RegisterForm;
-
 
 
 

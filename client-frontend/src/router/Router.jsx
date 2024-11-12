@@ -13,17 +13,18 @@ import EditPost from "../pages/EditPost.jsx";
 import PostDetail from "../pages/PostDetail.jsx"; 
 import Profile from "../pages/Profile.jsx";
 import AdminPage from "../pages/AdminPage.jsx"; 
+import ProtectedRoute from "../components/ProtectedRoute.jsx"; // Importa el componente de ruta protegida
 
 const userEmail = 'proyectoBioBlog@gmail.com';
+
+// Simulación de autenticación (cámbialo por tu lógica real)
+const isAuthenticated = !!localStorage.getItem('token');
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
         children: [
-            {
-                element: <Navigate to="/registro" />, 
-            },
             {
                 index: true,
                 element: <Home />,
@@ -34,7 +35,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "blog",
-                element: <Blog />,
+                element: <ProtectedRoute element={<Blog />} isAuthenticated={isAuthenticated} />
             },
             {
                 path: "contacto",
@@ -75,5 +76,3 @@ export const router = createBrowserRouter([
         ]
     }
 ]);
-
-

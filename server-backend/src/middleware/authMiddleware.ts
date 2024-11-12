@@ -33,7 +33,20 @@ export const authMiddleware = (req: CustomRequest, res: Response, next: NextFunc
     }
 };
 
+//=======================================
+// Creamos el middleware para validación de roles
+//=======================================
+export const roleValidation = (roles: string[]) => {
+    return (req: CustomRequest, res: Response, next: NextFunction) => {
+        if (!req.user) {
+            return res.status(401).json({ message: 'Usuario no autenticado.' });
+        }
 
+        // Verificamos si el rol del usuario está en la lista de roles permitidos
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({ message: 'Acceso denegado. Rol insuficiente.' });
+        }
 
-
-
+        next();
+    };
+};

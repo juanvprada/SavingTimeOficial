@@ -79,9 +79,3 @@ const PostDetail = ({ role, token }) => {
 };
 
 export default PostDetail;
-
-
-
-
-
-
