@@ -3,7 +3,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 // import { logoImg } from '../utils';
 
-const AuthForm = () => {
+const AuthForm = ({ textColor = 'text-gray-500', inputTextColor = 'text-gray-500', formBackground }) => {
     const [isLogin, setIsLogin] = useState(true);
 
     return (
@@ -13,32 +13,36 @@ const AuthForm = () => {
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-customGreen">
                     {isLogin ? 'Iniciar Sesión' : 'Registro de Usuario'}
                 </h2>
-                <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-500">
+                <p className={`text-sm sm:text-base md:text-lg lg:text-xl ${textColor}`}>
                     {isLogin ? 'Accede a tu cuenta para continuar.' : 'Crea una cuenta para acceder a contenido exclusivo.'}
                 </p>
             </div>
 
             {/* Botones para alternar entre Login y Registro */}
             <div className="flex justify-center mb-4">
-    <button
-        onClick={() => setIsLogin(true)}
-        className={`w-44 py-2 text-center rounded mx-2 ${isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
-    >
-        Iniciar Sesión
-    </button>
-    <button
-        onClick={() => setIsLogin(false)}
-        className={`w-44 py-2 text-center rounded mx-2 ${!isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
-    >
-        Registrarse
-    </button>
-</div>
+                <button
+                    onClick={() => setIsLogin(true)}
+                    className={`w-44 py-2 text-center rounded mx-2 ${isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
+                >
+                    Iniciar Sesión
+                </button>
+                <button
+                    onClick={() => setIsLogin(false)}
+                    className={`w-44 py-2 text-center rounded mx-2 ${!isLogin ? 'bg-green-600 text-white' : 'bg-green-100 text-green-600'}`}
+                >
+                    Registrarse
+                </button>
+            </div>
 
 
 
             {/* Renderizar el formulario de inicio de sesión o registro */}
             <div className="space-y-4">
-                {isLogin ? <LoginForm /> : <RegisterForm />}
+                {isLogin ? (
+                    <LoginForm inputTextColor={inputTextColor} formBackground={formBackground} />
+                ) : (
+                    <RegisterForm inputTextColor={inputTextColor} formBackground={formBackground} />
+                )}
             </div>
             <footer className="mt-4 text-center text-sm text-gray-400">
                 <p>Al registrarte, aceptas nuestros{' '}

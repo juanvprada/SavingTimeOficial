@@ -26,7 +26,7 @@ const Home = () => {
           </h1>
           {!isLoggedIn && (
           <div className="w-full max-w-md mt-0 sm:ml-16 sm:mt-0 md:max-w-md">
-            <AuthForm />
+            <AuthForm textColor="text-white" inputTextColor="text-white" formBackground="bg-transparent" />
           </div>
           )}
           </div>

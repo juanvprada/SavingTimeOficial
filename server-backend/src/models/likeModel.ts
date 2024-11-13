@@ -1,63 +1,57 @@
-import { db } from '../database/db';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../database/sequelize';
+import User from './userModel';
+import Post from './postModel';
 
-// Creamos la clase LikeModel para interactuar con la base de datos
-class LikeModel {
+class Like extends Model {
+  public id!: number;
+  public postId!: string;
+  public userId!: number;
 
-    //=========================================
-    // Definimos el método para agregar un like
-    //=========================================
-    static async addLike(postId: string, userId: number): Promise<void> {
-        const query = 'INSERT INTO likes (postId, userId) VALUES (?, ?)';
-        try {
-            await db.execute(query, [postId, userId]);
-        } catch (error) {
-            console.error('Error al agregar like:', error);
-            throw new Error('Error al agregar el like.');
-        }
-    }
-
-    //============================================================
-    // Definimos el método para obtener todos los likes de un post
-    //============================================================
-    static async getLikesByPost(postId: string): Promise<number> {
-        const query = 'SELECT COUNT(*) AS count FROM likes WHERE postId = ?';
-        try {
-            const [rows] = await db.execute(query, [postId]);
-            return (rows as any)[0].count;
-        } catch (error) {
-            console.error('Error al obtener likes por post:', error);
-            throw new Error('Error al obtener likes por post.');
-        }
-    }
-
-    //===========================================================================
-    // Definimos el método para verificar si un usuario ya ha dado like a un post
-    //===========================================================================
-    static async userHasLiked(postId: string, userId: number): Promise<boolean> {
-        const query = 'SELECT COUNT(*) AS count FROM likes WHERE postId = ? AND userId = ?';
-        try {
-            const [rows] = await db.execute(query, [postId, userId]);
-            return (rows as any)[0].count > 0;
-        } catch (error) {
-            console.error('Error al verificar like:', error);
-            throw new Error('Error al verificar like.');
-        }
-    }
-
-    //==========================================
-    // Definimos el método para eliminar un like
-    //==========================================
-    static async removeLike(postId: string, userId: number): Promise<void> {
-        const query = 'DELETE FROM likes WHERE postId = ? AND userId = ?';
-        try {
-            await db.execute(query, [postId, userId]);
-        } catch (error) {
-            console.error('Error al eliminar like:', error);
-            throw new Error('Error al eliminar el like.');
-        }
-    }
+  // Método de clase para obtener la cantidad de likes de un post
+  public static async getLikesByPost(postId: string): Promise<number> {
+    const likes = await Like.count({ where: { postId } });
+    return likes;
+  }
 }
 
-export default LikeModel;
+Like.init({
+  id: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  postId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: Post,
+      key: 'id',
+    },
+  },
+  userId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id',
+    },
+  },
+}, {
+  sequelize,
+  modelName: 'Like',
+  tableName: 'likes',
+  timestamps: false,
+});
+
+// Definimos las asociaciones
+User.hasMany(Like, { foreignKey: 'userId' });
+Post.hasMany(Like, { foreignKey: 'postId' });
+Like.belongsTo(User, { foreignKey: 'userId' });
+Like.belongsTo(Post, { foreignKey: 'postId' });
+
+export default Like;
+
+
 
 

@@ -91,7 +91,7 @@ const Navbar = ({ onSearch }) => {
               className="text-gray-300 hover:text-green-400 focus:outline-none"
               title="Registrarse"
             >
-              <FaUserPlus size={20} />
+              {/* <FaUserPlus size={20} /> */}
             </button>
           )}
         </div>
