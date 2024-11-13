@@ -1,5 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../database/sequelize';
+import Comment from './commentModel';
 
 class User extends Model {
   public id!: string;
@@ -10,12 +11,7 @@ class User extends Model {
 
   // Método para definir las asociaciones
   static associate() {
-    const Comment = require('./commentModel').default;
-    const Like = require('./likeModel').default;
     User.hasMany(Comment, { foreignKey: 'userId' });
-    User.hasMany(Like, { foreignKey: 'userId' });
-    Comment.belongsTo(User, { foreignKey: 'userId' });
-    Like.belongsTo(User, { foreignKey: 'userId' });
   }
 }
 
@@ -38,7 +34,6 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
- 
   role: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -52,5 +47,3 @@ User.init({
 });
 
 export default User;
-
-
