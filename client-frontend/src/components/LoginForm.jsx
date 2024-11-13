@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { logoImg } from '../utils';
 import useStore from '../store/store';
 import axios from 'axios';
 
-const LoginForm = () => {
+const LoginForm = ({ inputTextColor, formBackground }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -42,10 +41,12 @@ const LoginForm = () => {
     };
 
     return (
-        <section className="max-w-md mx-auto p-6 bg-white bg-opacity-90 rounded-lg shadow-md mt-10">
+        <section className={`max-w-md mx-auto p-6 rounded-lg shadow-md mt-10 ${formBackground}`}>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="form-group">
-                    <label className="block text-gray-800" htmlFor="email">Correo Electrónico</label>
+                    <label htmlFor="email" className={`block text-sm font-semibold ${inputTextColor}`}>
+                        Correo Electrónico
+                    </label>
                     <input
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                         type="email"
@@ -57,7 +58,9 @@ const LoginForm = () => {
                     />
                 </div>
                 <div className="form-group">
-                    <label className="block text-gray-800" htmlFor="password">Contraseña</label>
+                    <label htmlFor="password" className={`block text-sm font-semibold ${inputTextColor}`}>
+                        Contraseña
+                    </label>
                     <input
                         className="mt-1 p-2 border border-gray-300 rounded w-full focus:outline-none focus:ring focus:ring-green-200"
                         type="password"
@@ -74,10 +77,10 @@ const LoginForm = () => {
                 </button>
             </form>
             <p className="mt-4 text-center">
-                <span className="text-gray-800">¿Has olvidado tu contraseña?</span>{' '}
+                <span className={`text-sm ${inputTextColor} hover:text-green-500`}>¿Has olvidado tu contraseña?</span>{' '}
                 <button
                     onClick={() => navigate('/recuperar-password')}
-                    className="text-customGreen text-green-400 hover:underline focus:outline-none"
+                    className="text-customGreen hover:underline focus:outline-none"
                 >
                     Recuperar contraseña
                 </button>
@@ -87,3 +90,4 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
+

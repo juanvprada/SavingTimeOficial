@@ -1,53 +1,57 @@
-import { db } from '../database/db';
-import { CommentInterface } from '../interfaces/commentInterface';
-import mysql2 from 'mysql2/promise';
+import { DataTypes, Model } from 'sequelize';
+import { sequelize } from '../database/sequelize';
+import User from './userModel';
+import Post from './postModel';
 
-export const CommentModel = {
-  create: async (data: { userId: number, postId: string, content: string }): Promise<CommentInterface | null> => {
-    // Usamos un UUID (postId) como una cadena
-    const [result] = await db.query<mysql2.OkPacket>(
-      'INSERT INTO comments (userId, postId, content) VALUES (?, ?, ?)',
-      [data.userId, data.postId, data.content]
-    );
+class Comment extends Model {
+  public id!: number;
+  public postId!: string;
+  public userId!: number;
+  public content!: string;
+  public created_at!: Date;
+}
 
-    // Obtener el id del comentario recién creado y agregar created_at
-    const [comment] = await db.query<mysql2.RowDataPacket[]>(
-      'SELECT id, userId, postId, content, created_at FROM comments WHERE id = ?',
-      [result.insertId]
-    );
-
-    // Verificar si el comentario existe y devolverlo, de lo contrario retornar null
-    return comment.length > 0 ? comment[0] as CommentInterface : null;
+Comment.init({
+  id: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
+    primaryKey: true,
   },
-
-  // Obtener los comentarios por postId (ahora es un UUID)
-  findByPostId: async (postId: string): Promise<CommentInterface[]> => {
-    try {
-      console.log(`Consultando comentarios para postId: ${postId}`);
-
-      const [comments] = await db.query<mysql2.RowDataPacket[]>(
-        'SELECT c.id, c.userId, c.postId, c.content, c.created_at, u.username ' +
-        'FROM comments c JOIN users u ON c.userId = u.id WHERE c.postId = ? ' +
-        'ORDER BY c.created_at DESC',
-        [postId]
-      );
-
-      console.log(`Comentarios encontrados: ${comments.length}`);
-
-      // Mapeamos los resultados para asegurarnos de que se devuelvan en el formato correcto
-      return comments.map((comment: any) => {
-        return {
-          id: comment.id,
-          postId: comment.postId,
-          userId: comment.userId,
-          content: comment.content,
-          created_at: comment.created_at,
-          username: comment.username || '',
-        } as CommentInterface;
-      });
-    } catch (error) {
-      console.error('Error en la consulta de comentarios:', error);
-      throw error;
-    }
+  postId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: Post,
+      key: 'id',
+    },
   },
-};
+  userId: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    allowNull: false,
+    references: {
+      model: User,
+      key: 'id',
+    },
+  },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+}, {
+  sequelize,
+  modelName: 'Comment',
+  tableName: 'comments',
+  timestamps: false,
+});
+
+User.hasMany(Comment, { foreignKey: 'userId' });
+Post.hasMany(Comment, { foreignKey: 'postId' });
+Comment.belongsTo(User, { foreignKey: 'userId' });
+Comment.belongsTo(Post, { foreignKey: 'postId' });
+
+export default Comment;
+

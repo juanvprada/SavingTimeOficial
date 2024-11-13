@@ -1,153 +1,103 @@
 import { Request, Response } from 'express';
-import { db } from '../database/db';
+import Post from '../models/postModel';
 import { v4 as uuidv4 } from 'uuid';
-import { ResultSetHeader, RowDataPacket } from 'mysql2';
+console.log(uuidv4()); 
 
-//======================
-// Creamos un nuevo post
-//======================
+//=====================
+// Crear un nuevo post
+//=====================
 export const createPost = async (req: Request, res: Response) => {
-    const { name, kindOfPost, description } = req.body;
+  const { name, kindOfPost, description } = req.body;
+  const imagePath = req.file?.path ? req.file.path.replace(/\\/g, '/') : '';
+  const imageName = imagePath.split('/').pop();
+  const image = imageName ? `http://localhost:5000/uploads/${imageName}` : '';
 
-    const imagePath = req.file?.path ? req.file.path.replace(/\\/g, '/') : '';
-    const imageName = imagePath.split('/').pop();
-    const image = imageName ? `http://localhost:5000/uploads/${imageName}` : '';
+  if (!name || !kindOfPost || !description || !image) {
+    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+  }
 
-    if (!name || !kindOfPost || !description || !image) {
-        return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-    }
-
-    const id = uuidv4(); 
-
-    try {
-        const [result] = await db.query<ResultSetHeader>(
-            'INSERT INTO posts (id, name, kindOfPost, description, image) VALUES (?, ?, ?, ?, ?)',
-            [id, name, kindOfPost, description, image]
-        );
-
-        res.status(201).json({
-            message: 'Post creado con éxito',
-            post: {
-                id,
-                name,
-                kindOfPost,
-                description,
-                image
-            }
-        });
-    } catch (error) {
-        console.error(error); 
-        res.status(500).json({ message: 'Error al crear el post' }); 
-    }
+  try {
+    const newPost = await Post.create({ id: uuidv4(), name, kindOfPost, description, image });
+    res.status(201).json({ message: 'Post creado con éxito', post: newPost });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al crear el post', error });
+  }
 };
 
-//============================
-// Obtenemos un post por su ID
-//============================
+//===========================
+// Obtener un post por su ID
+//===========================
 export const getPostById = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try {
-        const [rows] = await db.query<RowDataPacket[]>(
-            'SELECT * FROM posts WHERE id = ?',
-            [id]
-        );
+  try {
+    const post = await Post.findByPk(id);
 
-        if (rows.length === 0) {
-            return res.status(404).json({ message: 'Post no encontrado' });
-        }
-
-        res.json(rows[0]);
-    } catch (error) {
-        console.error(error); 
-        res.status(500).json({ message: 'Error al obtener el post' }); 
+    if (!post) {
+      return res.status(404).json({ message: 'Post no encontrado' });
     }
+
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener el post', error });
+  }
 };
 
-//===============================
-// Actualizamos un post existente
-//===============================
+//====================
+// Actualizar un post
+//====================
 export const updatePost = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { name, kindOfPost, description } = req.body;
+  const { id } = req.params;
+  const { name, kindOfPost, description } = req.body;
+  const image = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : undefined;
 
-    const image = req.file ? `http://localhost:5000/uploads/${req.file.filename}` : undefined;
+  try {
+    const post = await Post.findByPk(id);
 
-    let existingImage: string | undefined;
-
-    try {
-        const [rows] = await db.query<RowDataPacket[]>('SELECT image FROM posts WHERE id = ?', [id]);
-
-        if (rows.length === 0) {
-            return res.status(404).json({ message: 'Post no encontrado' });
-        }
-
-        existingImage = rows[0].image;
-
-    } catch (error) {
-        console.error(error); 
-        return res.status(500).json({ message: 'Error al obtener la imagen existente' });
+    if (!post) {
+      return res.status(404).json({ message: 'Post no encontrado' });
     }
 
-    const finalImage = image || existingImage;
+    const updatedPost = await post.update({ name, kindOfPost, description, image: image || post.image });
 
-    if (!name || !kindOfPost || !description || !finalImage) {
-        return res.status(400).json({ message: 'Todos los campos son obligatorios' });
-    }
-
-    try {
-        const [result] = await db.query<ResultSetHeader>(
-            'UPDATE posts SET name = ?, kindOfPost = ?, description = ?, image = ? WHERE id = ?',
-            [name, kindOfPost, description, finalImage, id]
-        );
-
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Post no encontrado' });
-        }
-
-        res.json({ message: 'Post actualizado con éxito', post: { id, name, kindOfPost, description, image: finalImage } });
-    } catch (error) {
-        console.error(error); 
-        res.status(500).json({ message: 'Error al actualizar el post' });
-    }
+    res.json({ message: 'Post actualizado con éxito', post: updatedPost });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al actualizar el post', error });
+  }
 };
 
-//=============================
-// Eliminamos un post existente
-//=============================
+//==================
+// Eliminar un post
+//==================
 export const deletePost = async (req: Request, res: Response) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    try {
-        const [result] = await db.query<ResultSetHeader>(
-            'DELETE FROM posts WHERE id = ?',
-            [id]
-        );
+  try {
+    const post = await Post.findByPk(id);
 
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Post no encontrado' });
-        }
-
-        res.json({ message: 'Post eliminado con éxito' });
-    } catch (error) {
-        console.error(error); 
-        res.status(500).json({ message: 'Error al eliminar el post' }); 
+    if (!post) {
+      return res.status(404).json({ message: 'Post no encontrado' });
     }
+
+    await post.destroy();
+    res.json({ message: 'Post eliminado con éxito' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error al eliminar el post', error });
+  }
 };
 
-//==========================
-// Obtenemos todos los posts
-//==========================
+//=========================
+// Obtener todos los posts
+//=========================
 export const getPosts = async (req: Request, res: Response) => {
-    try {
-        const [rows] = await db.query('SELECT * FROM posts');
-        
-        res.json(rows);
-    } catch (error) {
-        console.error(error); 
-        res.status(500).json({ message: 'Error al obtener posts' }); 
-    }
+  try {
+    const posts = await Post.findAll();
+    res.json(posts);
+  } catch (error) {
+    res.status(500).json({ message: 'Error al obtener posts', error });
+  }
 };
+
 
 
 
