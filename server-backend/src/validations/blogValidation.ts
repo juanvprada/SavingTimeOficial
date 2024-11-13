@@ -53,8 +53,6 @@ export const registerValidation = [
       .matches(/\d/).withMessage('La contraseña debe contener al menos un número')
       .matches(/[a-zA-Z]/).withMessage('La contraseña debe contener al menos una letra')
       .not().matches(/\s/).withMessage('La contraseña no puede contener espacios'), // Asegura que no haya espacios
-
-   
 ];
 
 /* ====================

@@ -1,43 +1,47 @@
 import { Request, Response } from 'express';
-import { db } from '../database/db';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { OkPacket, RowDataPacket } from 'mysql2';
+import User from '../models/userModel';
 
 //====================
 // Registro de usuario
 //====================
 export const registerUser = async (req: Request, res: Response) => {
-    const { email, password, name, role = 'user' } = req.body;
+    const { name, email, password, role = 'user' } = req.body;
 
     try {
-        const [rows] = await db.query<RowDataPacket[]>('SELECT * FROM users WHERE email = ?', [email]);
-        if (rows.length > 0) {
+        // Verificamos si ya existe un usuario con el mismo correo electrónico
+        const existingUser = await User.findOne({ where: { email } });
+        if (existingUser) {
             return res.status(400).json({ message: 'El usuario ya existe' });
         }
 
-        // Hasheamos la contraseña para almacenarla de forma segura
+        // Hasheamos la contraseña antes de almacenarla
         const hashedPassword = await bcrypt.hash(password, 10);
-        const [result] = await db.query<OkPacket>(
-            'INSERT INTO users (email, password, name, role) VALUES (?, ?, ?, ?)',
-            [email, hashedPassword, name, role]
-        );
 
-        // Generamos un token al registrar el usuario
+        // Crear el nuevo usuario
+        const newUser = await User.create({
+            name,     // Aquí usamos "name"
+            email,
+            password: hashedPassword,
+            role,
+        });
+
+        // Generamos un token JWT para el usuario recién creado
         const token = jwt.sign(
-            { userId: result.insertId, role, email, name },
-            '1234',
+            { userId: newUser.id, role: newUser.role, email: newUser.email, name: newUser.name },
+            '1234',  // Clave secreta (mejor cambiarla a algo más seguro)
             { expiresIn: '1h' }
         );
 
         res.status(201).json({
             message: 'Usuario registrado con éxito',
-            userId: result.insertId,
-            token: token,
-            role: role
+            userId: newUser.id,
+            token,
+            role: newUser.role,
         });
     } catch (error) {
-        console.error(error);
+        console.error('Error al registrar el usuario:', error);
         res.status(500).json({ message: 'Error al registrar el usuario' });
     }
 };
@@ -49,17 +53,13 @@ export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
-        const [rows] = await db.query<RowDataPacket[]>(
-            'SELECT id, email, password, name, role FROM users WHERE email = ?',
-            [email]
-        );
+        const user = await User.findOne({ where: { email } });
 
-        if (rows.length === 0) {
+        if (!user) {
             console.log('No se encontró el usuario con el correo:', email);
             return res.status(401).json({ message: 'Credenciales inválidas' });
         }
 
-        const user = rows[0];
         console.log('Usuario encontrado:', user);
 
         const isMatch = await bcrypt.compare(password, user.password);
@@ -93,13 +93,14 @@ export const loginUser = async (req: Request, res: Response) => {
 //===========================
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
-        const [rows] = await db.query<RowDataPacket[]>('SELECT id, email, role FROM users');
-        res.json(rows);
+        const users = await User.findAll({ attributes: ['id', 'email', 'role'] });
+        res.json(users);
     } catch (error) {
-        console.error(error);
+        console.error('Error al obtener usuarios:', error);
         res.status(500).json({ message: 'Error al obtener usuarios' });
     }
 };
+
 
 
 

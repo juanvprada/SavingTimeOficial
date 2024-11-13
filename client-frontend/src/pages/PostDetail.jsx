@@ -1,25 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getOnePost, deletePost } from '../services/services';
-import { getLikesCount, toggleLike } from '../services/likeServices';
+import { getOnePost } from '../services/services';
+import { getComments, addComment } from '../services/commentServices';
 import ButtonIcon from '../components/ButtonIcon';
+import axios from 'axios';
+import CommentForm from '../components/CommentForm';
+import useStore from '../store/store';
 
-const PostDetail = ({ role, token }) => {
+const PostDetail = () => {
   const { id } = useParams();
+  const { token, role } = useStore();
   const [post, setPost] = useState(null);
-  const [likes, setLikes] = useState(0);
+  const [comments, setComments] = useState([]);
   const navigate = useNavigate();
   const postRef = useRef(null);
 
+  // Obtener el post
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const fetchedPost = await getOnePost(id);
         setPost(fetchedPost);
-
-        // Obtener el número de likes de este post
-        const likeCount = await getLikesCount(id);
-        setLikes(likeCount.count);
       } catch (error) {
         console.error("Error fetching post:", error);
       }
@@ -28,62 +29,53 @@ const PostDetail = ({ role, token }) => {
     fetchPost();
   }, [id]);
 
+  // Obtener los comentarios del post
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (postRef.current && !postRef.current.contains(event.target)) {
-        navigate('/blog');
-      }
-    };
+    if (!id) {
+      console.error("Post ID no disponible");
+      return;
+    }
 
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [navigate]);
-
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar este post?");
-    if (confirmDelete) {
+    const fetchComments = async () => {
       try {
-        await deletePost(id);
-        navigate('/blog');
+        const response = await axios.get(`http://localhost:5000/api/comments/${id}`);
+        setComments(response.data);
+        console.log('Comentarios obtenidos:', response.data);
       } catch (error) {
-        console.error("Error al eliminar el post:", error);
+        console.error('Error obteniendo comentarios:', error);
       }
-    }
+    };
+
+    fetchComments();
+  }, [id]);
+
+  // Manejar el envío de un nuevo comentario
+  const handleCommentAdded = () => {
+
+    // Función para actualizar los comentarios cuando se agrega un nuevo comentario
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/comments/${id}`);
+        setComments(response.data);
+      } catch (error) {
+        console.error('Error obteniendo comentarios:', error);
+      }
+    };
+
+    fetchComments();
   };
 
-  const handleLike = async () => {
-    try {
-      const response = await toggleLike(id);
-      setLikes((prevLikes) => response.liked ? prevLikes + 1 : prevLikes - 1);
-    } catch (error) {
-      console.error("Error al dar like:", error);
-    }
-  };
-
-  if (!post) return <div className="text-center text-xl text-gray-600">Cargando...</div>;
+  if (!post) return <div>Loading...</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-8 relative overflow-hidden mt-16">
-      <div className="absolute inset-0 bg-gradient-to-br from-green-100 via-orange-100 to-green-100 opacity-80 z-0"></div>
-      <div className="absolute inset-0 bg-pattern-texture opacity-30 z-0"></div>
-
-      <div className="w-full max-w-7xl bg-white rounded-lg shadow-2xl p-8 md:p-12 z-10">
-        <div className="flex flex-col items-center mb-12">
-          <img
-            src={post.image}
-            alt={post.name}
-            className="lg:w-full sm:w-full lg:h-[60vh] sm:h-[30vh] mb-16 object-cover rounded-lg shadow-lg"
-          />
-          <h1 className="lg:text-5xl sm:text-5xl font-bold text-green-600 tracking-tight text-center">{post.name}</h1>
-          {/* <p className="text-xl text-green-600 mt-2 mb-6 text-center">{new Date(post.createdAt).toLocaleDateString()}</p> */}
-        </div>
-
-
-
-        <p className="text-xl text-gray-700 leading-relaxed mb-8 text-center">{post.description}</p>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
+      <div
+        className="bg-white shadow-lg rounded-lg overflow-hidden w-full max-w-4xl p-10 h-full"
+        ref={postRef}
+      >
+        <h1 className="text-4xl font-bold text-green-600 mb-6">{post.name}</h1>
+        <img src={post.image} alt={post.name} className="w-full h-96 object-cover mb-6" />
+        <p className="text-lg text-gray-700 leading-relaxed mb-6">{post.description}</p>
 
         <div className="mt-6 flex justify-between items-center">
           {role === 'admin' && token && (
@@ -91,44 +83,57 @@ const PostDetail = ({ role, token }) => {
               icon="fas fa-edit"
               onClick={() => navigate(`/editar/${post.id}`)}
               title="Editar"
-              className="text-white bg-green-600 hover:bg-green-700 transition duration-300 p-6 rounded-full shadow-md transform hover:scale-110"
             />
           )}
           {role === 'admin' && token && (
             <ButtonIcon
               icon="fas fa-trash"
-              onClick={handleDelete}
+              onClick={() => handleDelete(post.id)}
               title="Eliminar"
-              className="text-white bg-red-600 hover:bg-red-700 transition duration-300 p-6 rounded-full shadow-md transform hover:scale-110"
             />
           )}
         </div>
 
-        {/* Likes Section */}
-        <div className="mt-8 flex justify-center items-center space-x-6">
-          <ButtonIcon
-            icon={likes > 0 ? "fas fa-heart text-red-500" : "far fa-heart"}
-            onClick={handleLike}
-            title={likes > 0 ? "Quitar like" : "Dar like"}
-            className="text-white bg-orange-500 hover:bg-orange-600 transition duration-300 p-6 rounded-full shadow-lg transform hover:scale-110"
-          />
-          <span className="text-2xl text-gray-800 font-semibold">{likes} Likes</span>
+        {/* Sección de Comentarios */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold text-gray-800">Comentarios</h2>
+
+          <div className="mt-4 space-y-4">
+            {/* Mostrar comentarios */}
+            {comments.length === 0 && <p>No hay comentarios aún.</p>}
+            {comments.map((comment) => (
+              <div key={comment.id} className="p-4 border-b border-gray-200">
+                <p className="text-gray-600">{comment.content}</p>
+                <p className="text-sm text-gray-500">- {comment.username}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Formulario para agregar un comentario */}
+          {token && (
+            <CommentForm
+              postId={id}
+              token={token}
+              onCommentAdded={handleCommentAdded}
+            />
+          )}
         </div>
 
-
+        <div className="mt-6 flex justify-center">
+          <button
+            onClick={() => navigate('/blog')}
+            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition duration-300"
+          >
+            Volver
+          </button>
+        </div>
       </div>
-      <div className="mt-10 flex justify-center">
-  <button
-    onClick={() => navigate('/blog')}
-    className="bg-green-600 w-48 text-white text-lg px-6 py-3 rounded-md hover:bg-green-700 transition duration-300 transform hover:scale-105 shadow-md"
-  >
-    Volver
-  </button>
-</div>
-
     </div>
-
   );
 };
 
 export default PostDetail;
+
+
+
+

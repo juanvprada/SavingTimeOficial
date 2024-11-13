@@ -3,19 +3,15 @@ import { sequelize } from '../database/sequelize';
 import User from './userModel';
 import Post from './postModel';
 
-class Like extends Model {
+class Comment extends Model {
   public id!: number;
   public postId!: string;
   public userId!: number;
-
-  // Método de clase para obtener la cantidad de likes de un post
-  public static async getLikesByPost(postId: string): Promise<number> {
-    const likes = await Like.count({ where: { postId } });
-    return likes;
-  }
+  public content!: string;
+  public created_at!: Date;
 }
 
-Like.init({
+Comment.init({
   id: {
     type: DataTypes.INTEGER.UNSIGNED,
     autoIncrement: true,
@@ -37,21 +33,25 @@ Like.init({
       key: 'id',
     },
   },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
 }, {
   sequelize,
-  modelName: 'Like',
-  tableName: 'likes',
+  modelName: 'Comment',
+  tableName: 'comments',
   timestamps: false,
 });
 
-// Definimos las asociaciones
-User.hasMany(Like, { foreignKey: 'userId' });
-Post.hasMany(Like, { foreignKey: 'postId' });
-Like.belongsTo(User, { foreignKey: 'userId' });
-Like.belongsTo(Post, { foreignKey: 'postId' });
+User.hasMany(Comment, { foreignKey: 'userId' });
+Post.hasMany(Comment, { foreignKey: 'postId' });
+Comment.belongsTo(User, { foreignKey: 'userId' });
+Comment.belongsTo(Post, { foreignKey: 'postId' });
 
-export default Like;
-
-
-
+export default Comment;
 
