@@ -6,6 +6,7 @@ import Carousel from "../components/Carousel";
 // import market from "../assets/news/market.jpg";
 import AuthForm from '../components/AuthForm'; 
 import useStore from '../store/store';
+import CookieConsent from '../components/CookieConsent';
 
 
 const Home = () => {
@@ -32,7 +33,6 @@ const Home = () => {
           </div>
       </div>
 
-      {/* Sección adicional */}
       {/* Sección adicional */}
       <section className="container mx-auto py-12 px-4">
         <div className="w-full mb-8">
@@ -122,10 +122,9 @@ const Home = () => {
           </div>
         </div>
       </section>
+      <CookieConsent />
     </div>
   );
 };
 
 export default Home;
-
-
