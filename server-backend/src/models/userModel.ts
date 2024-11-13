@@ -9,9 +9,8 @@ class User extends Model {
   public password!: string;
   public role!: string;
 
-  // Método para definir las asociaciones
   static associate() {
-    User.hasMany(Comment, { foreignKey: 'userId' });
+    User.hasMany(Comment, { foreignKey: 'userId', as: 'comments' });
   }
 }
 
