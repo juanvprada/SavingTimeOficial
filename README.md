@@ -14,6 +14,36 @@
 ## Descripción del Proyecto
 Bio-Blog es un blog ecológico enfocado en publicaciones relacionadas con una nutrición sostenible. Permite a los usuarios registrarse, iniciar sesión y participar en publicaciones mediante "likes". Además, existen dos roles de usuario: `admin` y `user`, con permisos específicos para la gestión del contenido. Los administradores pueden crear, editar y eliminar publicaciones, así como modificar roles de usuario. El proyecto está dividido en frontend (JavaScript) y backend (TypeScript) que se comunican mediante una API REST, respaldada por una base de datos MySQL.
 
+## Características del Proyecto
+- **Roles de Usuario**: `admin` y `user`, con permisos específicos.
+- **Autenticación JWT**: Seguridad y acceso controlado a través de tokens.
+- **Gestión de Posts**: CRUD completo para publicaciones con subida de imágenes.
+- **Likes**: Los usuarios pueden dar y quitar "likes" a las publicaciones.
+- **Comentarios**: Los usuarios pueden agregar comentarios a las publicaciones, creando una interacción más dinámica entre los usuarios y el contenido.
+- **Validaciones**: Validación de datos con `express-validator`.
+- **Testeo**: Tests en frontend con Mocks y en backend para verificar la funcionalidad.
+- **Estado Global**: Manejo de estado global con Zustand en el frontend.
+- **Estilos**: Diseño responsivo usando Tailwind CSS.
+- **Conexión HTTP**: La comunicación frontend-backend se realiza con Axios.
+
+---
+
+## Comentarios en las Publicaciones
+
+Ahora, los usuarios pueden interactuar aún más con las publicaciones añadiendo comentarios. Cada publicación tiene asociada una sección de comentarios donde los usuarios registrados pueden escribir su opinión o pregunta. Los comentarios se almacenan en la base de datos y están vinculados a cada publicación.
+
+### Implementación de los Comentarios:
+- **Frontend**: Se ha añadido un formulario para permitir que los usuarios dejen comentarios en el componente `CommentForm.jsx`, el cual se encuentra en la página de detalles de cada publicación (`PostDetail.jsx`). Los comentarios son visualizados en la sección `CommentSection.jsx`.
+  
+- **Backend**: Se ha implementado un controlador de comentarios (`commentController.ts`) que maneja la creación y obtención de comentarios para cada publicación. Los comentarios están gestionados en la base de datos con el modelo `commentModel.ts`.
+
+### API para los Comentarios:
+
+| Endpoint   | Descripción                                 |
+|------------|---------------------------------------------|
+| `/comments`| Crear y obtener comentarios de las publicaciones. |
+
+
 # Estructura de Carpetas
 
 ```plaintext
@@ -131,17 +161,8 @@ BIO-BLOG/
 
 ---
 
-## Características del Proyecto
-- **Roles de Usuario**: `admin` y `user`, con permisos específicos.
-- **Autenticación JWT**: Seguridad y acceso controlado a través de tokens.
-- **Gestión de Posts**: CRUD completo para publicaciones con subida de imágenes.
-- **Likes**: Los usuarios pueden dar y quitar likes a las publicaciones.
-- **Validaciones**: Validación de datos con `express-validator`.
-- **Testeo**: Tests en frontend con Mocks y en backend para verificar la funcionalidad.
-- **Estado Global**: Manejo de estado global con Zustand en el frontend.
-- **Estilos**: Diseño responsivo usando Tailwind CSS.
-- **Conexión HTTP**: La comunicación frontend-backend se realiza con Axios.
-- 
+
+
 ![diagrama-eco](https://github.com/user-attachments/assets/fbcd671d-b8eb-4d14-9b58-d30de21472d3)
 
 ## Tecnologías Utilizadas
