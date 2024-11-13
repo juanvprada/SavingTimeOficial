@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getOnePost } from '../services/services';
-import { getComments, addComment } from '../services/commentServices';
-import ButtonIcon from '../components/ButtonIcon';
 import axios from 'axios';
 import CommentForm from '../components/CommentForm';
 import useStore from '../store/store';
+import ButtonIcon from '../components/ButtonIcon';
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -51,7 +50,6 @@ const PostDetail = () => {
 
   // Manejar el envío de un nuevo comentario
   const handleCommentAdded = () => {
-
     // Función para actualizar los comentarios cuando se agrega un nuevo comentario
     const fetchComments = async () => {
       try {
@@ -103,8 +101,8 @@ const PostDetail = () => {
             {comments.length === 0 && <p>No hay comentarios aún.</p>}
             {comments.map((comment) => (
               <div key={comment.id} className="p-4 border-b border-gray-200">
+                <p className="text-sm text-gray-500"><strong>{comment.username}</strong></p>
                 <p className="text-gray-600">{comment.content}</p>
-                <p className="text-sm text-gray-500">- {comment.username}</p>
               </div>
             ))}
           </div>
@@ -133,7 +131,3 @@ const PostDetail = () => {
 };
 
 export default PostDetail;
-
-
-
-

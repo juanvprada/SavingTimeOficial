@@ -23,6 +23,8 @@ const PORT = process.env.PORT || 5000;
 // Llamamos a los métodos `associate` para definir las asociaciones
 User.associate();
 Post.associate();
+Comment.associate();
+Like.associate();
 
 // Middleware
 app.use(cors());
@@ -33,6 +35,7 @@ const uploadPath = path.join(__dirname, 'uploads');
 console.log('Upload path:', uploadPath);
 app.use('/uploads', express.static(uploadPath));
 
+// Rutas de la API
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
@@ -40,16 +43,9 @@ app.use('/api/roles', roleRoutes);
 app.use('/api/likes', likeRoutes);
 app.use('/api/comments', commentRoutes);
 
+// Iniciar el servidor
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
 export default app;
-
-
-
-
-
-
-
-

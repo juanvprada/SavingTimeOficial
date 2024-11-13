@@ -13,6 +13,14 @@ class Like extends Model {
     const likes = await Like.count({ where: { postId } });
     return likes;
   }
+
+  // Método para definir las asociaciones
+  static associate() {
+    Like.belongsTo(User, { foreignKey: 'userId' });
+    Like.belongsTo(Post, { foreignKey: 'postId' });
+    User.hasMany(Like, { foreignKey: 'userId' });
+    Post.hasMany(Like, { foreignKey: 'postId' });
+  }
 }
 
 Like.init({
@@ -44,14 +52,4 @@ Like.init({
   timestamps: false,
 });
 
-// Definimos las asociaciones
-User.hasMany(Like, { foreignKey: 'userId' });
-Post.hasMany(Like, { foreignKey: 'postId' });
-Like.belongsTo(User, { foreignKey: 'userId' });
-Like.belongsTo(Post, { foreignKey: 'postId' });
-
 export default Like;
-
-
-
-

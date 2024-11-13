@@ -6,9 +6,14 @@ import Post from './postModel';
 class Comment extends Model {
   public id!: number;
   public postId!: string;
-  public userId!: number;
+  public userId!: string;
   public content!: string;
   public created_at!: Date;
+
+  static associate() {
+    Comment.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+    Comment.belongsTo(Post, { foreignKey: 'postId' });
+  }
 }
 
 Comment.init({
@@ -26,7 +31,7 @@ Comment.init({
     },
   },
   userId: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.UUID,
     allowNull: false,
     references: {
       model: User,
@@ -48,10 +53,4 @@ Comment.init({
   timestamps: false,
 });
 
-User.hasMany(Comment, { foreignKey: 'userId' });
-Post.hasMany(Comment, { foreignKey: 'postId' });
-Comment.belongsTo(User, { foreignKey: 'userId' });
-Comment.belongsTo(Post, { foreignKey: 'postId' });
-
 export default Comment;
-
