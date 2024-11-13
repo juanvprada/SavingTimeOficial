@@ -37,17 +37,17 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-8 bg-white rounded-lg shadow-md mt-20 mb-6 relative">
-      <h2 className="text-2xl font-bold mb-4 text-green-600 text-center">
+    <div className="max-w-lg mx-auto p-8 bg-white rounded-lg shadow-lg mt-20 mb-10 relative">
+      <h2 className="text-3xl font-bold mb-6 text-green-600 text-center">
         ¡Déjanos un mensaje en <span className="text-green-700">Bio</span>{" "}
         <span className="text-green-700">Blog</span>! Te responderemos lo más
         pronto posible.
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label
             htmlFor="name"
-            className="block text-sm font-medium text-green-600"
+            className="block text-sm font-semibold text-green-600"
           >
             Nombre
           </label>
@@ -60,13 +60,13 @@ const ContactForm = () => {
             required
             placeholder="Introduce tu nombre"
             maxLength="50"
-            className="mt-1 block w-full border border-green-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="mt-1 block w-full border border-green-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm"
           />
         </div>
         <div>
           <label
             htmlFor="email"
-            className="block text-sm font-medium text-green-600"
+            className="block text-sm font-semibold text-green-600"
           >
             Correo Electrónico
           </label>
@@ -78,13 +78,13 @@ const ContactForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder="Introduce tu correo electrónico"
-            className="mt-1 block w-full border border-green-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="mt-1 block w-full border border-green-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm"
           />
         </div>
         <div>
           <label
             htmlFor="message"
-            className="block text-sm font-medium text-green-600"
+            className="block text-sm font-semibold text-green-600"
           >
             Mensaje (máx. 100 caracteres)
           </label>
@@ -95,13 +95,13 @@ const ContactForm = () => {
             onChange={(e) => setMessage(e.target.value)}
             maxLength="100"
             required
-            placeholder="Introduce tu mensaje aqui..."
-            className="mt-1 block w-full border border-green-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+            placeholder="Introduce tu mensaje aquí..."
+            className="mt-1 block w-full border border-green-300 rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm"
           />
         </div>
         <button
           type="submit"
-          className="w-full bg-green-500 text-white rounded-md p-2 hover:bg-green-600 transition-colors"
+          className="w-full bg-green-600 text-white font-bold rounded-lg p-3 hover:bg-green-700 transition-colors shadow-lg"
         >
           Enviar
         </button>
@@ -121,7 +121,7 @@ const ContactForm = () => {
             </p>
             <button
               onClick={closeModal}
-              className="mt-4 bg-green-500 text-white p-2 rounded-md hover:bg-green-600 transition-colors"
+              className="mt-4 bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition-colors"
             >
               Cerrar
             </button>
@@ -129,12 +129,12 @@ const ContactForm = () => {
         </div>
       )}
 
-      <div className="mt-8">
+      <div className="mt-10">
         <h3 className="text-xl font-bold text-green-700 text-center mb-4">
           Opiniones de nuestros usuarios
         </h3>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="p-4 bg-gray-100 rounded-lg shadow-md text-center">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          <div className="p-6 bg-gray-100 rounded-lg shadow-lg text-center">
             <p className="text-green-800 font-semibold mb-2">Usuario 1</p>
             <p className="text-yellow-500">★★★★★</p>
             <p className="text-sm font-medium text-gray-700 mt-2">
@@ -142,7 +142,7 @@ const ContactForm = () => {
               para aquellos que buscan llevar un estilo de vida saludable."
             </p>
           </div>
-          <div className="p-4 bg-gray-100 rounded-lg shadow-md text-center">
+          <div className="p-6 bg-gray-100 rounded-lg shadow-lg text-center">
             <p className="text-green-800 font-semibold mb-2">Usuario 2</p>
             <p className="text-yellow-500">★★★★☆</p>
             <p className="text-sm font-medium text-gray-700 mt-2">
@@ -151,7 +151,7 @@ const ContactForm = () => {
               ambiente era muy acogedor. ¡Gracias!"
             </p>
           </div>
-          <div className="p-4 bg-gray-100 rounded-lg shadow-md text-center">
+          <div className="p-6 bg-gray-100 rounded-lg shadow-lg text-center">
             <p className="text-green-800 font-semibold mb-2">Usuario 3</p>
             <p className="text-yellow-500">★★★★★</p>
             <p className="text-sm font-medium text-gray-700 mt-2">

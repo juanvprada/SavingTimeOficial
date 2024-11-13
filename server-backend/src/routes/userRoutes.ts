@@ -8,7 +8,4 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.get('/', authMiddleware, getAllUsers);
 
-
 export default router;
-
-

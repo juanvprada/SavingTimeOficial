@@ -8,7 +8,6 @@ const AdminPage = () => {
   const token = useStore((state) => state.token);
   const role = useStore((state) => state.role);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     if (role !== 'admin') {
@@ -27,7 +26,7 @@ const AdminPage = () => {
     };
 
     fetchUsers();
-  }, [token,role, navigate]);
+  }, [token, role, navigate]);
 
   const handleToggleAdmin = async (userId) => {
     try {
@@ -61,37 +60,39 @@ const AdminPage = () => {
 
   return (
     <div className="container mx-auto py-12">
-      <h1 className="text-3xl font-bold text-center mb-6">Gestión de Usuarios</h1>
-      <table className="min-w-full bg-white border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border-b p-2 text-left">Email</th>
-            <th className="border-b p-2 text-left">Rol</th>
-            <th className="border-b p-2 text-left">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id}>
-              <td className="border-b p-2">{user.email}</td>
-              <td className="border-b p-2">{user.role}</td>
-              <td className="border-b p-2">
-                <button
-                  onClick={() => handleToggleAdmin(user.id)}
-                  className={`py-1 px-3 text-white rounded ${user.role === 'admin' ? 'bg-red-500' : 'bg-blue-500'}`}
-                >
-                  {user.role === 'admin' ? 'Eliminar Admin' : 'Hacer Admin'}
-                </button>
-              </td>
+      <div className="text-center mb-6">
+        <h1 className="text-4xl font-bold mb-2">Gestión de Usuarios</h1>
+        <p className="text-lg text-gray-600">Administra los usuarios y sus roles en el sistema</p>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="border-b p-4 text-left font-semibold text-gray-600">Email</th>
+              <th className="border-b p-4 text-left font-semibold text-gray-600">Rol</th>
+              <th className="border-b p-4 text-left font-semibold text-gray-600">Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id} className="hover:bg-gray-50 transition">
+                <td className="border-b p-4">{user.email}</td>
+                <td className="border-b p-4">{user.role}</td>
+                <td className="border-b p-4">
+                  <button
+                    onClick={() => handleToggleAdmin(user.id)}
+                    className={`py-2 px-4 text-white rounded-full ${user.role === 'admin' ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'} transition`}
+                  >
+                    {user.role === 'admin' ? 'Eliminar Admin' : 'Hacer Admin'}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
 export default AdminPage;
-
-
-

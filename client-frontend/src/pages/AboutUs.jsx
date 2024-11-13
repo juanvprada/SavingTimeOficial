@@ -5,7 +5,7 @@ import { logoImg } from '../utils';
 
 const AboutUs = () => {
   return (
-    <div className="bg-gradient-to-br from-green-100 via-orange-50 text-gray-900 mt-16">
+    <div className="bg-gradient-to-br from-green-100 via-orange-50 text-gray-900">
 
    
       {/* Header */}
