@@ -7,7 +7,7 @@ import Carousel from "../components/Carousel";
 import AuthForm from '../components/AuthForm'; 
 import useStore from '../store/store';
 import CookieConsent from '../components/CookieConsent';
-
+import TermsAndConditions from '../components/Terms';
 
 const Home = () => {
   const isLoggedIn = useStore((state) => !!state.token); 
