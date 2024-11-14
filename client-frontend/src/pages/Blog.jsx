@@ -90,7 +90,7 @@ const Blog = () => {
   );
 
   return (
-    <div className=" min-h-screen">
+    <div className=" min-h-screen ">
       <header className="bg-green-600 text-white py-8">
         <div className="container mx-auto text-center">
           <h1 className="text-4xl font-bold">Bienvenidos a Bio Blog</h1>

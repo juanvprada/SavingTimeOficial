@@ -5,7 +5,7 @@ import { logoImg } from '../utils';
 
 const AboutUs = () => {
   return (
-    <div className="bg-gradient-to-br from-green-100 via-orange-50 text-gray-900">
+    <div className="bg-gradient-to-br from-green-100 via-orange-50 text-gray-900 ">
 
    
       {/* Header */}
@@ -106,7 +106,7 @@ const AboutUs = () => {
       {[
         {
           title: "Sostenibilidad Alimentaria",
-          text: "En Sustainify, promovemos el uso de productos locales, de temporada y orgánicos. Creemos en una alimentación que no solo sea saludable para el cuerpo, sino también para el planeta. Cada receta y consejo que compartimos está diseñado para minimizar el impacto ambiental y maximizar el valor nutricional."
+          text: "En Bio Blog, promovemos el uso de productos locales, de temporada y orgánicos. Creemos en una alimentación que no solo sea saludable para el cuerpo, sino también para el planeta. Cada receta y consejo que compartimos está diseñado para minimizar el impacto ambiental y maximizar el valor nutricional."
         },
         {
           title: "Compromiso con la Comunidad",
